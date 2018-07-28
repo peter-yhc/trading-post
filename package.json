@@ -1,19 +1,16 @@
 {
   "name": "trading-post",
-  "version": "1.0.0",
-  "description": "��#\u0000 \u0000t\u0000r\u0000a\u0000d\u0000i\u0000n\u0000g\u0000-\u0000p\u0000o\u0000s\u0000t\u0000\r\u0000 \u0000",
-  "main": "index.js",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-scripts": "1.1.4"
+  },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/peter-yhc/trading-post.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/peter-yhc/trading-post/issues"
-  },
-  "homepage": "https://github.com/peter-yhc/trading-post#readme"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
 }
