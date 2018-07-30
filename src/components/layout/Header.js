@@ -19,7 +19,7 @@ class Header extends Component {
       <AppBar position="absolute" className={classes.appBar}>
         <Toolbar>
           <Typography variant="title" color="inherit" noWrap>
-            Permanent drawer
+            Trading Post
           </Typography>
         </Toolbar>
       </AppBar>
