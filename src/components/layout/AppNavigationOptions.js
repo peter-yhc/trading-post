@@ -9,11 +9,11 @@ import withStyles from '@material-ui/core/es/styles/withStyles'
 const styles = {
   Link: {
     textDecoration: 'none',
-    color: "inherit"  
+    color: "inherit"
   }
 }
 
-class SideMenuList extends React.Component {
+class AppNavigationOptions extends React.Component {
 
   render() {
     const {classes} = this.props
@@ -47,4 +47,4 @@ class SideMenuList extends React.Component {
   }
 }
 
-export default withStyles(styles)(SideMenuList)
+export default withStyles(styles)(AppNavigationOptions)
