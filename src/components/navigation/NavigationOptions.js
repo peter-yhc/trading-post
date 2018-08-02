@@ -9,7 +9,7 @@ import withStyles from '@material-ui/core/es/styles/withStyles'
 const styles = {
   Link: {
     textDecoration: 'none',
-    color: "inherit"
+    color: 'inherit'
   }
 }
 

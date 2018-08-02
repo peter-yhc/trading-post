@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import withStyles from '@material-ui/core/es/styles/withStyles'
 import PropTypes from 'prop-types'
-import {PageRouter} from '../pages/PageRouter'
+import {PageRouter} from '../navigation/PageRouter'
 
 const styles = (theme) => ({
   content: {

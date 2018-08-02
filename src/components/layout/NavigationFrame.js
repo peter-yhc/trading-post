@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import Hidden from '@material-ui/core/Hidden'
 import Divider from '@material-ui/core/Divider'
-import NavigationOptions from './NavigationOptions'
+import NavigationOptions from '../navigation/NavigationOptions'
 import {Icon} from '@material-ui/core/es/index'
 
 const drawerWidth = 300
