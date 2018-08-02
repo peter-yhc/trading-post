@@ -13,7 +13,7 @@ const styles = {
   }
 }
 
-class AppNavigationOptions extends React.Component {
+class NavigationOptions extends React.Component {
 
   render() {
     const {classes} = this.props
@@ -47,4 +47,4 @@ class AppNavigationOptions extends React.Component {
   }
 }
 
-export default withStyles(styles)(AppNavigationOptions)
+export default withStyles(styles)(NavigationOptions)

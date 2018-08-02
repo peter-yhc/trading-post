@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import Hidden from '@material-ui/core/Hidden'
 import Divider from '@material-ui/core/Divider'
-import AppNavigationOptions from './AppNavigationOptions'
-import MainContent from './MainContent'
+import NavigationOptions from './NavigationOptions'
+import ContentContainer from './ContentContainer'
 import {Icon} from '@material-ui/core/es/index'
 
 const drawerWidth = 300
@@ -50,7 +50,7 @@ const styles = theme => ({
   }
 })
 
-class AppLayout extends React.Component {
+class BaseLayout extends React.Component {
   state = {
     mobileOpen: false
   }
@@ -66,7 +66,7 @@ class AppLayout extends React.Component {
       <div>
         <div className={classes.toolbar}/>
         <Divider/>
-        <AppNavigationOptions/>
+        <NavigationOptions/>
       </div>
     )
 
@@ -111,15 +111,15 @@ class AppLayout extends React.Component {
             {drawer}
           </Drawer>
         </Hidden>
-        <MainContent/>
+        <ContentContainer/>
       </div>
     )
   }
 }
 
-AppLayout.propTypes = {
+BaseLayout.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, {withTheme: true})(AppLayout)
+export default withStyles(styles, {withTheme: true})(BaseLayout)

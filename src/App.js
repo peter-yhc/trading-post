@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import './App.css'
-import AppLayout from './components/layout/AppLayout'
+import BaseLayout from './components/layout/BaseLayout'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/es/styles'
 import {pink, red, teal} from '@material-ui/core/es/colors/index'
 
@@ -24,7 +24,7 @@ class App extends Component {
     return (
       <MuiThemeProvider theme={theme}>
         <div className="App">
-          <AppLayout/>
+          <BaseLayout/>
         </div>
       </MuiThemeProvider>
     );

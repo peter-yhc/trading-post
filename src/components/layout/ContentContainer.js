@@ -13,7 +13,7 @@ const styles = (theme) => ({
   toolbar: theme.mixins.toolbar
 })
 
-class MainContent extends Component {
+class ContentContainer extends Component {
 
   render() {
     const {classes} = this.props
@@ -26,8 +26,8 @@ class MainContent extends Component {
   }
 }
 
-MainContent.propTypes = {
+ContentContainer.propTypes = {
   classes: PropTypes.object.isRequired
 }
 
-export default withStyles(styles)(MainContent)
+export default withStyles(styles)(ContentContainer)
