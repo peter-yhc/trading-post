@@ -20,28 +20,32 @@ class NavigationOptions extends React.Component {
 
     return (
       <React.Fragment>
-        <ListItem button>
-          <ListItemIcon>
-            <Icon>dashboard</Icon>
-          </ListItemIcon>
-          <ListItemText>
-            <Link className={classes.Link} to="/">Dashboard</Link>
-          </ListItemText>
-        </ListItem>
+        <Link className={classes.Link} to="/">
+          <ListItem button>
+            <ListItemIcon>
+              <Icon>dashboard</Icon>
+            </ListItemIcon>
+            <ListItemText>
+              Dashboard
+            </ListItemText>
+          </ListItem>
+        </Link>
         <ListItem button>
           <ListItemIcon>
             <Icon>assessment</Icon>
           </ListItemIcon>
           <ListItemText>Performance</ListItemText>
         </ListItem>
-        <ListItem button>
-          <ListItemIcon>
-            <Icon>assignment</Icon>
-          </ListItemIcon>
-          <ListItemText>
-            <Link className={classes.Link} to="/portfolio">Portfolio</Link>
-          </ListItemText>
-        </ListItem>
+        <Link className={classes.Link} to="/portfolio">
+          <ListItem button>
+            <ListItemIcon>
+              <Icon>assignment</Icon>
+            </ListItemIcon>
+            <ListItemText>
+              Portfolio
+            </ListItemText>
+          </ListItem>
+        </Link>
       </React.Fragment>
     )
   }
