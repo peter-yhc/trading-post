@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 import withStyles from '@material-ui/core/es/styles/withStyles'
 import PropTypes from 'prop-types'
-import {Portfolio} from '../pages/Portfolio'
-import {Route, Switch} from 'react-router-dom'
+import {PageRouter} from '../pages/PageRouter'
 
 const styles = (theme) => ({
   content: {
@@ -21,17 +20,7 @@ class MainContent extends Component {
     return (
       <main className={classes.content}>
         <div className={classes.toolbar}/>
-        <Switch>
-          <Route path="/dashboard">
-            <p>Dashboard</p>
-          </Route>
-          <Route path="/management">
-            <p>Management</p>
-          </Route>
-          <Route path="/portfolio">
-            <Portfolio/>
-          </Route>
-        </Switch>
+        <PageRouter/>
       </main>
     )
   }
