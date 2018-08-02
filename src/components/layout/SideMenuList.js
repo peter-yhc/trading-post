@@ -1,20 +1,22 @@
-import React from 'react';
-import ListItemIcon from '@material-ui/core/es/ListItemIcon/ListItemIcon';
-import ListItem from '@material-ui/core/es/ListItem/ListItem';
-import ListItemText from '@material-ui/core/es/ListItemText/ListItemText';
-import Icon from '@material-ui/core/es/Icon/Icon';
-import {Link} from "react-router-dom";
+import React from 'react'
+import ListItem from '@material-ui/core/es/ListItem/ListItem'
+import ListItemIcon from '@material-ui/core/es/ListItemIcon/ListItemIcon'
+import ListItemText from '@material-ui/core/es/ListItemText/ListItemText'
+import Icon from '@material-ui/core/es/Icon/Icon'
+import {Link} from 'react-router-dom'
 
 export class SideMenuList extends React.Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
         <ListItem button>
           <ListItemIcon>
             <Icon>dashboard</Icon>
           </ListItemIcon>
-          <ListItemText>Dashboard</ListItemText>
+          <ListItemText>
+            <Link to="/">Dashboard</Link>
+          </ListItemText>
         </ListItem>
         <ListItem button>
           <ListItemIcon>
@@ -30,7 +32,7 @@ export class SideMenuList extends React.Component {
             <Link to="/portfolio">Portfolio</Link>
           </ListItemText>
         </ListItem>
-      </div>
-    );
+      </React.Fragment>
+    )
   }
 }
