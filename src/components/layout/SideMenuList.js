@@ -4,10 +4,20 @@ import ListItemIcon from '@material-ui/core/es/ListItemIcon/ListItemIcon'
 import ListItemText from '@material-ui/core/es/ListItemText/ListItemText'
 import Icon from '@material-ui/core/es/Icon/Icon'
 import {Link} from 'react-router-dom'
+import withStyles from '@material-ui/core/es/styles/withStyles'
 
-export class SideMenuList extends React.Component {
+const styles = {
+  Link: {
+    textDecoration: 'none',
+    color: "inherit"  
+  }
+}
+
+class SideMenuList extends React.Component {
 
   render() {
+    const {classes} = this.props
+
     return (
       <React.Fragment>
         <ListItem button>
@@ -15,7 +25,7 @@ export class SideMenuList extends React.Component {
             <Icon>dashboard</Icon>
           </ListItemIcon>
           <ListItemText>
-            <Link to="/">Dashboard</Link>
+            <Link className={classes.Link} to="/">Dashboard</Link>
           </ListItemText>
         </ListItem>
         <ListItem button>
@@ -29,10 +39,12 @@ export class SideMenuList extends React.Component {
             <Icon>assignment</Icon>
           </ListItemIcon>
           <ListItemText>
-            <Link to="/portfolio">Portfolio</Link>
+            <Link className={classes.Link} to="/portfolio">Portfolio</Link>
           </ListItemText>
         </ListItem>
       </React.Fragment>
     )
   }
 }
+
+export default withStyles(styles)(SideMenuList)

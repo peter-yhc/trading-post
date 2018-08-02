@@ -1,18 +1,18 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import Hidden from '@material-ui/core/Hidden';
-import Divider from '@material-ui/core/Divider';
-import {SideMenuList} from './SideMenuList';
-import MainContent from './MainContent';
-import {Icon} from '@material-ui/core/es/index';
+import React from 'react'
+import PropTypes from 'prop-types'
+import {withStyles} from '@material-ui/core/styles'
+import Drawer from '@material-ui/core/Drawer'
+import AppBar from '@material-ui/core/AppBar'
+import Toolbar from '@material-ui/core/Toolbar'
+import Typography from '@material-ui/core/Typography'
+import IconButton from '@material-ui/core/IconButton'
+import Hidden from '@material-ui/core/Hidden'
+import Divider from '@material-ui/core/Divider'
+import SideMenuList from './SideMenuList'
+import MainContent from './MainContent'
+import {Icon} from '@material-ui/core/es/index'
 
-const drawerWidth = 300;
+const drawerWidth = 300
 
 const styles = theme => ({
   root: {
@@ -48,19 +48,19 @@ const styles = theme => ({
     backgroundColor: theme.palette.background.default,
     padding: theme.spacing.unit * 3
   }
-});
+})
 
 class AppLayout extends React.Component {
   state = {
     mobileOpen: false
-  };
+  }
 
   handleDrawerToggle = () => {
-    this.setState(state => ({mobileOpen: !state.mobileOpen}));
-  };
+    this.setState(state => ({mobileOpen: !state.mobileOpen}))
+  }
 
   render() {
-    const {classes, theme} = this.props;
+    const {classes, theme} = this.props
 
     const drawer = (
       <div>
@@ -68,7 +68,7 @@ class AppLayout extends React.Component {
         <Divider/>
         <SideMenuList/>
       </div>
-    );
+    )
 
     return (
       <div className={classes.root}>
@@ -113,13 +113,13 @@ class AppLayout extends React.Component {
         </Hidden>
         <MainContent/>
       </div>
-    );
+    )
   }
 }
 
 AppLayout.propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired
-};
+}
 
-export default withStyles(styles, {withTheme: true})(AppLayout);
+export default withStyles(styles, {withTheme: true})(AppLayout)
