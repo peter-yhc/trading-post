@@ -1,10 +1,64 @@
 import React, {Component} from 'react'
-import {Typography} from '@material-ui/core/es/index'
+import {Paper} from '@material-ui/core/es/index'
+import withStyles from '@material-ui/core/es/styles/withStyles'
+import {Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core/es'
+import {stocks} from '../data/StockData'
 
-export class Portfolio extends Component {
+const styles = ({
+  root: {
+    width: '100%',
+    overflowX: 'auto'
+  }
+})
+
+class Portfolio extends Component {
+
+  state = {
+    stocks: stocks
+  }
+
+  createTable() {
+    let table = []
+    this.state.stocks.forEach(stock => {
+      table.push(<TableRow>
+        <TableCell>{stock.name}</TableCell>
+        <TableCell>{stock.exchange}</TableCell>
+        <TableCell>{stock.currency}</TableCell>
+        <TableCell>{stock.shares}</TableCell>
+        <TableCell>{stock.bookCost}</TableCell>
+        <TableCell>{stock.marketValue}</TableCell>
+        <TableCell>{stock.unrealisedGains}</TableCell>
+      </TableRow>)
+    })
+    return table
+  }
+
+
   render() {
+    const {classes} = this.props
     return (
-      <Typography noWrap>{'You think water moves fast? You should see ice.'}</Typography>
+      <React.Fragment>
+        <Paper className={classes.root}>
+          <Table className={classes.table}>
+            <TableHead>
+              <TableRow>
+                <TableCell>Name</TableCell>
+                <TableCell>Exchange</TableCell>
+                <TableCell>Currency</TableCell>
+                <TableCell>Shares</TableCell>
+                <TableCell>Book Cost</TableCell>
+                <TableCell>Market Value</TableCell>
+                <TableCell>Unrealised Gains</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {this.createTable()}
+            </TableBody>
+          </Table>
+        </Paper>
+      </React.Fragment>
     )
   }
 }
+
+export default withStyles(styles)(Portfolio)

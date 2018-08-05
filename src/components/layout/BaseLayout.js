@@ -7,7 +7,6 @@ import NavigationFrame from './NavigationFrame'
 const styles = {
   root: {
     flexGrow: 1,
-    height: 430,
     zIndex: 1,
     overflow: 'hidden',
     position: 'relative',
