@@ -2,12 +2,12 @@ import React, {Component} from 'react'
 import './App.css'
 import BaseLayout from './components/layout/BaseLayout'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/es/styles'
-import {pink, red, teal} from '@material-ui/core/es/colors/index'
+import {blueGrey, grey, red} from '@material-ui/core/es/colors/index'
 
 const theme = createMuiTheme({
   palette: {
-    primary: teal,
-    secondary: pink,
+    primary: blueGrey,
+    secondary: grey,
     error: red,
     // Used by `getContrastText()` to maximize the contrast between the background and
     // the text.
@@ -17,7 +17,7 @@ const theme = createMuiTheme({
     // E.g., shift from Red 500 to Red 300 or Red 700.
     tonalOffset: 0.2
   }
-});
+})
 
 class App extends Component {
   render() {
@@ -27,8 +27,8 @@ class App extends Component {
           <BaseLayout/>
         </div>
       </MuiThemeProvider>
-    );
+    )
   }
 }
 
-export default App;
+export default App

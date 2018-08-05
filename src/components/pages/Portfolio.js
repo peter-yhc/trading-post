@@ -3,7 +3,7 @@ import {Paper} from '@material-ui/core/es/index'
 import withStyles from '@material-ui/core/es/styles/withStyles'
 import {Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core/es'
 import {stocks} from '../data/StockData'
-import NumberFormat from 'react-number-format';
+import NumberFormat from 'react-number-format'
 
 const styles = ({
   root: {
@@ -39,7 +39,6 @@ class Portfolio extends Component {
     })
     return table
   }
-
 
   render() {
     const {classes} = this.props
