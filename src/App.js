@@ -6,8 +6,15 @@ import {blueGrey, grey, red} from '@material-ui/core/es/colors/index'
 
 const theme = createMuiTheme({
   palette: {
-    primary: blueGrey,
-    secondary: grey,
+    primary: {
+      main: "#48655C",
+      dark: "#364B47",
+      light: "#719E81"
+    },
+    secondary: {
+      main: "#B3C49C",
+      light: "#EEF4CD"
+    },
     error: red,
     // Used by `getContrastText()` to maximize the contrast between the background and
     // the text.
