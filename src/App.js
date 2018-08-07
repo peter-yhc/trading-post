@@ -2,18 +2,18 @@ import React, {Component} from 'react'
 import './App.css'
 import BaseLayout from './components/layout/BaseLayout'
 import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/es/styles'
-import {blueGrey, grey, red} from '@material-ui/core/es/colors/index'
+import {red} from '@material-ui/core/es/colors/index'
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      dark: "#E22F38",
-      main: "#E3BD8B",
-      light: "#C1C7A2"
+      dark: '#F69759',
+      main: '#E3BD8B',
+      light: '#C1C7A2'
     },
     secondary: {
-      main: "#8DA891",
-      light: "#A4ECE3"
+      main: '#8DA891',
+      light: '#A4ECE3'
     },
     error: red,
     // Used by `getContrastText()` to maximize the contrast between the background and
