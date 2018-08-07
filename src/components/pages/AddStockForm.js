@@ -24,7 +24,15 @@ class AddStockForm extends Component {
     open: false,
     error: false,
     errorText: undefined,
-    shares: ""
+    shares: ''
+  }
+
+  resetState = () => {
+    this.setState({
+      error: false,
+      errorText: undefined,
+      shares: ''
+    })
   }
 
   handleClickOpen = () => {
@@ -33,6 +41,7 @@ class AddStockForm extends Component {
 
   handleClose = () => {
     this.setState({open: false})
+    this.resetState()
   }
 
   validateNumber = (event) => {
