@@ -4,13 +4,14 @@ import withStyles from '@material-ui/core/es/styles/withStyles'
 import {stocks} from '../data/StockData'
 import NumberFormat from 'react-number-format'
 
-const styles = ({
+const styles = theme => ({
   root: {
     width: '100%',
     overflowX: 'auto'
   },
   button: {
-    marginLeft: "0.2em"
+    marginLeft: "0.2em",
+    marginBottom: theme.spacing.unit
   }
 })
 
