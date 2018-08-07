@@ -3,6 +3,7 @@ import {Button, Grid, Icon, Paper, Table, TableBody, TableCell, TableHead, Table
 import withStyles from '@material-ui/core/es/styles/withStyles'
 import {stocks} from '../data/StockData'
 import NumberFormat from 'react-number-format'
+import AddStockForm from './AddStockForm'
 
 const styles = theme => ({
   root: {
@@ -49,13 +50,7 @@ class Portfolio extends Component {
       <React.Fragment>
         <Grid item sm={12}>
           <Grid container direction="row" justify="flex-end">
-            <Button
-              color="primary"
-              variant="contained"
-              className={classes.button}
-            >
-              <Icon>add</Icon>
-            </Button>
+            <AddStockForm/>
             <Button
               color="secondary"
               variant="contained"
