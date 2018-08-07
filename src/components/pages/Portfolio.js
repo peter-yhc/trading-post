@@ -2,7 +2,8 @@ import React, {Component} from 'react'
 import {Button, Grid, Icon} from '@material-ui/core/es'
 import withStyles from '@material-ui/core/es/styles/withStyles'
 import AddStockForm from './AddStockForm'
-import PortfolioTable from './PortfolioTable'
+import {stocks} from '../data/StockData'
+import {PortfolioTable} from './PortfolioTable'
 
 const styles = theme => ({
   root: {
@@ -33,7 +34,7 @@ class Portfolio extends Component {
           </Grid>
         </Grid>
         <Grid item sm={12}>
-          <PortfolioTable/>
+          <PortfolioTable data={stocks}/>
         </Grid>
       </React.Fragment>
     )

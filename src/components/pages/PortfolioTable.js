@@ -1,20 +1,12 @@
-import React, {Component} from 'react'
+import React from 'react'
 import {Paper, Table, TableBody, TableCell, TableHead, TableRow} from '@material-ui/core/es'
-import {stocks} from '../data/StockData'
 import NumberFormat from 'react-number-format'
-import withStyles from '@material-ui/core/es/styles/withStyles'
 
-const styles = theme => {
-}
+export function PortfolioTable(props) {
 
-export class PortfolioTable extends Component {
-  state = {
-    stocks: stocks
-  }
-
-  createTable() {
+  function createTable() {
     let table = []
-    this.state.stocks.forEach(stock => {
+    props.data.forEach(stock => {
       table.push(<TableRow key={stock.name}>
         <TableCell>{stock.name}</TableCell>
         <TableCell>{stock.exchange}</TableCell>
@@ -34,29 +26,24 @@ export class PortfolioTable extends Component {
     return table
   }
 
-  render() {
-    const {classes} = this.props
-    return (
-      <Paper className={classes.root}>
-        <Table className={classes.table}>
-          <TableHead>
-            <TableRow>
-              <TableCell>Name</TableCell>
-              <TableCell>Exchange</TableCell>
-              <TableCell>Currency</TableCell>
-              <TableCell>Shares</TableCell>
-              <TableCell>Book Cost</TableCell>
-              <TableCell>Market Value</TableCell>
-              <TableCell>Unrealised Gains</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {this.createTable()}
-          </TableBody>
-        </Table>
-      </Paper>
-    )
-  }
+  return (
+    <Paper>
+      <Table>
+        <TableHead>
+          <TableRow>
+            <TableCell>Name</TableCell>
+            <TableCell>Exchange</TableCell>
+            <TableCell>Currency</TableCell>
+            <TableCell>Shares</TableCell>
+            <TableCell>Book Cost</TableCell>
+            <TableCell>Market Value</TableCell>
+            <TableCell>Unrealised Gains</TableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {createTable()}
+        </TableBody>
+      </Table>
+    </Paper>
+  )
 }
-
-export default withStyles(styles)(PortfolioTable)
