@@ -22,9 +22,9 @@ class AddStockForm extends Component {
 
   state = {
     open: false,
+    error: false,
     errorText: undefined,
-    shares: 1,
-    error: false
+    shares: ""
   }
 
   handleClickOpen = () => {
