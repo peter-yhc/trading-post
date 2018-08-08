@@ -12,7 +12,6 @@ export class Portfolio extends Component {
   }
 
   handleNewStock = (newStock) => {
-    console.log('Submit received  ' + JSON.stringify(newStock))
     const stocks = this.state.stocks
     stocks.push({
       name: newStock.name.toUpperCase(),

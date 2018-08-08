@@ -36,13 +36,10 @@ class AddStockForm extends Component {
   state = getDefaultState()
 
   resetState = () => {
-    console.log("State reset")
     this.setState(getDefaultState())
   }
 
   handleClickOpen = () => {
-    console.log("State open")
-
     const state = getDefaultState()
     state.open = true
     console.log(state)
@@ -50,7 +47,6 @@ class AddStockForm extends Component {
   }
 
   handleClose = () => {
-    console.log("State closed")
     this.resetState()
   }
 
