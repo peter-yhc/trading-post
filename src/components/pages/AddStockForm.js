@@ -132,7 +132,7 @@ class AddStockForm extends Component {
                 label="Book Cost"
                 className={classes.textField}
                 value={this.state.bookCost}
-                onChange={this.validateNumber('bookCost', /^\d+.\d{0,2}$/)}
+                onChange={this.validateNumber('bookCost', /^\d+(.[0-9]{0,2})?$/)}
                 error={this.state.bookCostError}
                 helperText={this.state.bookCostErrorText}
                 margin="normal"/>
