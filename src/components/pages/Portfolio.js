@@ -1,22 +1,11 @@
+import {Grid} from '@material-ui/core/es'
 import React, {Component} from 'react'
-import {Button, Grid, Icon} from '@material-ui/core/es'
-import withStyles from '@material-ui/core/es/styles/withStyles'
-import AddStockForm from './AddStockForm'
 import {stocks} from '../data/StockData'
+import AddStockForm from './AddStockForm'
+import EditStockForm from './EditStockForm'
 import {PortfolioTable} from './PortfolioTable'
 
-const styles = theme => ({
-  root: {
-    width: '100%',
-    overflowX: 'auto'
-  },
-  button: {
-    marginLeft: '0.2em',
-    marginBottom: theme.spacing.unit
-  }
-})
-
-class Portfolio extends Component {
+export class Portfolio extends Component {
 
   state = {
     stocks: stocks
@@ -38,18 +27,12 @@ class Portfolio extends Component {
   }
 
   render() {
-    const {classes} = this.props
     return (
       <React.Fragment>
         <Grid item sm={12}>
           <Grid container direction="row" justify="flex-end">
             <AddStockForm onSubmit={this.handleNewStock}/>
-            <Button
-              color="secondary"
-              variant="contained"
-              className={classes.button}>
-              <Icon>edit</Icon>
-            </Button>
+            <EditStockForm/>
           </Grid>
         </Grid>
         <Grid item sm={12}>
@@ -59,5 +42,3 @@ class Portfolio extends Component {
     )
   }
 }
-
-export default withStyles(styles)(Portfolio)
