@@ -18,41 +18,72 @@ const styles = theme => ({
   }
 })
 
-class AddStockForm extends Component {
-
-  state = {
+function getDefaultState() {
+  return {
     open: false,
     error: false,
     errorText: undefined,
-    shares: ''
+    name: '',
+    exchange: '',
+    currency: '',
+    shares: '',
+    bookCost: ''
   }
+}
+
+class AddStockForm extends Component {
+
+  state = getDefaultState()
 
   resetState = () => {
-    this.setState({
-      error: false,
-      errorText: undefined,
-      shares: ''
-    })
+    console.log("State reset")
+    this.setState(getDefaultState())
   }
 
   handleClickOpen = () => {
-    this.setState({open: true})
+    console.log("State open")
+
+    const state = getDefaultState()
+    state.open = true
+    console.log(state)
+    this.setState(state)
   }
 
   handleClose = () => {
-    this.setState({open: false})
+    console.log("State closed")
     this.resetState()
   }
 
-  validateNumber = (event) => {
-    this.setState({shares: event.target.value})
-    if (event.target.value.match(/^\d+$/)) {
-      this.setState({error: false})
-      this.setState({errorText: undefined})
+  handleSubmit = () => {
+    console.log(this.state)
+    this.props.onSubmit({
+      name: this.state.name,
+      exchange: this.state.exchange,
+      currency: this.state.currency,
+      shares: this.state.shares,
+      bookCost: this.state.bookCost
+    })
+    this.resetState()
+  }
+
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+
+  validateNumber = (name, format) => event => {
+    this.setState({[name]: event.target.value})
+    const nameError = `${name}Error`
+    const nameErrorText = `${name}ErrorText`
+    if (event.target.value.match(format)) {
+      this.setState({[nameError]: false})
+      this.setState({[nameErrorText]: undefined})
     } else {
-      this.setState({error: true})
-      this.setState({errorText: 'Invalid number'})
+      this.setState({[nameError]: true})
+      this.setState({[nameErrorText]: 'Invalid number'})
     }
+    this.handleChange(name)(event)
   }
 
   render() {
@@ -72,17 +103,38 @@ class AddStockForm extends Component {
           <DialogContent>
             <form className={classes.formContainer}>
               <TextField
-                label="New symbol to track"
+                label="Symbol"
                 className={classes.textField}
-                value={this.state.symbol}
+                value={this.state.name}
+                onChange={this.handleChange('name')}
                 margin="normal"/>
               <TextField
-                label="Number of shares owned"
+                label="Exchange"
+                className={classes.textField}
+                value={this.state.exchange}
+                onChange={this.handleChange('exchange')}
+                margin="normal"/>
+              <TextField
+                label="Currency"
+                className={classes.textField}
+                value={this.state.currency}
+                onChange={this.handleChange('currency')}
+                margin="normal"/>
+              <TextField
+                label="Number of shares"
                 className={classes.textField}
                 value={this.state.shares}
-                onChange={this.validateNumber}
-                error={this.state.error}
-                helperText={this.state.errorText}
+                onChange={this.validateNumber('shares', /^\d+$/)}
+                error={this.state.sharesError}
+                helperText={this.state.sharesErrorText}
+                margin="normal"/>
+              <TextField
+                label="Book Cost"
+                className={classes.textField}
+                value={this.state.bookCost}
+                onChange={this.validateNumber('bookCost', /^\d+.\d{0,2}$/)}
+                error={this.state.bookCostError}
+                helperText={this.state.bookCostErrorText}
                 margin="normal"/>
             </form>
           </DialogContent>
@@ -90,7 +142,7 @@ class AddStockForm extends Component {
             <Button onClick={this.handleClose} color="primary">
               Cancel
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.handleSubmit} color="primary">
               Add
             </Button>
           </DialogActions>
