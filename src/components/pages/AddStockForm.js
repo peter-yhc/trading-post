@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core/es/index'
 import withStyles from '@material-ui/core/es/styles/withStyles'
 import React, {Component} from 'react'
+import {DecimalField, IntegerField} from '../common'
 
 const styles = theme => ({
   button: {
@@ -67,20 +68,6 @@ class AddStockForm extends Component {
     })
   }
 
-  validateNumber = (name, format) => event => {
-    this.setState({[ name ]: event.target.value})
-    const nameError = `${name}Error`
-    const nameErrorText = `${name}ErrorText`
-    if (event.target.value.match(format)) {
-      this.setState({[ nameError ]: false})
-      this.setState({[ nameErrorText ]: undefined})
-    } else {
-      this.setState({[ nameError ]: true})
-      this.setState({[ nameErrorText ]: 'Invalid number'})
-    }
-    this.handleChange(name)(event)
-  }
-
   render() {
     const {classes} = this.props
     return (
@@ -107,24 +94,18 @@ class AddStockForm extends Component {
                   margin="normal"/>
               </Grid>
               <Grid container item sm={6} justify="center">
-                <TextField
-                  label="Number of shares"
-                  className={classes.textField}
+                <IntegerField
+                  label={'Number of shares'}
                   value={this.state.shares}
-                  onChange={this.validateNumber('shares', /^\d+$/)}
-                  error={this.state.sharesError}
-                  helperText={this.state.sharesErrorText}
-                  margin="normal"/>
+                  handleChange={this.handleChange('shares')}
+                />
               </Grid>
               <Grid container item sm={6} justify="center">
-                <TextField
-                  label="Book Cost"
-                  className={classes.textField}
+                <DecimalField
+                  label={'Book Cost'}
                   value={this.state.bookCost}
-                  onChange={this.validateNumber('bookCost', /^\d+(.[0-9]{0,2})?$/)}
-                  error={this.state.bookCostError}
-                  helperText={this.state.bookCostErrorText}
-                  margin="normal"/>
+                  handleChange={this.handleChange('bookCost')}
+                />
               </Grid>
             </form>
           </DialogContent>
