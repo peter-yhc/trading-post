@@ -31,11 +31,11 @@ export class Portfolio extends Component {
         <Grid item sm={12}>
           <Grid container direction="row" justify="flex-end">
             <AddStockForm onSubmit={this.handleNewStock}/>
-            <EditStockForm/>
+            <EditStockForm data={this.state.stocks}/>
           </Grid>
         </Grid>
         <Grid item sm={12}>
-          <PortfolioTable data={stocks}/>
+          <PortfolioTable data={this.state.stocks}/>
         </Grid>
       </React.Fragment>
     )
