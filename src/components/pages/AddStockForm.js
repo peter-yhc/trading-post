@@ -49,14 +49,7 @@ class AddStockForm extends Component {
   }
 
   handleClickOpen = () => {
-    const state = getDefaultState()
-    state.open = true
-    console.log(state)
-    this.setState(state)
-  }
-
-  handleClose = () => {
-    this.resetState()
+    this.setState({open: true})
   }
 
   handleSubmit = () => {
@@ -104,9 +97,9 @@ class AddStockForm extends Component {
         </Button>
         <Dialog
           open={this.state.open}
-          onClose={this.handleClose}>
+          onClose={this.resetState}>
           <DialogContent>
-            <Typography variant="title">Add to your portfolio</Typography>
+            <Typography variant="subheading">Add to your portfolio</Typography>
             <form className={classes.formContainer}>
               <Grid container item sm={6} justify="center">
                 <TextField
@@ -155,7 +148,7 @@ class AddStockForm extends Component {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.resetState} color="primary">
               Cancel
             </Button>
             <Button onClick={this.handleSubmit} color="primary">
