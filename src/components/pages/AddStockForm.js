@@ -33,8 +33,6 @@ function getDefaultState() {
     error: false,
     errorText: undefined,
     name: '',
-    exchange: '',
-    currency: '',
     shares: '',
     bookCost: ''
   }
@@ -56,7 +54,6 @@ class AddStockForm extends Component {
     console.log(this.state)
     this.props.onSubmit({
       name: this.state.name,
-      exchange: this.state.exchange,
       currency: this.state.currency,
       shares: this.state.shares,
       bookCost: this.state.bookCost
@@ -107,22 +104,6 @@ class AddStockForm extends Component {
                   className={classes.textField}
                   value={this.state.name}
                   onChange={this.handleChange('name')}
-                  margin="normal"/>
-              </Grid>
-              <Grid container item sm={6} justify="center">
-                <TextField
-                  label="Exchange"
-                  className={classes.textField}
-                  value={this.state.exchange}
-                  onChange={this.handleChange('exchange')}
-                  margin="normal"/>
-              </Grid>
-              <Grid container item sm={6} justify="center">
-                <TextField
-                  label="Currency"
-                  className={classes.textField}
-                  value={this.state.currency}
-                  onChange={this.handleChange('currency')}
                   margin="normal"/>
               </Grid>
               <Grid container item sm={6} justify="center">

@@ -15,8 +15,8 @@ export class Portfolio extends Component {
     const stocks = this.state.stocks
     stocks.push({
       name: newStock.name.toUpperCase(),
-      exchange: newStock.exchange.toUpperCase(),
-      currency: newStock.currency.toUpperCase(),
+      exchange: 'tbd',
+      currency: 'tbd',
       shares: newStock.shares,
       bookCost: newStock.bookCost,
       marketValue: 0,
