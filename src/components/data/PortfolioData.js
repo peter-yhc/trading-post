@@ -1,4 +1,4 @@
-export const stocks = [{
+export const portfolioStocks = [{
   name: "GOOG",
   exchange: "NASDAQ",
   currency: "USD",

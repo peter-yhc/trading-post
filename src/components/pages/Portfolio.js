@@ -1,6 +1,6 @@
 import {Grid} from '@material-ui/core/es'
 import React, {Component} from 'react'
-import {stocks} from '../data/StockData'
+import {portfolioStocks} from '../data/PortfolioData'
 import AddStockForm from './AddStockForm'
 import EditStockForm from './EditStockForm'
 import {PortfolioTable} from './PortfolioTable'
@@ -8,7 +8,7 @@ import {PortfolioTable} from './PortfolioTable'
 export class Portfolio extends Component {
 
   state = {
-    stocks: stocks
+    stocks: portfolioStocks
   }
 
   handleNewStock = (newStock) => {
