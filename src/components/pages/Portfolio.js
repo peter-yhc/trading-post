@@ -25,13 +25,24 @@ export class Portfolio extends Component {
     this.setState({stocks})
   }
 
+  handleStockUpdate = (updatedStock) => {
+    const stocks = this.state.stocks
+    stocks.forEach(stock => {
+      if (stock.name === updatedStock.name) {
+        stock.bookCost = updatedStock.bookCost
+        stock.shares = updatedStock.shares
+      }
+    })
+    this.setState({stocks})
+  }
+
   render() {
     return (
       <React.Fragment>
         <Grid item sm={12}>
           <Grid container direction="row" justify="flex-end">
             <AddStockForm onSubmit={this.handleNewStock}/>
-            <EditStockForm data={this.state.stocks}/>
+            <EditStockForm onSubmit={this.handleStockUpdate} data={this.state.stocks}/>
           </Grid>
         </Grid>
         <Grid item sm={12}>

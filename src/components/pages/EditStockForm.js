@@ -8,11 +8,11 @@ import {
   Icon,
   InputLabel,
   NativeSelect,
-  TextField,
   Typography
 } from '@material-ui/core/es/index'
 import withStyles from '@material-ui/core/es/styles/withStyles'
 import React, {Component} from 'react'
+import {DecimalField, IntegerField} from '../common'
 
 const styles = theme => ({
   button: {
@@ -37,20 +37,27 @@ const styles = theme => ({
 
 function getDefaultState() {
   return {
-    open: false
+    open: false,
+    shares: '',
+    bookCost: '',
+    name: ''
   }
 }
 
 class EditStockForm extends Component {
 
-  state = getDefaultState()
+  constructor(props) {
+    super(props)
+    this.state = getDefaultState()
+  }
 
   handleClickOpen = () => {
     this.setState({open: true})
+    this.setState({name: this.props.data[ 0 ].name})
   }
 
   resetState = () => {
-    this.setState({open: false})
+    this.setState(getDefaultState())
   }
 
   createSelectOptions = () => {
@@ -61,6 +68,21 @@ class EditStockForm extends Component {
       )
     })
     return options
+  }
+
+  handleChange = name => event => {
+    this.setState({
+      [ name ]: event.target.value
+    })
+  }
+
+  handleSubmit = () => {
+    this.props.onSubmit({
+      name: this.state.name,
+      shares: this.state.shares,
+      bookCost: this.state.bookCost
+    })
+    this.resetState()
   }
 
   render() {
@@ -88,23 +110,22 @@ class EditStockForm extends Component {
                   <NativeSelect
                     id="stock-name-selector"
                     className={classes.select}
-                    inputProps={{name: 'name'}}>
+                    onChange={this.handleChange('name')}>
                     {this.createSelectOptions()}
                   </NativeSelect>
                 </FormControl>
               </Grid>
               <Grid container item sm={6} justify="center" alignItems="flex-end">
-                <TextField
+                <IntegerField
                   label="Number of shares"
-                  className={classes.textField}
-                  margin="normal"/>
+                  value={this.state.shares}
+                  handleChange={this.handleChange('shares')}/>
               </Grid>
-
               <Grid container item sm={6} justify="center">
-                <TextField
+                <DecimalField
                   label="Book Cost"
-                  className={classes.textField}
-                  margin="normal"/>
+                  value={this.state.bookCost}
+                  handleChange={this.handleChange('bookCost')}/>
               </Grid>
             </form>
           </DialogContent>
@@ -112,8 +133,8 @@ class EditStockForm extends Component {
             <Button color="primary" onClick={this.resetState}>
               Cancel
             </Button>
-            <Button color="primary">
-              Save
+            <Button color="primary" onClick={this.handleSubmit}>
+              Update
             </Button>
           </DialogActions>
         </Dialog>
