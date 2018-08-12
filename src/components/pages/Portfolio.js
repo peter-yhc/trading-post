@@ -1,54 +1,54 @@
 import {Grid} from '@material-ui/core/es'
-import React, {Component} from 'react'
-import {portfolioStocks} from '../data/PortfolioData'
+import React from 'react'
 import AddStockForm from './AddStockForm'
 import EditStockForm from './EditStockForm'
 import {PortfolioTable} from './PortfolioTable'
+import {connect} from 'react-redux'
 
-export class Portfolio extends Component {
-
-  state = {
-    stocks: portfolioStocks
-  }
-
-  handleNewStock = (newStock) => {
-    const stocks = this.state.stocks
-    stocks.push({
-      name: newStock.name.toUpperCase(),
-      exchange: 'tbd',
-      currency: 'tbd',
-      shares: newStock.shares,
-      bookCost: newStock.bookCost,
-      marketValue: 0,
-      unrealisedGains: 0
-    })
-    this.setState({stocks})
-  }
-
-  handleStockUpdate = (updatedStock) => {
-    const stocks = this.state.stocks
-    stocks.forEach(stock => {
-      if (stock.name === updatedStock.name) {
-        stock.bookCost = updatedStock.bookCost
-        stock.shares = updatedStock.shares
-      }
-    })
-    this.setState({stocks})
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        <Grid item sm={12}>
-          <Grid container direction="row" justify="flex-end">
-            <AddStockForm onSubmit={this.handleNewStock}/>
-            <EditStockForm onSubmit={this.handleStockUpdate} data={this.state.stocks}/>
-          </Grid>
+function Portfolio(props) {
+  return (
+    <React.Fragment>
+      <p>stock length: {props.stocks.length}</p>
+      <Grid item sm={12}>
+        <Grid container direction="row" justify="flex-end">
+          <AddStockForm onSubmit={props.onStockAdd}/>
+          <EditStockForm onSubmit={props.onStockUpdate} data={props.stocks}/>
         </Grid>
-        <Grid item sm={12}>
-          <PortfolioTable data={this.state.stocks}/>
-        </Grid>
-      </React.Fragment>
-    )
+      </Grid>
+      <Grid item sm={12}>
+        <PortfolioTable data={props.stocks}/>
+      </Grid>
+    </React.Fragment>
+  )
+}
+
+function mapStateToProps(state) {
+  return state
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    onStockAdd: (stock) => {
+      dispatch({
+        type: 'NEW_STOCK',
+        payload: {
+          name: stock.name.toUpperCase(),
+          shares: stock.shares,
+          bookCost: stock.bookCost
+        }
+      })
+    },
+    onStockUpdate: (stock) => {
+      dispatch({
+        type: 'UPDATE_STOCK',
+        payload: {
+          name: stock.name.toUpperCase(),
+          shares: stock.shares,
+          bookCost: stock.bookCost
+        }
+      })
+    }
   }
 }
+
+export default connect(mapStateToProps, mapDispatchToProps)(Portfolio)

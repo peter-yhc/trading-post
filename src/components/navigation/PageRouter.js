@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import {Route, Switch} from 'react-router-dom'
-import {Portfolio} from '../pages/Portfolio'
+import Portfolio from '../pages/Portfolio'
+import store from '../data/store'
 
 export class PageRouter extends Component {
 
@@ -14,7 +15,7 @@ export class PageRouter extends Component {
           <p>Management</p>
         </Route>
         <Route path="/portfolio">
-          <Portfolio/>
+          <Portfolio store={store}/>
         </Route>
       </Switch>
     )
