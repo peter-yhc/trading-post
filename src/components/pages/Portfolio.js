@@ -8,7 +8,6 @@ import {connect} from 'react-redux'
 function Portfolio(props) {
   return (
     <React.Fragment>
-      <p>stock length: {props.stocks.length}</p>
       <Grid item sm={12}>
         <Grid container direction="row" justify="flex-end">
           <AddStockForm onSubmit={props.onStockAdd}/>

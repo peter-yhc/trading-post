@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React from 'react'
 import NumberField from './NumberField'
 
-const DECIMAL_FORMAT = /^\d+(.[0-9]{0,2})?$/
+const DECIMAL_FORMAT = /^\d+(\.[0-9]{0,2})?$/
 const INTEGER_FORMAT = /^\d+$/
 
 export function DecimalField(props) {
