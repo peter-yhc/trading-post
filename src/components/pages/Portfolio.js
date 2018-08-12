@@ -30,21 +30,13 @@ function mapDispatchToProps(dispatch) {
     onStockAdd: (stock) => {
       dispatch({
         type: 'NEW_STOCK',
-        payload: {
-          name: stock.name.toUpperCase(),
-          shares: stock.shares,
-          bookCost: stock.bookCost
-        }
+        payload: stock
       })
     },
     onStockUpdate: (stock) => {
       dispatch({
         type: 'UPDATE_STOCK',
-        payload: {
-          name: stock.name.toUpperCase(),
-          shares: stock.shares,
-          bookCost: stock.bookCost
-        }
+        payload: stock
       })
     }
   }

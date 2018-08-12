@@ -52,10 +52,8 @@ class AddStockForm extends Component {
   }
 
   handleSubmit = () => {
-    console.log(this.state)
     this.props.onSubmit({
-      name: this.state.name,
-      currency: this.state.currency,
+      name: this.state.name.toUpperCase(),
       shares: this.state.shares,
       bookCost: this.state.bookCost
     })

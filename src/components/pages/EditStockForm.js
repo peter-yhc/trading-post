@@ -78,7 +78,7 @@ class EditStockForm extends Component {
 
   handleSubmit = () => {
     this.props.onSubmit({
-      name: this.state.name,
+      name: this.state.name.toUpperCase(),
       shares: this.state.shares,
       bookCost: this.state.bookCost
     })
