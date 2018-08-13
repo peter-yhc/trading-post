@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import './App.css'
-import {getRealTimeData} from './components/data/initialiser'
+import {getRealTimeDataForPortfolio} from './components/data/initialiser'
 import BaseLayout from './components/layout/BaseLayout'
 
 const theme = createMuiTheme({
@@ -53,7 +53,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     init: (stocks) => {
-      getRealTimeData(stocks)(dispatch)
+      dispatch(getRealTimeDataForPortfolio(stocks))
     }
   }
 }

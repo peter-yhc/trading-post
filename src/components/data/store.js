@@ -4,19 +4,19 @@ import thunk from 'redux-thunk'
 const initialState = {
   stocks: [{
     name: 'GOOG',
-    shares: 1,
+    shares: 50,
     bookCost: 532.18
   }, {
-    name: 'VCN',
-    shares: 1,
+    name: 'VCN.TO',
+    shares: 197,
     bookCost: 16.92
   }, {
     name: 'BND',
-    shares: 1,
+    shares: 352,
     bookCost: 59.37
   }, {
-    name: 'XAW',
-    shares: 1,
+    name: 'XAW.TO',
+    shares: 206,
     bookCost: 22.08
   }]
 }
