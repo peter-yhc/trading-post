@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import './App.css'
-import {getRealTimeDataForPortfolio} from './components/data/initialiser'
+import {getRealTimeDataForPortfolio} from './components/data/storeActionCreator'
 import BaseLayout from './components/layout/BaseLayout'
 
 const theme = createMuiTheme({
