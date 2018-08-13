@@ -24,9 +24,11 @@ export function getRealTimeDataForStock(stock) {
 }
 
 function createPayload(stock, apiData) {
+  const currentMarketValue = apiData.close * stock.shares
   return Object.assign({}, stock, {
     currency: apiData.currency,
     exchange: apiData.exchange,
-    marketValue: (apiData.close * stock.shares).toFixed(2)
+    marketValue: currentMarketValue.toFixed(2),
+    unrealisedGains: (currentMarketValue - stock.bookCost).toFixed(2)
   })
 }
