@@ -1,9 +1,10 @@
 import {Grid} from '@material-ui/core/es'
 import React from 'react'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
 import AddStockForm from './AddStockForm'
 import EditStockForm from './EditStockForm'
 import {PortfolioTable} from './PortfolioTable'
-import {connect} from 'react-redux'
 
 function Portfolio(props) {
   return (
@@ -42,4 +43,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Portfolio)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Portfolio))

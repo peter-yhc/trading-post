@@ -1,8 +1,11 @@
-import React, {Component} from 'react'
-import './App.css'
-import BaseLayout from './components/layout/BaseLayout'
-import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/es/styles'
 import {red} from '@material-ui/core/es/colors/index'
+import {createMuiTheme, MuiThemeProvider} from '@material-ui/core/es/styles'
+import React, {Component} from 'react'
+import {connect} from 'react-redux'
+import {withRouter} from 'react-router-dom'
+import './App.css'
+import {getRealTimeData} from './components/data/initialiser'
+import BaseLayout from './components/layout/BaseLayout'
 
 const theme = createMuiTheme({
   palette: {
@@ -27,6 +30,11 @@ const theme = createMuiTheme({
 })
 
 class App extends Component {
+
+  componentWillMount() {
+    this.props.init(this.props.stocks)
+  }
+
   render() {
     return (
       <MuiThemeProvider theme={theme}>
@@ -38,4 +46,16 @@ class App extends Component {
   }
 }
 
-export default App
+function mapStateToProps(state) {
+  return state
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    init: (stocks) => {
+      getRealTimeData(stocks)(dispatch)
+    }
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
