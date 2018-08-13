@@ -19,8 +19,8 @@ const styles = theme => ({
     marginLeft: '0.2em',
     marginBottom: theme.spacing.unit
   },
-  formControl: {
-    marginBottom: '8px'
+  selectForm: {
+    marginTop: '24px'
   },
   formContainer: {
     display: 'flex',
@@ -53,7 +53,7 @@ class EditStockForm extends Component {
 
   handleClickOpen = () => {
     this.setState({open: true})
-    this.setState({name: this.props.data[ 0 ].name})
+    this.setState({name: this.props.data[0].name})
   }
 
   resetState = () => {
@@ -72,7 +72,7 @@ class EditStockForm extends Component {
 
   handleChange = name => event => {
     this.setState({
-      [ name ]: event.target.value
+      [name]: event.target.value
     })
   }
 
@@ -103,9 +103,9 @@ class EditStockForm extends Component {
           <DialogContent>
             <Typography variant="subheading">Edit portfolio</Typography>
             <form className={classes.formContainer}>
-              <Grid container item sm={6} justify="center" alignItems="flex-end">
+              <Grid container item sm={6} justify="center">
                 <FormControl
-                  className={classes.formControl}>
+                  className={classes.selectForm}>
                   <InputLabel htmlFor="stock-name-selector">Name</InputLabel>
                   <NativeSelect
                     id="stock-name-selector"
@@ -115,17 +115,23 @@ class EditStockForm extends Component {
                   </NativeSelect>
                 </FormControl>
               </Grid>
-              <Grid container item sm={6} justify="center" alignItems="flex-end">
-                <IntegerField
-                  label="Number of shares"
-                  value={this.state.shares}
-                  handleChange={this.handleChange('shares')}/>
+              <Grid container item sm={6} justify="center">
               </Grid>
               <Grid container item sm={6} justify="center">
-                <DecimalField
-                  label="Book Cost"
-                  value={this.state.bookCost}
-                  handleChange={this.handleChange('bookCost')}/>
+                <FormControl>
+                  <IntegerField
+                    label="Number of shares"
+                    value={this.state.shares}
+                    handleChange={this.handleChange('shares')}/>
+                </FormControl>
+              </Grid>
+              <Grid container item sm={6} justify="center">
+                <FormControl>
+                  <DecimalField
+                    label="Book Cost"
+                    value={this.state.bookCost}
+                    handleChange={this.handleChange('bookCost')}/>
+                </FormControl>
               </Grid>
             </form>
           </DialogContent>
