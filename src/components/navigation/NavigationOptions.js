@@ -20,7 +20,7 @@ class NavigationOptions extends React.Component {
 
     return (
       <React.Fragment>
-        <Link className={classes.Link} to="/">
+        <Link className={classes.Link} to="/dashboard">
           <ListItem button>
             <ListItemIcon>
               <Icon>dashboard</Icon>
