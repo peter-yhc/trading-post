@@ -12,7 +12,7 @@ import {
 } from '@material-ui/core/es/index'
 import withStyles from '@material-ui/core/es/styles/withStyles'
 import React, {Component} from 'react'
-import {DecimalField, IntegerField} from '../common'
+import {DecimalField, IntegerField} from '../../common'
 
 const styles = theme => ({
   button: {

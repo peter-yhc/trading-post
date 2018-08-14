@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Route, Switch} from 'react-router-dom'
-import Portfolio from '../pages/Portfolio'
+import Portfolio from '../pages/portfolio/Portfolio'
 import store from '../data/store'
 
 export class PageRouter extends Component {
