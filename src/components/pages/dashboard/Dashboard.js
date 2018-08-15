@@ -1,6 +1,7 @@
-import {Grid, Typography} from '@material-ui/core/es/index'
+import {Grid} from '@material-ui/core/es/index'
 import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
+import {CHART} from '../../data/YahooApi'
 import {StockTimeSeriesChart} from './StockTimeSeriesChart'
 
 class Dashboard extends Component {
@@ -22,7 +23,8 @@ class Dashboard extends Component {
           series: [ 65, 59, 80, 81, 56, 55, 40 ]
         }
       ]
-    }
+    },
+    chartPeriod: CHART.MONTH
   }
 
   generateCharts = () => {
@@ -30,8 +32,8 @@ class Dashboard extends Component {
 
     this.state.chartData.stocks.forEach(stock => {
       charts.push(
-        <Grid item md={6} lg={4}>
-          <StockTimeSeriesChart title={stock.name} labels={this.state.chartData.labels} data={stock.series}/>
+        <Grid item md={6} lg={4} key={stock.name}>
+          <StockTimeSeriesChart title={stock.name} period={this.state.chartPeriod}/>
         </Grid>
       )
     })
@@ -41,9 +43,6 @@ class Dashboard extends Component {
   render() {
     return (
       <React.Fragment>
-        <Typography variant="headline">
-          Dashboard
-        </Typography>
         <Grid container>
           {this.generateCharts()}
         </Grid>
