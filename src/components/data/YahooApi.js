@@ -11,7 +11,7 @@ export default {
       symbol: data.meta.symbol,
       currency: data.meta.currency,
       exchange: data.meta.exchangeName,
-      close: closingData ? closingData[ closingData.length - 1 ].toFixed(2) : 0
+      dailyClose: closingData ? closingData[ closingData.length - 1 ].toFixed(2) : 0
     }
   }
 }

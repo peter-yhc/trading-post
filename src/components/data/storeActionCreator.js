@@ -24,7 +24,7 @@ export function getRealTimeDataForStock(stock) {
 }
 
 function createPayload(stock, apiData) {
-  const currentMarketValue = apiData.close * stock.shares
+  const currentMarketValue = apiData.dailyClose * stock.shares
   return Object.assign({}, stock, {
     currency: apiData.currency,
     exchange: apiData.exchange,
