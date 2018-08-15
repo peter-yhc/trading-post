@@ -5,12 +5,14 @@ import {Line} from 'react-chartjs-2'
 import YahooApi from '../../data/YahooApi'
 import './StockTimeSeriesChart.css'
 
+const MAX_TICKS = 5
+
 export class StockTimeSeriesChart extends Component {
 
   state = {}
 
   async componentDidMount() {
-    const timeSeriesData = await YahooApi.getTimeSeriesData(this.props.title, this.props.period)
+    const timeSeriesData = fitDataToChart(await YahooApi.getTimeSeriesData(this.props.title, this.props.period))
 
     this.setState({
       chartData: {
@@ -30,6 +32,14 @@ export class StockTimeSeriesChart extends Component {
     legend: {
       display: false
     },
+    scales: {
+      xAxes: [
+        {
+          ticks: {
+            maxTicksLimit: MAX_TICKS
+          }
+        } ]
+    }
   }
 
   render() {
@@ -53,6 +63,15 @@ export class StockTimeSeriesChart extends Component {
       </React.Fragment>
     )
   }
+}
+
+function fitDataToChart(chartData) {
+  const extraDataCount = chartData.timeSeries.length % MAX_TICKS - 1
+  if (extraDataCount !== 0) {
+    chartData.timeSeries = chartData.timeSeries.slice(extraDataCount, chartData.timeSeries.length)
+    chartData.dataSeries = chartData.dataSeries.slice(extraDataCount, chartData.dataSeries.length)
+  }
+  return chartData
 }
 
 StockTimeSeriesChart.propTypes = {

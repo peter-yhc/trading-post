@@ -1,4 +1,5 @@
 import axios from 'axios'
+import moment from 'moment'
 
 export default {
   getBasicData: async (symbol) => {
@@ -22,10 +23,10 @@ export default {
     const response = await axios.get(
       `https://cors.io/?https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?period1=${startingPeriod}&period2=${endingPeriod}&interval=${interval}`)
     const data = response.data.chart.result[ 0 ]
-    
+
     return {
       symbol,
-      timeSeries: data.timestamp.map(unixtime => new Date(unixtime * 1000).toLocaleDateString("en-au")),
+      timeSeries: data.timestamp.map(unixtime => moment(unixtime * 1000).format("DD MMM")),
       dataSeries: data.indicators.quote[ 0 ].close
     }
   }
