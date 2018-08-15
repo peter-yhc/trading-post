@@ -11,7 +11,7 @@ import Divider from '@material-ui/core/Divider'
 import NavigationOptions from '../navigation/NavigationOptions'
 import {Icon} from '@material-ui/core/es/index'
 
-const drawerWidth = 300
+const drawerWidth = 250
 
 const styles = theme => ({
   appBar: {
