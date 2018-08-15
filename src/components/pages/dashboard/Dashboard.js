@@ -30,7 +30,7 @@ class Dashboard extends Component {
 
     this.state.chartData.stocks.forEach(stock => {
       charts.push(
-        <Grid item sm={6} md={4}>
+        <Grid item md={6} lg={4}>
           <StockTimeSeriesChart title={stock.name} labels={this.state.chartData.labels} data={stock.series}/>
         </Grid>
       )
