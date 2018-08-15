@@ -1,4 +1,4 @@
-import {Grid} from '@material-ui/core/es/index'
+import {Grid, NativeSelect} from '@material-ui/core/es/index'
 import React, {Component} from 'react'
 import {withRouter} from 'react-router-dom'
 import {CHART} from '../../data/YahooApi'
@@ -40,9 +40,20 @@ class Dashboard extends Component {
     return charts
   }
 
+  changeChartPeriod = (event) => {
+    this.setState({
+      chartPeriod: parseInt(event.target.value)
+    })
+  }
+
   render() {
     return (
       <React.Fragment>
+        <NativeSelect onChange={this.changeChartPeriod}>
+          <option value={CHART.MONTH}>1 Month</option>
+          <option value={CHART.YEAR}>1 Year</option>
+          <option value={CHART.FIVE_YEARS}>5 Years</option>
+        </NativeSelect>
         <Grid container>
           {this.generateCharts()}
         </Grid>

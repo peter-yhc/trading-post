@@ -11,8 +11,8 @@ export class StockTimeSeriesChart extends Component {
 
   state = {}
 
-  async componentDidMount() {
-    const timeSeriesData = fitDataToChart(await YahooApi.getTimeSeriesData(this.props.title, this.props.period))
+  async componentWillReceiveProps(props) {
+    const timeSeriesData = fitDataToChart(await YahooApi.getTimeSeriesData(props.title, props.period))
 
     this.setState({
       chartData: {
