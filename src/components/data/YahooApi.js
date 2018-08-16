@@ -6,12 +6,11 @@ const MAX_HISTORY = 24 * 60 * 60 * 365 * 5 // 5 years
 export default {
 
   getStockHistory: async (symbol) => {
-    const cache = localStorage.getItem(symbol)
-    if (cache !== undefined) {
-      const parsedCache = JSON.parse(cache)
-      if (moment().diff(parsedCache.fetchedAt, 'days') === 0) {
+    const cache = JSON.parse(localStorage.getItem('stocks')) || {}
+    if (cache && cache[ symbol ]) {
+      if (moment().diff(cache[ symbol ].fetchedAt, 'days') === 0) {
         console.log(`Cache is valid: ${symbol}`)
-        return JSON.parse(cache)
+        return cache[ symbol ]
       }
     }
 
@@ -33,8 +32,8 @@ export default {
       },
       fetchedAt: moment().format('YYYY-MM-DD')
     }
-    console.log('setting storage for ' + symbol)
-    localStorage.setItem(symbol, JSON.stringify(result))
+    cache[ symbol ] = result
+    localStorage.setItem('stocks', JSON.stringify(cache))
     return result
   }
 }
