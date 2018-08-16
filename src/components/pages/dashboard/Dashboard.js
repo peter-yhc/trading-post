@@ -11,11 +11,11 @@ const CHART = {
   FIVE_YEARS: 24 * 60 * 60 * 365 * 5
 }
 
-
 class Dashboard extends Component {
 
   state = {
-    chartStartTime: 1527811200
+    selectValue: CHART.MONTH,
+    chartStartTime: this.calculateStartTime(CHART.MONTH)
   }
 
   generateCharts = () => {
@@ -24,7 +24,8 @@ class Dashboard extends Component {
     this.props.stocks.forEach(stock => {
       charts.push(
         <Grid item md={6} lg={4} key={stock.name}>
-          <StockTimeSeriesChart title={stock.name} startTime={this.state.chartStartTime} historicalData={stock.history}/>
+          <StockTimeSeriesChart title={stock.name} startTime={this.state.chartStartTime}
+                                historicalData={stock.history}/>
         </Grid>
       )
     })
@@ -33,14 +34,21 @@ class Dashboard extends Component {
 
   changeChartPeriod = (event) => {
     this.setState({
-      chartStartTime: Math.round(new Date().getTime() / 1000) - parseInt(event.target.value, 10)
+      selectValue: event.target.value,
+      chartStartTime: this.calculateStartTime(parseInt(event.target.value, 10))
     })
+  }
+
+  calculateStartTime(interval) {
+    return Math.round(new Date().getTime() / 1000) - interval
   }
 
   render() {
     return (
       <React.Fragment>
-        <NativeSelect onChange={this.changeChartPeriod}>
+        <NativeSelect
+          value={this.state.selectValue}
+          onChange={this.changeChartPeriod}>
           <option value={CHART.MONTH}>1 Month</option>
           <option value={CHART.HALF_YEAR}>6 Months</option>
           <option value={CHART.YEAR}>1 Year</option>
