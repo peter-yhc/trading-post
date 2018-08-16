@@ -16,7 +16,15 @@ export class StockTimeSeriesChart extends Component {
     }
   }
 
-  async componentWillReceiveProps(props) {
+  componentWillMount() {
+    this.setupData(this.props)
+  }
+
+  componentWillReceiveProps(props) {
+    this.setupData(props)
+  }
+
+  setupData(props) {
     if (props.historicalData === undefined) {
       return
     }
@@ -45,7 +53,8 @@ export class StockTimeSeriesChart extends Component {
           ticks: {
             maxTicksLimit: MAX_TICKS
           }
-        } ]
+        }
+      ]
     }
   }
 
