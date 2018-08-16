@@ -1,10 +1,20 @@
 import axios from 'axios'
+import moment from 'moment'
 
 const MAX_HISTORY = 24 * 60 * 60 * 365 * 5 // 5 years
 
 export default {
 
   getStockHistory: async (symbol) => {
+    const cache = localStorage.getItem(symbol)
+    if (cache !== undefined) {
+      const parsedCache = JSON.parse(cache)
+      if (moment().diff(parsedCache.fetchedAt, 'days') === 0) {
+        console.log(`Cache is valid: ${symbol}`)
+        return JSON.parse(cache)
+      }
+    }
+
     const endingPeriod = Math.round(new Date().getTime() / 1000)
     const startingPeriod = endingPeriod - MAX_HISTORY
     const response = await axios.get(
@@ -20,8 +30,11 @@ export default {
       history: {
         dates: data.timestamp,
         closingPrices: closingData
-      }
+      },
+      fetchedAt: moment().format('YYYY-MM-DD')
     }
+    console.log('setting storage for ' + symbol)
+    localStorage.setItem(symbol, JSON.stringify(result))
     return result
   }
 }
