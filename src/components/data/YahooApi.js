@@ -6,7 +6,7 @@ const MAX_HISTORY = 24 * 60 * 60 * 365 * 5 // 5 years
 export default {
 
   getStockHistory: async (symbol) => {
-    const cache = JSON.parse(localStorage.getItem('stocks')) || {}
+    let cache = JSON.parse(localStorage.getItem('stocks')) || {}
     if (cache && cache[ symbol ]) {
       if (moment().diff(cache[ symbol ].fetchedAt, 'days') === 0) {
         console.log(`Cache is valid: ${symbol}`)
@@ -32,6 +32,7 @@ export default {
       },
       fetchedAt: moment().format('YYYY-MM-DD')
     }
+    cache = JSON.parse(localStorage.getItem('stocks')) || {} // reload local storage to minimise run condition TODO make this synchronised
     cache[ symbol ] = result
     localStorage.setItem('stocks', JSON.stringify(cache))
     return result
