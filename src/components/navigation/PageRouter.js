@@ -11,7 +11,7 @@ export class PageRouter extends Component {
       <Switch>
         <Route exact path="/" render={() => (<Redirect to="/dashboard"/>)}/>
         <Route path="/dashboard">
-          <Dashboard/>
+          <Dashboard store={store}/>
         </Route>
         <Route path="/management">
           <p>Management</p>

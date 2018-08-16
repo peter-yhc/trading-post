@@ -1,25 +1,32 @@
 import {Grid, Typography} from '@material-ui/core/es/index'
+import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, {Component} from 'react'
 import {Line} from 'react-chartjs-2'
-import YahooApi from '../../data/YahooApi'
 import './StockTimeSeriesChart.css'
 
 const MAX_TICKS = 5
 
 export class StockTimeSeriesChart extends Component {
 
-  state = {}
+  constructor(props) {
+    super(props)
+    this.state = {
+      loading: true
+    }
+  }
 
   async componentWillReceiveProps(props) {
-    const timeSeriesData = fitDataToChart(await YahooApi.getTimeSeriesData(props.title, props.period))
-
+    if (props.historicalData === undefined) {
+      return
+    }
+    const {labels, data} = fitDataToChart(props.historicalData, props.startTime)
     this.setState({
       chartData: {
-        labels: timeSeriesData.timeSeries,
+        labels,
         datasets: [
           {
-            data: timeSeriesData.dataSeries
+            data
           }
         ]
       },
@@ -65,16 +72,45 @@ export class StockTimeSeriesChart extends Component {
   }
 }
 
-function fitDataToChart(chartData) {
-  const extraDataCount = chartData.timeSeries.length % MAX_TICKS - 1
-  if (extraDataCount !== 0) {
-    chartData.timeSeries = chartData.timeSeries.slice(extraDataCount, chartData.timeSeries.length)
-    chartData.dataSeries = chartData.dataSeries.slice(extraDataCount, chartData.dataSeries.length)
+function fitDataToChart({dates: historicalDates, closingPrices}, startTime) {
+
+  const startingIndex = historicalDates.findIndex(unixtime => {
+    return unixtime >= startTime
+  })
+
+  const chartLabels = historicalDates.slice(startingIndex, historicalDates.length).
+    map(unixtime => moment(unixtime * 1000).format('DD MMM'))
+  const chartPoints = closingPrices.slice(startingIndex, closingPrices.length)
+
+  return {
+    labels: sampleDataForVisualisation(chartLabels),
+    data: sampleDataForVisualisation(chartPoints)
   }
-  return chartData
+}
+
+function sampleDataForVisualisation(array) {
+  const sampleSize = parseInt(array.length / 50)
+  if (sampleSize === 0) return array
+
+  const sampledArray = []
+  for (let i = 0; i < array.length - 1; i++) {
+    if (i % sampleSize === 0) {
+      sampledArray.push(array[ array.length - 1 - i ])
+    }
+  }
+  return trimDataPoints(sampledArray).reverse()
+}
+
+function trimDataPoints(array) {
+  const extraDataCount = array % MAX_TICKS - 1
+  if (extraDataCount !== 0) {
+    array.slice(0, array.length - 1 - extraDataCount)
+  }
+  return array
 }
 
 StockTimeSeriesChart.propTypes = {
   title: PropTypes.string.isRequired,
-  period: PropTypes.number.isRequired
+  startTime: PropTypes.number.isRequired,
+  historicalData: PropTypes.object
 }
