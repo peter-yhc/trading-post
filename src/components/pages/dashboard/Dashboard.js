@@ -33,7 +33,7 @@ class Dashboard extends Component {
 
   changeChartPeriod = (event) => {
     this.setState({
-      chartStartTime: Math.round((new Date).getTime() / 1000) - parseInt(event.target.value)
+      chartStartTime: Math.round(new Date().getTime() / 1000) - parseInt(event.target.value, 10)
     })
   }
 

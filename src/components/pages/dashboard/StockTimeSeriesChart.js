@@ -87,9 +87,9 @@ function fitDataToChart({dates: historicalDates, closingPrices}, startTime) {
     return unixtime >= startTime
   })
 
-  const chartLabels = historicalDates.slice(startingIndex, historicalDates.length).
-    map(unixtime => moment(unixtime * 1000).format('DD MMM'))
   const chartPoints = closingPrices.slice(startingIndex, closingPrices.length)
+  const chartLabels = historicalDates.slice(startingIndex, historicalDates.length)
+                                     .map(unixtime => moment(unixtime * 1000).format('DD MMM'))
 
   return {
     labels: sampleDataForVisualisation(chartLabels),
@@ -98,7 +98,7 @@ function fitDataToChart({dates: historicalDates, closingPrices}, startTime) {
 }
 
 function sampleDataForVisualisation(array) {
-  const sampleSize = parseInt(array.length / 50)
+  const sampleSize = parseInt(array.length / 50, 10)
   if (sampleSize === 0) return array
 
   const sampledArray = []

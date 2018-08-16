@@ -5,7 +5,7 @@ const MAX_HISTORY = 24 * 60 * 60 * 365 * 5 // 5 years
 export default {
 
   getStockHistory: async (symbol) => {
-    const endingPeriod = Math.round((new Date).getTime() / 1000)
+    const endingPeriod = Math.round(new Date().getTime() / 1000)
     const startingPeriod = endingPeriod - MAX_HISTORY
     const response = await axios.get(
       `https://cors.io/?https://query1.finance.yahoo.com/v8/finance/chart/${symbol}?period1=${startingPeriod}&period2=${endingPeriod}&interval=1d`)
