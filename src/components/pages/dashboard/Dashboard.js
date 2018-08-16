@@ -15,23 +15,6 @@ const CHART = {
 class Dashboard extends Component {
 
   state = {
-    chartData: {
-      labels: [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August' ],
-      stocks: [
-        {
-          name: 'AAPL',
-          series: [ 65, 59, 80, 81, 56, 55, 40 ]
-        },
-        {
-          name: 'GOOG',
-          series: [ 65, 59, 80, 81, 56, 55, 40 ]
-        },
-        {
-          name: 'FB',
-          series: [ 65, 59, 80, 81, 56, 55, 40 ]
-        }
-      ]
-    },
     chartStartTime: 1527811200
   }
 
@@ -49,8 +32,6 @@ class Dashboard extends Component {
   }
 
   changeChartPeriod = (event) => {
-    console.log('changing period')
-    console.log(Math.round((new Date).getTime() / 1000) - parseInt(event.target.value))
     this.setState({
       chartStartTime: Math.round((new Date).getTime() / 1000) - parseInt(event.target.value)
     })
