@@ -1,14 +1,18 @@
 import YahooApi from './YahooApi'
+import {retrieveStocks} from './DataPersist'
+import moment from 'moment'
 
-export function getRealTimeDataForPortfolio(portfolioStocks) {
-  console.log(portfolioStocks)
+export function initialise() {
   return (dispatch) => {
-    portfolioStocks.forEach(async stock => {
-      const apiData = await YahooApi.getStockHistory(stock.symbol)
-      dispatch({
-        type: 'UPDATE_STOCK',
-        payload: createPayload(stock, apiData)
-      })
+    retrieveStocks().forEach(stock => {
+      if (moment().diff(stock.fetchedAt, 'days') > 0) {
+        dispatch(getRealTimeDataForStock(stock))
+      } else {
+        dispatch({
+          type: 'UPDATE_STOCK',
+          payload: stock
+        })
+      }
     })
   }
 }
@@ -30,6 +34,7 @@ function createPayload(stock, apiData) {
     exchange: apiData.exchange,
     marketValue: currentMarketValue.toFixed(2),
     unrealisedGains: (currentMarketValue - stock.bookCost).toFixed(2),
-    history: apiData.history
+    history: apiData.history,
+    fetchedAt: apiData.fetchedAt
   })
 }

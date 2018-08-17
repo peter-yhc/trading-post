@@ -53,7 +53,7 @@ class EditStockForm extends Component {
 
   handleClickOpen = () => {
     this.setState({open: true})
-    this.setState({name: this.props.data[0].symbol})
+    this.setState({symbol: this.props.data[0].symbol})
   }
 
   resetState = () => {
@@ -78,7 +78,7 @@ class EditStockForm extends Component {
 
   handleSubmit = () => {
     this.props.onSubmit({
-      name: this.state.symbol.toUpperCase(),
+      symbol: this.state.symbol.toUpperCase(),
       shares: this.state.shares,
       bookCost: this.state.bookCost
     })

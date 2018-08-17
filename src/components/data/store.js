@@ -1,14 +1,17 @@
 import {applyMiddleware, compose, createStore} from 'redux'
 import thunk from 'redux-thunk'
+import {updateStocks} from './DataPersist'
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'NEW_STOCK':
+      updateStocks(action.payload.symbol, action.payload)
       return {
         ...state,
         stocks: [...state.stocks, action.payload]
       }
     case 'UPDATE_STOCK':
+      updateStocks(action.payload.symbol, action.payload)
       return {
         ...state,
         stocks: state.stocks.map(el => {
