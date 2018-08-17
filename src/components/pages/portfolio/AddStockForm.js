@@ -33,7 +33,7 @@ function getDefaultState() {
     open: false,
     error: false,
     errorText: undefined,
-    name: '',
+    symbol: '',
     shares: '',
     bookCost: ''
   }
@@ -53,7 +53,7 @@ class AddStockForm extends Component {
 
   handleSubmit = () => {
     this.props.onSubmit({
-      name: this.state.name.toUpperCase(),
+      symbol: this.state.symbol.toUpperCase(),
       shares: this.state.shares,
       bookCost: this.state.bookCost
     })
@@ -87,8 +87,8 @@ class AddStockForm extends Component {
                 <TextField
                   label="Symbol"
                   className={classes.textField}
-                  value={this.state.name}
-                  onChange={this.handleChange('name')}
+                  value={this.state.symbol}
+                  onChange={this.handleChange('symbol')}
                   margin="normal"/>
               </Grid>
               <Grid container item sm={6} justify="center">

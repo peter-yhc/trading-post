@@ -23,8 +23,9 @@ class Dashboard extends Component {
 
     this.props.stocks.forEach(stock => {
       charts.push(
-        <Grid item md={6} lg={4} key={stock.name}>
-          <StockTimeSeriesChart title={stock.name} startTime={this.state.chartStartTime}
+        <Grid item md={6} lg={4} key={stock.symbol}>
+          <StockTimeSeriesChart title={stock.symbol}
+                                startTime={this.state.chartStartTime}
                                 historicalData={stock.history}/>
         </Grid>
       )
