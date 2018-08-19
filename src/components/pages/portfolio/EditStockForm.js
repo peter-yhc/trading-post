@@ -110,7 +110,7 @@ class EditStockForm extends Component {
                   <NativeSelect
                     id="stock-name-selector"
                     className={classes.select}
-                    onChange={this.handleChange('name')}>
+                    onChange={this.handleChange('symbol')}>
                     {this.createSelectOptions()}
                   </NativeSelect>
                 </FormControl>
