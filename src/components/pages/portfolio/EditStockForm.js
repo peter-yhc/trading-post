@@ -106,7 +106,7 @@ class EditStockForm extends Component {
               <Grid container item sm={6} justify="center">
                 <FormControl
                   className={classes.selectForm}>
-                  <InputLabel htmlFor="stock-name-selector">Name</InputLabel>
+                  <InputLabel htmlFor="stock-name-selector">Symbol</InputLabel>
                   <NativeSelect
                     id="stock-name-selector"
                     className={classes.select}
