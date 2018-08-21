@@ -27,47 +27,32 @@ class D3StockTimeSeriesChart extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     if (!nextProps.historicalData) return null // data hasn't been loaded yet so do nothing
 
-    const historicalDates = nextProps.historicalData.dates
-    const historicalPrices = nextProps.historicalData.closingPrices
-
-    const data = []
-    for (let i = 0; i < historicalDates.length; i++) {
-      data.push({
-        price: historicalPrices[ i ],
-        time: new Date(historicalDates[ i ] * 1000)
-      })
-    }
+    const {filteredDates, filteredPrices} = truncateData(nextProps.historicalData, nextProps.startTime)
+    // data has changed, so recalculate scale domains
+    const timeDomain = d3.extent(filteredDates.map(it => new Date(it * 1000)))
+    const priceDomainPadding = Math.abs(d3.max(filteredPrices) - d3.min(filteredPrices)) / 10
 
     const {xScale, yScale, lineGenerator} = prevState
 
-    // data has changed, so recalculate scale domains
-    const timeDomain = d3.extent(historicalDates.map(it => new Date(it * 1000)))
-    const priceMargin = Math.abs(d3.max(historicalPrices) - d3.min(historicalPrices)) / 10
-
     xScale.domain(timeDomain)
-    yScale.domain([ d3.min(historicalPrices) - priceMargin, d3.max(historicalPrices) + priceMargin ])
+    yScale.domain([ d3.min(filteredPrices) - priceDomainPadding, d3.max(filteredPrices) + priceDomainPadding ])
 
     // calculate line for lows
     lineGenerator.x(d => xScale(d.time))
     lineGenerator.y(d => yScale(d.price))
-    const prices = lineGenerator(data)
+    const prices = lineGenerator(mergeData(filteredDates, filteredPrices))
     return {prices}
-  }
-
-  componentDidUpdate() {
-    d3.select(this.state.xAxisRef).call(this.xAxis)
-    d3.select(this.state.yAxisRef).call(this.yAxis)
   }
 
   setRefX = element => {
     if (element) {
-      this.setState({xAxisRef: element})
+      d3.select(element).call(this.xAxis)
     }
   }
 
   setRefY = element => {
     if (element) {
-      this.setState({yAxisRef: element})
+      d3.select(element).call(this.yAxis)
     }
   }
 
@@ -86,6 +71,25 @@ class D3StockTimeSeriesChart extends Component {
       </React.Fragment>
     )
   }
+}
+
+function truncateData(historicalData, startTime) {
+  const filteredDates = historicalData.dates.filter(date => date >= startTime)
+  const filteredPrices = historicalData.closingPrices.slice(historicalData.closingPrices.length - filteredDates.length,
+    historicalData.closingPrices.length)
+
+  return {filteredDates, filteredPrices}
+}
+
+function mergeData(filteredDates, filteredPrices) {
+  const data = []
+  for (let i = 0; i < filteredDates.length; i++) {
+    data.push({
+      price: filteredPrices[ i ],
+      time: new Date(filteredDates[ i ] * 1000)
+    })
+  }
+  return data
 }
 
 D3StockTimeSeriesChart.propTypes = {
