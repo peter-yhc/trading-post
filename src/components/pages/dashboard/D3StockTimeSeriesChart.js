@@ -44,15 +44,20 @@ class D3StockTimeSeriesChart extends Component {
     return {prices}
   }
 
+  componentDidUpdate() {
+    d3.select(this.state.xAxisRef).call(this.xAxis)
+    d3.select(this.state.yAxisRef).call(this.yAxis)
+  }
+
   setRefX = element => {
     if (element) {
-      d3.select(element).call(this.xAxis)
+      this.setState({xAxisRef: element})
     }
   }
 
   setRefY = element => {
     if (element) {
-      d3.select(element).call(this.yAxis)
+      this.setState({yAxisRef: element})
     }
   }
 
