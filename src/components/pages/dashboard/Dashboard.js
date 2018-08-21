@@ -2,7 +2,7 @@ import {Grid, NativeSelect} from '@material-ui/core/es/index'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {StockTimeSeriesChart} from './StockTimeSeriesChart'
+import D3StockTimeSeriesChart from './D3StockTimeSeriesChart'
 
 const CHART = {
   MONTH: 24 * 60 * 60 * 30,
@@ -24,9 +24,9 @@ class Dashboard extends Component {
     this.props.stocks.forEach(stock => {
       charts.push(
         <Grid item md={6} lg={4} key={stock.symbol}>
-          <StockTimeSeriesChart title={stock.symbol}
-                                startTime={this.state.chartStartTime}
-                                historicalData={stock.history}/>
+          <D3StockTimeSeriesChart title={stock.symbol}
+                                  startTime={this.state.chartStartTime}
+                                  historicalData={stock.history}/>
         </Grid>
       )
     })
