@@ -16,8 +16,7 @@ class D3StockTimeSeriesChart extends Component {
               .range([ height - margin.bottom, margin.top ]),
     lineGenerator: d3.line(),
     xAxisRef: null,
-    yAxisRef: null,
-    yAxisTickCountOverride: null
+    yAxisRef: null
   }
 
   xAxis = d3.axisBottom().scale(this.state.xScale)
@@ -40,7 +39,7 @@ class D3StockTimeSeriesChart extends Component {
     lineGenerator.x(d => xScale(d.time))
     lineGenerator.y(d => yScale(d.price))
     const prices = lineGenerator(mergeData(filteredDates, filteredPrices))
-    return {prices, yAxisTickCountOverride: calculateYAxisTickCount(filteredPrices)}
+    return {prices}
   }
 
   componentDidUpdate() {
@@ -48,8 +47,8 @@ class D3StockTimeSeriesChart extends Component {
         .ticks(defineTimeAxisIntervals(this.props.interval))
         .tickFormat(defineTimeAxisFormat(this.props.interval))
     this.yAxis
-        .ticks(this.state.yAxisTickCountOverride)
-        .tickFormat(d => `$${d}`)
+        .ticks(8)
+        .tickFormat(d => `$${d.toFixed(2)}`)
 
     d3.select(this.state.xAxisRef).call(this.xAxis)
     d3.select(this.state.yAxisRef).call(this.yAxis)
@@ -109,7 +108,9 @@ function mergeData(filteredDates, filteredPrices) {
 
 function calculateYAxisTickCount(priceList) {
   const minMax = d3.extent(priceList)
-  return minMax[ 1 ] - minMax[ 0 ] < 10 ? parseInt(minMax[ 1 ] - minMax[ 0 ], 10) : 10
+  console.log(minMax)
+  // return minMax[ 1 ] - minMax[ 0 ] < 10 ? parseInt(minMax[ 1 ] - minMax[ 0 ], 10) : 10
+  return 10
 }
 
 function defineTimeAxisIntervals(interval) {
