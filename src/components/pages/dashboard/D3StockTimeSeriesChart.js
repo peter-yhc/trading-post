@@ -16,18 +16,17 @@ class D3StockTimeSeriesChart extends Component {
               .range([ height - margin.bottom, margin.top ]),
     lineGenerator: d3.line(),
     xAxisRef: null,
-    yAxisRef: null
+    yAxisRef: null,
+    yAxisTickCountOverride: null
   }
 
   xAxis = d3.axisBottom().scale(this.state.xScale)
-            .tickFormat(d3.timeFormat('%b, %Y'))
   yAxis = d3.axisLeft().scale(this.state.yScale)
-            .tickFormat(d => `$${d}`)
 
   static getDerivedStateFromProps(nextProps, prevState) {
     if (!nextProps.historicalData) return null // data hasn't been loaded yet so do nothing
 
-    const {filteredDates, filteredPrices} = truncateData(nextProps.historicalData, nextProps.startTime)
+    const {filteredDates, filteredPrices} = truncateDataToInterval(nextProps.historicalData, nextProps.interval)
     // data has changed, so recalculate scale domains
     const timeDomain = d3.extent(filteredDates.map(it => new Date(it * 1000)))
     const priceDomainPadding = Math.abs(d3.max(filteredPrices) - d3.min(filteredPrices)) / 10
@@ -41,10 +40,17 @@ class D3StockTimeSeriesChart extends Component {
     lineGenerator.x(d => xScale(d.time))
     lineGenerator.y(d => yScale(d.price))
     const prices = lineGenerator(mergeData(filteredDates, filteredPrices))
-    return {prices}
+    return {prices, yAxisTickCountOverride: calculateYAxisTickCount(filteredPrices)}
   }
 
   componentDidUpdate() {
+    this.xAxis
+        .ticks(defineTimeAxisIntervals(this.props.interval))
+        .tickFormat(defineTimeAxisFormat(this.props.interval))
+    this.yAxis
+        .ticks(this.state.yAxisTickCountOverride)
+        .tickFormat(d => `$${d}`)
+
     d3.select(this.state.xAxisRef).call(this.xAxis)
     d3.select(this.state.yAxisRef).call(this.yAxis)
   }
@@ -78,8 +84,12 @@ class D3StockTimeSeriesChart extends Component {
   }
 }
 
-function truncateData(historicalData, startTime) {
-  const filteredDates = historicalData.dates.filter(date => date >= startTime)
+function calculateStartTime(interval) {
+  return Math.round(new Date().getTime() / 1000) - interval
+}
+
+function truncateDataToInterval(historicalData, interval) {
+  const filteredDates = historicalData.dates.filter(date => date >= calculateStartTime(interval))
   const filteredPrices = historicalData.closingPrices.slice(historicalData.closingPrices.length - filteredDates.length,
     historicalData.closingPrices.length)
 
@@ -97,10 +107,45 @@ function mergeData(filteredDates, filteredPrices) {
   return data
 }
 
+function calculateYAxisTickCount(priceList) {
+  const minMax = d3.extent(priceList)
+  return minMax[ 1 ] - minMax[ 0 ] < 10 ? parseInt(minMax[ 1 ] - minMax[ 0 ], 10) : 10
+}
+
+function defineTimeAxisIntervals(interval) {
+  switch (interval) {
+    case ChartIntervalEnum.MONTH:
+      return d3.timeMonday
+    case ChartIntervalEnum.HALF_YEAR:
+      return d3.timeMonth
+    case ChartIntervalEnum.YEAR:
+      return d3.timeMonth.every(2)
+    default:
+      return d3.timeYear
+  }
+}
+
+function defineTimeAxisFormat(interval) {
+  switch (interval) {
+    case ChartIntervalEnum.MONTH:
+      return d3.timeFormat('%d %b, %Y')
+    default:
+      return d3.timeFormat('%b, %Y')
+  }
+}
+
 D3StockTimeSeriesChart.propTypes = {
   title: PropTypes.string.isRequired,
-  startTime: PropTypes.number.isRequired,
+  interval: PropTypes.number.isRequired,
   historicalData: PropTypes.object
 }
+
+export const ChartIntervalEnum = Object.freeze({
+    MONTH: 24 * 60 * 60 * 30,
+    HALF_YEAR: 24 * 60 * 60 * 182,
+    YEAR: 24 * 60 * 60 * 365,
+    FIVE_YEARS: 24 * 60 * 60 * 365 * 5
+  }
+)
 
 export default D3StockTimeSeriesChart

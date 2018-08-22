@@ -2,20 +2,14 @@ import {Grid, NativeSelect} from '@material-ui/core/es/index'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import D3StockTimeSeriesChart from './D3StockTimeSeriesChart'
+import D3StockTimeSeriesChart, {ChartIntervalEnum as CHART} from './D3StockTimeSeriesChart'
 
-const CHART = {
-  MONTH: 24 * 60 * 60 * 30,
-  HALF_YEAR: 24 * 60 * 60 * 182,
-  YEAR: 24 * 60 * 60 * 365,
-  FIVE_YEARS: 24 * 60 * 60 * 365 * 5
-}
+
 
 class Dashboard extends Component {
 
   state = {
     selectValue: CHART.MONTH,
-    chartStartTime: this.calculateStartTime(CHART.MONTH)
   }
 
   generateCharts = () => {
@@ -25,7 +19,7 @@ class Dashboard extends Component {
       charts.push(
         <Grid item md={6} lg={4} key={stock.symbol}>
           <D3StockTimeSeriesChart title={stock.symbol}
-                                  startTime={this.state.chartStartTime}
+                                  interval={this.state.selectValue}
                                   historicalData={stock.history}/>
         </Grid>
       )
@@ -35,14 +29,10 @@ class Dashboard extends Component {
 
   changeChartPeriod = (event) => {
     this.setState({
-      selectValue: event.target.value,
-      chartStartTime: this.calculateStartTime(parseInt(event.target.value, 10))
+      selectValue: parseInt(event.target.value, 10),
     })
   }
 
-  calculateStartTime(interval) {
-    return Math.round(new Date().getTime() / 1000) - interval
-  }
 
   render() {
     return (
