@@ -22,8 +22,6 @@ const styles = theme => ({
     flexWrap: 'wrap'
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
     width: 200
   }
 })
@@ -77,9 +75,7 @@ class AddStockForm extends Component {
           onClick={this.handleClickOpen}>
           <Icon>add</Icon>
         </Button>
-        <Dialog
-          open={this.state.open}
-          onClose={this.resetState}>
+        <Dialog open={this.state.open} onClose={this.resetState}>
           <DialogContent>
             <Typography variant="subheading">Add to your portfolio</Typography>
             <form className={classes.formContainer}>
@@ -108,18 +104,13 @@ class AddStockForm extends Component {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button onClick={this.resetState} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handleSubmit} color="primary">
-              Add
-            </Button>
+            <Button onClick={this.resetState} color="primary"> Cancel </Button>
+            <Button onClick={this.handleSubmit} color="primary"> Add </Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>
     )
   }
-
 }
 
 export default withStyles(styles)(AddStockForm)

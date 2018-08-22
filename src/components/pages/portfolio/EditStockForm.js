@@ -19,13 +19,12 @@ const styles = theme => ({
     marginLeft: '0.2em',
     marginBottom: theme.spacing.unit
   },
-  selectForm: {
-    marginTop: '24px'
-  },
   formContainer: {
     display: 'flex',
-    flexWrap: 'wrap',
-    width: '500px'
+    flexWrap: 'wrap'
+  },
+  selectForm: {
+    marginTop: '24px'
   },
   select: {
     minWidth: 200
@@ -53,7 +52,7 @@ class EditStockForm extends Component {
 
   handleClickOpen = () => {
     this.setState({open: true})
-    this.setState({symbol: this.props.data[0].symbol})
+    this.setState({symbol: this.props.data[ 0 ].symbol})
   }
 
   resetState = () => {
@@ -72,7 +71,7 @@ class EditStockForm extends Component {
 
   handleChange = name => event => {
     this.setState({
-      [name]: event.target.value
+      [ name ]: event.target.value
     })
   }
 
@@ -96,10 +95,7 @@ class EditStockForm extends Component {
           onClick={this.handleClickOpen}>
           <Icon>edit</Icon>
         </Button>
-        <Dialog
-          className={classes.root}
-          open={this.state.open}
-          onClose={this.resetState}>
+        <Dialog className={classes.root} open={this.state.open} onClose={this.resetState}>
           <DialogContent>
             <Typography variant="subheading">Edit portfolio</Typography>
             <form className={classes.formContainer}>
@@ -115,8 +111,7 @@ class EditStockForm extends Component {
                   </NativeSelect>
                 </FormControl>
               </Grid>
-              <Grid container item sm={6} justify="center">
-              </Grid>
+              <Grid container item sm={6} justify="center"> {/*purposely blank*/} </Grid>
               <Grid container item sm={6} justify="center">
                 <FormControl>
                   <IntegerField
@@ -136,18 +131,13 @@ class EditStockForm extends Component {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button color="primary" onClick={this.resetState}>
-              Cancel
-            </Button>
-            <Button color="primary" onClick={this.handleSubmit}>
-              Update
-            </Button>
+            <Button color="primary" onClick={this.resetState}> Cancel </Button>
+            <Button color="primary" onClick={this.handleSubmit}> Update </Button>
           </DialogActions>
         </Dialog>
       </React.Fragment>
     )
   }
-
 }
 
 export default withStyles(styles)(EditStockForm)
