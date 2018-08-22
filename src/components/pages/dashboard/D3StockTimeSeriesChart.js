@@ -26,16 +26,15 @@ class D3StockTimeSeriesChart extends Component {
     if (!nextProps.historicalData) return null // data hasn't been loaded yet so do nothing
 
     const {filteredDates, filteredPrices} = truncateDataToInterval(nextProps.historicalData, nextProps.interval)
-    // data has changed, so recalculate scale domains
     const timeDomain = d3.extent(filteredDates.map(it => new Date(it * 1000)))
     const priceDomainPadding = Math.abs(d3.max(filteredPrices) - d3.min(filteredPrices)) / 10
 
     const {xScale, yScale, lineGenerator} = prevState
 
+    // Set data values and generate line
     xScale.domain(timeDomain)
     yScale.domain([ d3.min(filteredPrices) - priceDomainPadding, d3.max(filteredPrices) + priceDomainPadding ])
 
-    // calculate line for lows
     lineGenerator.x(d => xScale(d.time))
     lineGenerator.y(d => yScale(d.price))
     const prices = lineGenerator(mergeData(filteredDates, filteredPrices))
@@ -104,13 +103,6 @@ function mergeData(filteredDates, filteredPrices) {
     })
   }
   return data
-}
-
-function calculateYAxisTickCount(priceList) {
-  const minMax = d3.extent(priceList)
-  console.log(minMax)
-  // return minMax[ 1 ] - minMax[ 0 ] < 10 ? parseInt(minMax[ 1 ] - minMax[ 0 ], 10) : 10
-  return 10
 }
 
 function defineTimeAxisIntervals(interval) {
