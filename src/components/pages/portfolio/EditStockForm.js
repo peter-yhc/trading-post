@@ -19,6 +19,9 @@ const styles = theme => ({
     marginLeft: '0.2em',
     marginBottom: theme.spacing.unit
   },
+  dialogButton: {
+    margin: theme.spacing.unit
+  },
   formContainer: {
     display: 'flex',
     flexWrap: 'wrap'
@@ -131,8 +134,13 @@ class EditStockForm extends Component {
             </form>
           </DialogContent>
           <DialogActions>
-            <Button color="primary" onClick={this.resetState}> Cancel </Button>
-            <Button color="primary" onClick={this.handleSubmit}> Update </Button>
+              <Grid direction={'row'} justify={'flex-start'} container item>
+                <Button className={classes.dialogButton}> Delete </Button>
+              </Grid>
+              <Grid direction={'row'} justify={'flex-end'} container item>
+                <Button className={classes.dialogButton} color="primary" onClick={this.resetState}> Cancel </Button>
+                <Button className={classes.dialogButton} color="primary" onClick={this.handleSubmit}> Update </Button>
+              </Grid>
           </DialogActions>
         </Dialog>
       </React.Fragment>
