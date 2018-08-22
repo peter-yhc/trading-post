@@ -6,7 +6,7 @@ const width = 400
 const height = 280
 const margin = {top: 20, right: 5, bottom: 20, left: 40}
 
-class D3StockTimeSeriesChart extends Component {
+class StockTimeSeriesChart extends Component {
 
   state = {
     prices: null,
@@ -127,7 +127,7 @@ function defineTimeAxisFormat(interval) {
   }
 }
 
-D3StockTimeSeriesChart.propTypes = {
+StockTimeSeriesChart.propTypes = {
   title: PropTypes.string.isRequired,
   interval: PropTypes.number.isRequired,
   historicalData: PropTypes.object
@@ -141,4 +141,4 @@ export const ChartIntervalEnum = Object.freeze({
   }
 )
 
-export default D3StockTimeSeriesChart
+export default StockTimeSeriesChart

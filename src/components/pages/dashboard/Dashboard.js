@@ -2,9 +2,7 @@ import {Grid, NativeSelect} from '@material-ui/core/es/index'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import D3StockTimeSeriesChart, {ChartIntervalEnum as CHART} from './D3StockTimeSeriesChart'
-
-
+import StockTimeSeriesChart, {ChartIntervalEnum as CHART} from './StockTimeSeriesChart'
 
 class Dashboard extends Component {
 
@@ -18,9 +16,9 @@ class Dashboard extends Component {
     this.props.stocks.forEach(stock => {
       charts.push(
         <Grid item md={6} lg={4} key={stock.symbol}>
-          <D3StockTimeSeriesChart title={stock.symbol}
-                                  interval={this.state.selectValue}
-                                  historicalData={stock.history}/>
+          <StockTimeSeriesChart title={stock.symbol}
+                                interval={this.state.selectValue}
+                                historicalData={stock.history}/>
         </Grid>
       )
     })
