@@ -1,3 +1,4 @@
+import withStyles from '@material-ui/core/es/styles/withStyles'
 import * as d3 from 'd3'
 import PropTypes from 'prop-types'
 import React, {Component} from 'react'
@@ -5,6 +6,12 @@ import React, {Component} from 'react'
 const width = 400
 const height = 280
 const margin = {top: 20, right: 5, bottom: 20, left: 40}
+
+const styles = {
+  title: {
+    fontSize: '14px'
+  }
+}
 
 class StockTimeSeriesChart extends Component {
 
@@ -18,6 +25,8 @@ class StockTimeSeriesChart extends Component {
     xAxisRef: null,
     yAxisRef: null
   }
+
+  titleRef = React.createRef()
 
   xAxis = d3.axisBottom().scale(this.state.xScale)
   yAxis = d3.axisLeft().scale(this.state.yScale)
@@ -51,6 +60,7 @@ class StockTimeSeriesChart extends Component {
 
     d3.select(this.state.xAxisRef).call(this.xAxis)
     d3.select(this.state.yAxisRef).call(this.yAxis)
+    d3.select(this.titleRef.current).text(this.props.title)
   }
 
   setRefX = element => {
@@ -66,11 +76,13 @@ class StockTimeSeriesChart extends Component {
   }
 
   render() {
+    const {classes} = this.props
     return (
       <React.Fragment>
         <svg width={'100%'} height={height}
              viewBox={`0 0 ${width} ${height}`}
-             preserveAspectRatio="xMidYMid meet">>
+             preserveAspectRatio="xMidYMid meet">
+          <text ref={this.titleRef} className={classes.title} x={width / 2} y={margin.top}/>
           <path d={this.state.prices} fill='none' stroke={'#eb6a5b'} strokeWidth='2'/>
           <g>
             <g ref={this.setRefX} transform={`translate(0, ${height - margin.bottom})`}/>
@@ -141,4 +153,4 @@ export const ChartIntervalEnum = Object.freeze({
   }
 )
 
-export default StockTimeSeriesChart
+export default withStyles(styles)(StockTimeSeriesChart)

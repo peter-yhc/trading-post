@@ -1,13 +1,20 @@
 import {Grid, NativeSelect} from '@material-ui/core/es/index'
+import withStyles from '@material-ui/core/es/styles/withStyles'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import StockTimeSeriesChart, {ChartIntervalEnum as CHART} from './StockTimeSeriesChart'
 
+const styles = {
+  chartContainer: {
+    paddingTop: '1em'
+  }
+}
+
 class Dashboard extends Component {
 
   state = {
-    selectValue: CHART.MONTH,
+    selectValue: CHART.MONTH
   }
 
   generateCharts = () => {
@@ -15,10 +22,14 @@ class Dashboard extends Component {
 
     this.props.stocks.forEach(stock => {
       charts.push(
-        <Grid item md={6} lg={4} key={stock.symbol}>
+        <Grid item
+              className={this.props.classes.chartContainer}
+              md={6} lg={4}
+              key={stock.symbol}>
           <StockTimeSeriesChart title={stock.symbol}
                                 interval={this.state.selectValue}
-                                historicalData={stock.history}/>
+                                historicalData={stock.history}
+          />
         </Grid>
       )
     })
@@ -27,10 +38,9 @@ class Dashboard extends Component {
 
   changeChartPeriod = (event) => {
     this.setState({
-      selectValue: parseInt(event.target.value, 10),
+      selectValue: parseInt(event.target.value, 10)
     })
   }
-
 
   render() {
     return (
@@ -55,4 +65,4 @@ function mapStateToProps(state) {
   return state
 }
 
-export default withRouter(connect(mapStateToProps)(Dashboard))
+export default withRouter(connect(mapStateToProps)(withStyles(styles)(Dashboard)))
