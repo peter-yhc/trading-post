@@ -5,7 +5,7 @@ import moment from 'moment'
 export function initialise() {
   return (dispatch) => {
     retrieveStocks().forEach(stock => {
-      if (moment().diff(stock.fetchedAt, 'days') > 0) {
+      if (stock.fetchedAt === undefined || moment().diff(stock.fetchedAt, 'days') > 0) {
         dispatch(getRealTimeDataForStock(stock))
       } else {
         dispatch({
