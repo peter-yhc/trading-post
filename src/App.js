@@ -10,13 +10,13 @@ import BaseLayout from './components/layout/BaseLayout'
 const theme = createMuiTheme({
   palette: {
     primary: {
-      dark: '#F69759',
-      main: '#E3BD8B',
-      light: '#C1C7A2'
+      dark: '#23303F',
+      main: '#272D33',
+      light: '#EE4E34'
     },
     secondary: {
-      main: '#8DA891',
-      light: '#A4ECE3'
+      main: '#EB972F',
+      light: '#C5CF43'
     },
     error: red,
     // Used by `getContrastText()` to maximize the contrast between the background and

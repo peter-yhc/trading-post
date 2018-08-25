@@ -18,15 +18,16 @@ class StockTimeSeriesChart extends Component {
   state = {
     prices: null,
     xScale: d3.scaleTime()
-              .range([ margin.left, width - margin.right ]),
+              .range([margin.left, width - margin.right]),
     yScale: d3.scaleLinear()
-              .range([ height - margin.bottom, margin.top ]),
+              .range([height - margin.bottom, margin.top]),
     lineGenerator: d3.line(),
     xAxisRef: null,
     yAxisRef: null
   }
 
   titleRef = React.createRef()
+  pathRef = React.createRef()
 
   xAxis = d3.axisBottom().scale(this.state.xScale)
   yAxis = d3.axisLeft().scale(this.state.yScale)
@@ -42,7 +43,7 @@ class StockTimeSeriesChart extends Component {
 
     // Set data values and generate line
     xScale.domain(timeDomain)
-    yScale.domain([ d3.min(filteredPrices) - priceDomainPadding, d3.max(filteredPrices) + priceDomainPadding ])
+    yScale.domain([d3.min(filteredPrices) - priceDomainPadding, d3.max(filteredPrices) + priceDomainPadding])
 
     lineGenerator.x(d => xScale(d.time))
     lineGenerator.y(d => yScale(d.price))
@@ -61,6 +62,7 @@ class StockTimeSeriesChart extends Component {
     d3.select(this.state.xAxisRef).call(this.xAxis)
     d3.select(this.state.yAxisRef).call(this.yAxis)
     d3.select(this.titleRef.current).text(this.props.title)
+    d3.select(this.pathRef.current).style('stroke', strokeColor)
   }
 
   setRefX = element => {
@@ -83,7 +85,7 @@ class StockTimeSeriesChart extends Component {
              viewBox={`0 0 ${width} ${height}`}
              preserveAspectRatio="xMidYMid meet">
           <text ref={this.titleRef} className={classes.title} x={width / 2} y={margin.top}/>
-          <path d={this.state.prices} fill='none' stroke={'#eb6a5b'} strokeWidth='2'/>
+          <path ref={this.pathRef} d={this.state.prices} fill='none' strokeWidth='2'/>
           <g>
             <g ref={this.setRefX} transform={`translate(0, ${height - margin.bottom})`}/>
             <g ref={this.setRefY} transform={`translate(${margin.left}, 0)`}/>
@@ -92,6 +94,10 @@ class StockTimeSeriesChart extends Component {
       </React.Fragment>
     )
   }
+}
+
+function strokeColor(d) {
+  return 'hsl(200, 100%, 30%)'
 }
 
 function calculateStartTime(interval) {
@@ -110,8 +116,8 @@ function mergeData(filteredDates, filteredPrices) {
   const data = []
   for (let i = 0; i < filteredDates.length; i++) {
     data.push({
-      price: filteredPrices[ i ],
-      time: new Date(filteredDates[ i ] * 1000)
+      price: filteredPrices[i],
+      time: new Date(filteredDates[i] * 1000)
     })
   }
   return data
