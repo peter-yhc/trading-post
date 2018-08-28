@@ -31,7 +31,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onStockAdd: (stock) => {
       dispatch({
-        type: 'NEW_STOCK',
+        type: 'STOCK_CREATE',
         payload: stock
       })
       dispatch(getRealTimeDataForStock(stock))

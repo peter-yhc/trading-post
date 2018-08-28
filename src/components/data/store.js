@@ -4,13 +4,13 @@ import {getTracking, updateStocks, updateTracking} from './DataPersist'
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'NEW_STOCK':
+    case 'STOCK_CREATE':
       updateStocks(action.payload.symbol, action.payload)
       return {
         ...state,
         stocks: [ ...state.stocks, action.payload ]
       }
-    case 'UPDATE_STOCK':
+    case 'STOCK_UPDATE':
       updateStocks(action.payload.symbol, action.payload)
       return {
         ...state,

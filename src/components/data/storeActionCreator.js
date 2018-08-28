@@ -9,7 +9,7 @@ export function initialise() {
         dispatch(getRealTimeDataForStock(stock))
       } else {
         dispatch({
-          type: 'UPDATE_STOCK',
+          type: 'STOCK_UPDATE',
           payload: stock
         })
       }
@@ -21,7 +21,7 @@ export function getRealTimeDataForStock(stock) {
   return async (dispatch) => {
     const apiData = await YahooApi.getStockHistory(stock.symbol)
     dispatch({
-      type: 'UPDATE_STOCK',
+      type: 'STOCK_UPDATE',
       payload: createPayload(stock, apiData)
     })
   }
