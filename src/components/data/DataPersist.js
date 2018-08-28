@@ -12,3 +12,16 @@ export function updateStocks(symbol, updatedValues) {
 export function retrieveStocks() {
   return JSON.parse(localStorage.getItem('stocks')) || []
 }
+
+export function getTracking() {
+  return JSON.parse(localStorage.getItem('tracking')) || []
+}
+
+export function updateTracking(symbol) {
+  const cache = getTracking()
+  if (!cache.includes(symbol)) {
+    cache.push(symbol)
+  }
+  localStorage.setItem('tracking', JSON.stringify(cache))
+  return cache
+}

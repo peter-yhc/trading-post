@@ -35,6 +35,10 @@ function mapDispatchToProps(dispatch) {
         payload: stock
       })
       dispatch(getRealTimeDataForStock(stock))
+      dispatch({
+        type: 'TRACKING_UPDATE',
+        payload: {symbol: 'AAPL'}
+      })
     },
     onStockUpdate: (stock) => {
       dispatch(getRealTimeDataForStock(stock))
