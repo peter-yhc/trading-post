@@ -9,16 +9,19 @@ import EditStockForm from './EditStockForm'
 import {PortfolioTable} from './PortfolioTable'
 
 function Portfolio(props) {
+  const portfolioStocks = props.stocks.filter(stock => {
+    return props.display.portfolio.findIndex(it => it === stock.symbol) !== -1
+  })
   return (
     <React.Fragment>
       <Grid item sm={12}>
         <Grid container direction="row" justify="flex-end">
           <AddStockForm onSubmit={props.onStockAdd}/>
-          <EditStockForm onSubmit={props.onStockUpdate} data={props.stocks}/>
+          <EditStockForm onSubmit={props.onStockUpdate} data={portfolioStocks}/>
         </Grid>
       </Grid>
       <Grid item sm={12}>
-        <PortfolioTable data={props.stocks}/>
+        <PortfolioTable data={portfolioStocks}/>
       </Grid>
     </React.Fragment>
   )
