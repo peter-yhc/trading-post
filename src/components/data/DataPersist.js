@@ -14,7 +14,7 @@ export function retrieveStocks() {
 }
 
 export function getDisplay() {
-  return JSON.parse(localStorage.getItem('display')) || {tracking: [], portfolio: []}
+  return JSON.parse(localStorage.getItem('display')) || {[DISPLAY.WATCHING]: [], [DISPLAY.PORTFOLIO]: []}
 }
 
 export function updateDisplay(symbol, listToUpdate) {
@@ -40,6 +40,7 @@ export function updateDisplay(symbol, listToUpdate) {
 }
 
 export const DISPLAY = Object.seal({
-  TRACKING: 'tracking',
+  ALL: 'all',
+  WATCHING: 'watching',
   PORTFOLIO: 'portfolio'
 })
