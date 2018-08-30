@@ -13,15 +13,33 @@ export function retrieveStocks() {
   return JSON.parse(localStorage.getItem('stocks')) || []
 }
 
-export function getTracking() {
-  return JSON.parse(localStorage.getItem('tracking')) || []
+export function getDisplay() {
+  return JSON.parse(localStorage.getItem('display')) || {tracking: [], portfolio: []}
 }
 
-export function updateTracking(symbol) {
-  const cache = getTracking()
-  if (!cache.includes(symbol)) {
-    cache.push(symbol)
+export function updateDisplay(symbol, listToUpdate) {
+  const cache = getDisplay()
+
+  switch(listToUpdate) {
+    case DISPLAY.TRACKING:
+      if (!cache[DISPLAY.TRACKING].includes(symbol)) {
+        cache[DISPLAY.TRACKING].push(symbol)
+      }
+      break;
+    case DISPLAY.PORTFOLIO:
+      if (!cache[DISPLAY.PORTFOLIO].includes(symbol)) {
+        cache[DISPLAY.PORTFOLIO].push(symbol)
+      }
+      break;
+    default:
+      console.log(`Error: Unknown list type ${listToUpdate}`)
   }
-  localStorage.setItem('tracking', JSON.stringify(cache))
+
+  localStorage.setItem('display', JSON.stringify(cache))
   return cache
 }
+
+export const DISPLAY = Object.seal({
+  TRACKING: 'tracking',
+  PORTFOLIO: 'portfolio'
+})

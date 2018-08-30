@@ -1,6 +1,6 @@
 import {applyMiddleware, compose, createStore} from 'redux'
 import thunk from 'redux-thunk'
-import {getTracking, updateStocks, updateTracking} from './DataPersist'
+import {getDisplay, updateDisplay, updateStocks} from './DataPersist'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -20,16 +20,16 @@ const reducer = (state, action) => {
             : el
         })
       }
-    case 'TRACKING_UPDATE':
-      const updatedTracking = updateTracking(action.payload.symbol)
+    case 'DISPLAY_UPDATE':
+      const updatedTracking = updateDisplay(action.payload.symbol, action.payload.displayType)
       return {
         ...state,
-        tracking: updatedTracking
+        display: updatedTracking
       }
     default:
       return {
         stocks: JSON.parse(localStorage.getItem('stocks')) || [],
-        tracking: getTracking()
+        display: getDisplay()
       }
   }
 }
