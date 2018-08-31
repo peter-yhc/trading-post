@@ -6,6 +6,7 @@ import {withRouter} from 'react-router-dom'
 import './App.css'
 import {initialise} from './components/data/storeActionCreator'
 import BaseLayout from './components/layout/BaseLayout'
+import withStyles from '@material-ui/core/es/styles/withStyles'
 
 const theme = createMuiTheme({
   palette: {
@@ -29,6 +30,12 @@ const theme = createMuiTheme({
   }
 })
 
+const styles = {
+  App: {
+    height: '100%'
+  }
+}
+
 class App extends Component {
 
   componentWillMount() {
@@ -36,9 +43,12 @@ class App extends Component {
   }
 
   render() {
+
+    const {classes} = this.props
+
     return (
       <MuiThemeProvider theme={theme}>
-        <div className="App">
+        <div className={classes.App}>
           <BaseLayout/>
         </div>
       </MuiThemeProvider>
@@ -58,4 +68,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App)))

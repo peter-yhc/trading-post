@@ -33,6 +33,9 @@ const styles = theme => ({
       position: 'relative'
     }
   },
+  drawer: {
+    height: '100%'
+  },
   content: {
     flexGrow: 1,
     backgroundColor: theme.palette.background.default,
@@ -96,7 +99,8 @@ class NavigationFrame extends React.Component {
             variant="permanent"
             open
             classes={{
-              paper: classes.drawerPaper
+              paper: classes.drawerPaper,
+              docked: classes.drawer
             }}>
             {drawer}
           </Drawer>
