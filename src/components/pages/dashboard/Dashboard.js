@@ -3,8 +3,8 @@ import withStyles from '@material-ui/core/es/styles/withStyles'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {DISPLAY} from '../../data/DataPersist'
 import StockTimeSeriesChart, {ChartIntervalEnum as CHART} from './StockTimeSeriesChart'
+import {DISPLAY} from '../../data/DataPersist'
 
 const styles = {
   chartContainer: {
@@ -46,8 +46,15 @@ class Dashboard extends Component {
   render() {
     return (
       <React.Fragment>
-        <Grid container>
-          <Grid xs={12} sm={6} container direction={'row'} justify={'flex-start'}>
+        <Grid container spacing={24} justify={'flex-start'}>
+          <Grid item>
+            <NativeSelect>
+              <option value={DISPLAY.ALL}>All</option>
+              <option value={DISPLAY.WATCHING}>Watching</option>
+              <option value={DISPLAY.PORTFOLIO}>Portfolio</option>
+            </NativeSelect>
+          </Grid>
+          <Grid item>
             <NativeSelect
               value={this.state.selectValue}
               onChange={this.changeChartPeriod}>
@@ -55,13 +62,6 @@ class Dashboard extends Component {
               <option value={CHART.HALF_YEAR}>6 Months</option>
               <option value={CHART.YEAR}>1 Year</option>
               <option value={CHART.FIVE_YEARS}>5 Years</option>
-            </NativeSelect>
-          </Grid>
-          <Grid xs={12} sm={6} container direction={'row'} justify={'flex-end'}>
-            <NativeSelect>
-              <option value={DISPLAY.ALL}>All</option>
-              <option value={DISPLAY.WATCHING}>Watching</option>
-              <option value={DISPLAY.PORTFOLIO}>Portfolio</option>
             </NativeSelect>
           </Grid>
         </Grid>
