@@ -15,22 +15,22 @@ const styles = {
 class Dashboard extends Component {
 
   state = {
-    selectValue: CHART.MONTH
+    selectValue: CHART.MONTH,
+    displayValue: DISPLAY.ALL
   }
 
   generateCharts = () => {
     const charts = []
+    const filteredStocks = filterStocksByDisplayType(this.props.display, this.props.stocks, this.state.displayValue)
 
-    this.props.stocks.forEach(stock => {
+    filteredStocks.forEach(stock => {
       charts.push(
-        <Grid item
-              className={this.props.classes.chartContainer}
-              md={6} lg={4}
-              key={stock.symbol}>
+        <Grid key={stock.symbol}
+              item md={6} lg={4}
+              className={this.props.classes.chartContainer}>
           <StockTimeSeriesChart title={stock.symbol}
                                 interval={this.state.selectValue}
-                                historicalData={stock.history}
-          />
+                                historicalData={stock.history}/>
         </Grid>
       )
     })
@@ -43,12 +43,20 @@ class Dashboard extends Component {
     })
   }
 
+  changeDisplay = (event) => {
+    this.setState({
+      displayValue: event.target.value
+    })
+  }
+
   render() {
     return (
       <React.Fragment>
         <Grid container spacing={24} justify={'flex-start'}>
           <Grid item>
-            <NativeSelect>
+            <NativeSelect
+              value={this.state.displayValue}
+              onChange={this.changeDisplay}>
               <option value={DISPLAY.ALL}>All</option>
               <option value={DISPLAY.WATCHING}>Watching</option>
               <option value={DISPLAY.PORTFOLIO}>Portfolio</option>
@@ -70,6 +78,14 @@ class Dashboard extends Component {
         </Grid>
       </React.Fragment>
     )
+  }
+}
+
+function filterStocksByDisplayType(displays, stocks, type) {
+  if (type !== DISPLAY.ALL) {
+    return stocks.filter(stock => displays[ type ].includes(stock.symbol)) || []
+  } else {
+    return stocks
   }
 }
 
