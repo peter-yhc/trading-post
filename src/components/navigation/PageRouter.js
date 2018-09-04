@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import store from '../data/Store'
 import Dashboard from '../pages/dashboard/Dashboard'
-import {Performance} from '../pages/performance/Performance'
+import Performance from '../pages/performance/Performance'
 import Portfolio from '../pages/portfolio/Portfolio'
 
 export class PageRouter extends Component {
@@ -15,7 +15,7 @@ export class PageRouter extends Component {
           <Dashboard store={store}/>
         </Route>
         <Route path="/performance">
-          <Performance/>
+          <Performance store={store}/>
         </Route>
         <Route path="/portfolio">
           <Portfolio store={store}/>
