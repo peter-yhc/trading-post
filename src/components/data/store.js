@@ -33,10 +33,10 @@ const reducer = (state, action) => {
         }
       }
     case 'DISPLAY_UPDATE':
-      const updatedTracking = updateDisplay(action.payload.symbol, action.payload.displayType)
+      const updatedDisplay = updateDisplay(action.payload.symbol, action.payload.displayType)
       return {
         ...state,
-        display: updatedTracking
+        display: updatedDisplay
       }
     default:
       return {
