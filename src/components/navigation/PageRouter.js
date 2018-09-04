@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import store from '../data/store'
+import store from '../data/Store'
 import Dashboard from '../pages/dashboard/Dashboard'
 import Portfolio from '../pages/portfolio/Portfolio'
 
