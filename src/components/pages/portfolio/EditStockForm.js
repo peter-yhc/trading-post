@@ -11,6 +11,7 @@ import {
   Typography
 } from '@material-ui/core/es/index'
 import withStyles from '@material-ui/core/es/styles/withStyles'
+import PropTypes from 'prop-types'
 import React, {Component} from 'react'
 import {DecimalField, IntegerField} from '../../common'
 
@@ -87,6 +88,11 @@ class EditStockForm extends Component {
     this.resetState()
   }
 
+  handleDelete = () => {
+    this.props.onDelete({symbol: this.state.symbol.toUpperCase(), displayOption: 'portfolio'})
+    this.resetState()
+  }
+
   render() {
     const {classes} = this.props
     return (
@@ -134,18 +140,24 @@ class EditStockForm extends Component {
             </form>
           </DialogContent>
           <DialogActions>
-              <Grid direction={'row'} justify={'flex-start'} container item>
-                <Button className={classes.dialogButton}> Delete </Button>
-              </Grid>
-              <Grid direction={'row'} justify={'flex-end'} container item>
-                <Button className={classes.dialogButton} color="primary" onClick={this.resetState}> Cancel </Button>
-                <Button className={classes.dialogButton} color="primary" onClick={this.handleSubmit}> Update </Button>
-              </Grid>
+            <Grid direction={'row'} justify={'flex-start'} container item>
+              <Button className={classes.dialogButton} onClick={this.handleDelete}> Delete </Button>
+            </Grid>
+            <Grid direction={'row'} justify={'flex-end'} container item>
+              <Button className={classes.dialogButton} color="primary" onClick={this.resetState}> Cancel </Button>
+              <Button className={classes.dialogButton} color="primary" onClick={this.handleSubmit}> Update </Button>
+            </Grid>
           </DialogActions>
         </Dialog>
       </React.Fragment>
     )
   }
+}
+
+EditStockForm.propTypes = {
+  data: PropTypes.array.isRequired,
+  onSubmit: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(EditStockForm)

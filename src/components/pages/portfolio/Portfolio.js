@@ -17,7 +17,7 @@ function Portfolio(props) {
       <Grid item sm={12}>
         <Grid container direction="row" justify="flex-end">
           <AddStockForm onSubmit={props.onStockAdd}/>
-          <EditStockForm onSubmit={props.onStockUpdate} data={portfolioStocks}/>
+          <EditStockForm data={portfolioStocks} onSubmit={props.onStockUpdate} onDelete={props.onStockDelete}/>
         </Grid>
       </Grid>
       <Grid item sm={12}>
@@ -46,6 +46,12 @@ function mapDispatchToProps(dispatch) {
     },
     onStockUpdate: (stock) => {
       dispatch(getRealTimeDataForStock(stock))
+    },
+    onStockDelete: (stock) => {
+      dispatch({
+        type: 'STOCK_DELETE',
+        payload: {symbol: stock.symbol, displayOption: stock.displayOption}
+      })
     }
   }
 }

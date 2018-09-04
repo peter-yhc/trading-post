@@ -20,6 +20,18 @@ const reducer = (state, action) => {
             : el
         })
       }
+    case 'STOCK_DELETE':
+      const displayType = action.payload.displayOption
+      const index = state.display[ displayType ].indexOf(action.payload.symbol)
+      if (index > -1) state.display[ displayType ].splice(index, 1)
+
+      return {
+        ...state,
+        display: {
+          ...state.display,
+          [ displayType ]: state.display[ displayType ]
+        }
+      }
     case 'DISPLAY_UPDATE':
       const updatedTracking = updateDisplay(action.payload.symbol, action.payload.displayType)
       return {
