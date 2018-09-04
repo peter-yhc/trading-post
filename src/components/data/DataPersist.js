@@ -1,5 +1,5 @@
-export function updateStocks(symbol, updatedValues) {
-  const cache = JSON.parse(localStorage.getItem('stocks')) || []
+export function updateStocksCache(symbol, updatedValues) {
+  const cache = getStockCache()
   const cachedDataIndex = cache.findIndex(stock => stock.symbol === symbol)
   if (cachedDataIndex !== -1) {
     cache[cachedDataIndex] = updatedValues
@@ -9,16 +9,16 @@ export function updateStocks(symbol, updatedValues) {
   localStorage.setItem('stocks', JSON.stringify(cache))
 }
 
-export function retrieveStocks() {
+export function getStockCache() {
   return JSON.parse(localStorage.getItem('stocks')) || []
 }
 
-export function getDisplay() {
+export function getDisplaySettings() {
   return JSON.parse(localStorage.getItem('display')) || {[DISPLAY.WATCHING]: [], [DISPLAY.PORTFOLIO]: []}
 }
 
-export function updateDisplay(symbol, listToUpdate) {
-  const cache = getDisplay()
+export function updateDisplaySetting(symbol, listToUpdate) {
+  const cache = getDisplaySettings()
   if (!cache[listToUpdate].includes(symbol)) {
     cache[listToUpdate].push(symbol)
   }

@@ -1,17 +1,17 @@
 import {applyMiddleware, compose, createStore} from 'redux'
 import thunk from 'redux-thunk'
-import {getDisplay, updateDisplay, updateStocks} from './DataPersist'
+import {getDisplaySettings, updateDisplaySetting, updateStocksCache} from './DataPersist'
 
 const reducer = (state, action) => {
   switch (action.type) {
     case 'STOCK_CREATE':
-      updateStocks(action.payload.symbol, action.payload)
+      updateStocksCache(action.payload.symbol, action.payload)
       return {
         ...state,
         stocks: [ ...state.stocks, action.payload ]
       }
     case 'STOCK_UPDATE':
-      updateStocks(action.payload.symbol, action.payload)
+      updateStocksCache(action.payload.symbol, action.payload)
       return {
         ...state,
         stocks: state.stocks.map(el => {
@@ -33,7 +33,7 @@ const reducer = (state, action) => {
         }
       }
     case 'DISPLAY_UPDATE':
-      const updatedDisplay = updateDisplay(action.payload.symbol, action.payload.displayType)
+      const updatedDisplay = updateDisplaySetting(action.payload.symbol, action.payload.displayType)
       return {
         ...state,
         display: updatedDisplay
@@ -41,7 +41,7 @@ const reducer = (state, action) => {
     default:
       return {
         stocks: JSON.parse(localStorage.getItem('stocks')) || [],
-        display: getDisplay()
+        display: getDisplaySettings()
       }
   }
 }

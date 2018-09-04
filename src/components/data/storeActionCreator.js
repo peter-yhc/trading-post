@@ -1,10 +1,10 @@
 import YahooApi from './YahooApi'
-import {retrieveStocks} from './DataPersist'
+import {getStockCache} from './DataPersist'
 import moment from 'moment'
 
 export function initialise() {
   return (dispatch) => {
-    retrieveStocks().forEach(stock => {
+    getStockCache().forEach(stock => {
       if (stock.fetchedAt === undefined || moment().diff(stock.fetchedAt, 'days') > 0) {
         dispatch(getRealTimeDataForStock(stock))
       } else {
