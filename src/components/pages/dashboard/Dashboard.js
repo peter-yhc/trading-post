@@ -83,7 +83,7 @@ class Dashboard extends Component {
 
 function filterStocksByDisplayType(displays, stocks, type) {
   if (type !== DISPLAY.ALL) {
-    return stocks.filter(stock => displays[ type ].includes(stock.symbol)) || []
+    return stocks.filter(stock => displays[ type ] && displays[ type ].includes(stock.symbol)) || []
   } else {
     return stocks
   }
