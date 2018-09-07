@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import './App.css'
-import {initialise} from './components/data/storeActionCreator'
+import {initialise} from './components/data/StoreActionCreator'
 import BaseLayout from './components/layout/BaseLayout'
 import withStyles from '@material-ui/core/es/styles/withStyles'
 
