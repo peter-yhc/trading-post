@@ -14,7 +14,7 @@ export function getStockCache() {
 }
 
 export function getDisplaySettings() {
-  return JSON.parse(localStorage.getItem('display')) || {[DISPLAY.WATCHING]: [], [DISPLAY.PORTFOLIO]: []}
+  return JSON.parse(localStorage.getItem('display')) || {[ACCOUNT.WATCHING]: [], [ACCOUNT.PORTFOLIO]: []}
 }
 
 export function updateDisplaySetting(symbol, listToUpdate) {
@@ -26,7 +26,7 @@ export function updateDisplaySetting(symbol, listToUpdate) {
   return cache
 }
 
-export const DISPLAY = Object.seal({
+export const ACCOUNT = Object.seal({
   ALL: 'all',
   WATCHING: 'watching',
   PORTFOLIO: 'portfolio'

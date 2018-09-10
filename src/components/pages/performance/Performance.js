@@ -3,7 +3,7 @@ import withStyles from '@material-ui/core/es/styles/withStyles'
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {DISPLAY} from '../../data/DataPersist'
+import {ACCOUNT} from '../../data/DataPersist'
 import {PortfolioTable} from '../portfolio/PortfolioTable'
 
 const styles = theme => ({
@@ -15,7 +15,7 @@ const styles = theme => ({
 function Performance(props) {
   console.log(props)
   const portfolioStocks = props.stocks.filter(stock => {
-    return props.display[ DISPLAY.PORTFOLIO ].findIndex(it => it === stock.symbol) !== -1
+    return props.display[ ACCOUNT.PORTFOLIO ].findIndex(it => it === stock.symbol) !== -1
   })
 
   const {classes} = props

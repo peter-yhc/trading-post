@@ -2,7 +2,7 @@ import {Grid} from '@material-ui/core/es'
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {DISPLAY} from '../../data/DataPersist'
+import {ACCOUNT} from '../../data/DataPersist'
 import {getRealTimeDataForStock} from '../../data/StoreActionCreator'
 import AddStockForm from './AddStockForm'
 import EditStockForm from './EditStockForm'
@@ -41,7 +41,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(getRealTimeDataForStock(stock))
       dispatch({
         type: 'DISPLAY_UPDATE',
-        payload: {symbol: stock.symbol, displayType: DISPLAY.PORTFOLIO}
+        payload: {symbol: stock.symbol, displayType: ACCOUNT.PORTFOLIO}
       })
     },
     onStockUpdate: (stock) => {

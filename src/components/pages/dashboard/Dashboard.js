@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import StockTimeSeriesChart, {ChartIntervalEnum as CHART} from './StockTimeSeriesChart'
-import {DISPLAY} from '../../data/DataPersist'
+import {ACCOUNT} from '../../data/DataPersist'
 
 const styles = {
   chartContainer: {
@@ -16,7 +16,7 @@ class Dashboard extends Component {
 
   state = {
     selectValue: CHART.MONTH,
-    displayValue: DISPLAY.ALL
+    displayValue: ACCOUNT.ALL
   }
 
   generateCharts = () => {
@@ -57,9 +57,9 @@ class Dashboard extends Component {
             <NativeSelect
               value={this.state.displayValue}
               onChange={this.changeDisplay}>
-              <option value={DISPLAY.ALL}>All</option>
-              <option value={DISPLAY.WATCHING}>Watching</option>
-              <option value={DISPLAY.PORTFOLIO}>Portfolio</option>
+              <option value={ACCOUNT.ALL}>All</option>
+              <option value={ACCOUNT.WATCHING}>Watching</option>
+              <option value={ACCOUNT.PORTFOLIO}>Portfolio</option>
             </NativeSelect>
           </Grid>
           <Grid item>
@@ -82,7 +82,7 @@ class Dashboard extends Component {
 }
 
 function filterStocksByDisplayType(displays, stocks, type) {
-  if (type !== DISPLAY.ALL) {
+  if (type !== ACCOUNT.ALL) {
     return stocks.filter(stock => displays[ type ] && displays[ type ].includes(stock.symbol)) || []
   } else {
     return stocks
