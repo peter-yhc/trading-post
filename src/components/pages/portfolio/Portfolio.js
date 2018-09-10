@@ -1,28 +1,23 @@
-import {Grid} from '@material-ui/core/es'
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {ACCOUNT} from '../../data/DataPersist'
-import {getRealTimeDataForStock} from '../../data/StoreActionCreator'
-import AddStockForm from './AddStockForm'
-import EditStockForm from './EditStockForm'
-import {PortfolioTable} from './PortfolioTable'
+import {updateStockWithCacheData, updateStockWithLiveData} from '../../data/StoreActionCreator'
+import PortfolioAccount from './PortfolioAccount'
 
 function Portfolio(props) {
+
   const portfolioStocks = props.stocks.filter(stock => {
     return props.display.portfolio.findIndex(it => it === stock.symbol) !== -1
   })
+
   return (
     <React.Fragment>
-      <Grid item sm={12}>
-        <Grid container direction="row" justify="flex-end">
-          <AddStockForm onSubmit={props.onStockAdd}/>
-          <EditStockForm data={portfolioStocks} onSubmit={props.onStockUpdate} onDelete={props.onStockDelete}/>
-        </Grid>
-      </Grid>
-      <Grid item sm={12}>
-        <PortfolioTable data={portfolioStocks}/>
-      </Grid>
+      <PortfolioAccount title={"My Test Account"}
+                        stocks={portfolioStocks}
+                        onStockAdd={props.onStockAdd}
+                        onStockUpdate={props.onStockUpdate}
+                        onStockDelete={props.onStockDelete}/>
     </React.Fragment>
   )
 }
@@ -38,19 +33,19 @@ function mapDispatchToProps(dispatch) {
         type: 'STOCK_CREATE',
         payload: stock
       })
-      dispatch(getRealTimeDataForStock(stock))
+      dispatch(updateStockWithLiveData(stock))
       dispatch({
         type: 'DISPLAY_UPDATE',
-        payload: {symbol: stock.symbol, displayType: ACCOUNT.PORTFOLIO}
+        payload: { symbol: stock.symbol, displayType: ACCOUNT.PORTFOLIO }
       })
     },
     onStockUpdate: (stock) => {
-      dispatch(getRealTimeDataForStock(stock))
+      dispatch(updateStockWithCacheData(stock))
     },
     onStockDelete: (stock) => {
       dispatch({
         type: 'STOCK_DELETE',
-        payload: {symbol: stock.symbol, displayOption: stock.displayOption}
+        payload: { symbol: stock.symbol, displayOption: stock.displayOption }
       })
     }
   }
