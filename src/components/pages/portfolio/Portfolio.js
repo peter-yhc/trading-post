@@ -1,15 +1,30 @@
+import {Button, Grid} from '@material-ui/core/es/index'
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {ACCOUNT} from '../../data/DataPersist'
 import {updateStockWithCacheData, updateStockWithLiveData} from '../../data/StoreActionCreator'
 import PortfolioAccount from './PortfolioAccount'
+import withStyles from '@material-ui/core/es/styles/withStyles'
+
+const styles = theme => ({
+  newAccountButton: {
+    marginTop: theme.spacing.unit,
+    backgroundColor: theme.palette.primary.main,
+    color: 'white',
+    '&:hover': {
+      backgroundColor: theme.palette.primary.dark
+    }
+  }
+})
 
 function Portfolio(props) {
 
   const portfolioStocks = props.stocks.filter(stock => {
     return props.display.portfolio.findIndex(it => it === stock.symbol) !== -1
   })
+
+  const {classes} = props
 
   return (
     <React.Fragment>
@@ -18,6 +33,9 @@ function Portfolio(props) {
                         onStockAdd={props.onStockAdd}
                         onStockUpdate={props.onStockUpdate}
                         onStockDelete={props.onStockDelete}/>
+      <Grid container item direction={'row'} justify={'flex-end'}>
+        <Button className={classes.newAccountButton}> New Account </Button>
+      </Grid>
     </React.Fragment>
   )
 }
@@ -36,7 +54,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(updateStockWithLiveData(stock))
       dispatch({
         type: 'DISPLAY_UPDATE',
-        payload: { symbol: stock.symbol, displayType: ACCOUNT.PORTFOLIO }
+        payload: {symbol: stock.symbol, displayType: ACCOUNT.PORTFOLIO}
       })
     },
     onStockUpdate: (stock) => {
@@ -45,10 +63,10 @@ function mapDispatchToProps(dispatch) {
     onStockDelete: (stock) => {
       dispatch({
         type: 'STOCK_DELETE',
-        payload: { symbol: stock.symbol, displayOption: stock.displayOption }
+        payload: {symbol: stock.symbol, displayOption: stock.displayOption}
       })
     }
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Portfolio))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Portfolio)))
