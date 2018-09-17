@@ -16,7 +16,6 @@ const styles = theme => ({
     width: 400
   },
   newAccountButton: {
-    marginTop: theme.spacing.unit,
     backgroundColor: theme.palette.primary.main,
     color: 'white',
     '&:hover': {

@@ -6,6 +6,13 @@ import {ACCOUNT} from '../../data/DataPersist'
 import {updateStockWithCacheData, updateStockWithLiveData} from '../../data/StoreActionCreator'
 import PortfolioAccount from './PortfolioAccount'
 import AddAccountForm from './AddAccountForm'
+import {withStyles} from '@material-ui/core'
+
+const styles = theme => ({
+  accountFormContainer: {
+    marginTop: theme.spacing.unit * 2
+  }
+})
 
 function Portfolio(props) {
 
@@ -17,6 +24,8 @@ function Portfolio(props) {
     console.log(`New Account submitted ${accountName}`)
   }
 
+  const {classes} = props
+
   return (
     <React.Fragment>
       <PortfolioAccount title={'My Test Account'}
@@ -24,7 +33,8 @@ function Portfolio(props) {
                         onStockAdd={props.onStockAdd}
                         onStockUpdate={props.onStockUpdate}
                         onStockDelete={props.onStockDelete}/>
-      <Grid container item direction={'row'} justify={'flex-end'}>
+      <Grid container item direction={'row'} justify={'flex-end'}
+            className={classes.accountFormContainer}>
         <AddAccountForm onSubmit={handleNewAccount}/>
       </Grid>
     </React.Fragment>
@@ -60,4 +70,4 @@ function mapDispatchToProps(dispatch) {
   }
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Portfolio))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Portfolio)))

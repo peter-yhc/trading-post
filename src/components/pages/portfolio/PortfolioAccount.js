@@ -19,7 +19,7 @@ function PortfolioAccount(props) {
     <React.Fragment>
       <Grid container direction="row" justify="flex-end">
         <Grid sm={6} item container direction="row" justify="flex-start">
-          <Typography className={props.classes.title} variant={'title'}>{props.title}</Typography>
+          <Typography className={props.classes.title} variant={'subheading'}>{props.title}</Typography>
         </Grid>
         <Grid sm={6} item container direction="row" justify="flex-end">
           <AddStockForm onSubmit={props.onStockAdd}/>
