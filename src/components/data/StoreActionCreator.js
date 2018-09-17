@@ -8,10 +8,7 @@ export function initialise() {
       if (stock.fetchedAt === undefined || moment().diff(stock.fetchedAt, 'days') > 0) {
         dispatch(updateStockWithLiveData(stock))
       } else {
-        dispatch({
-          type: 'STOCK_UPDATE',
-          payload: stock
-        })
+        dispatch(updateStockWithCacheData(stock))
       }
     })
   }
@@ -20,14 +17,24 @@ export function initialise() {
 export function updateStockWithLiveData(stock) {
   return async (dispatch) => {
     const apiData = await YahooApi.getStockHistory(stock.symbol)
+    const currentMarketValue = apiData.dailyClose * stock.shares
+
     dispatch({
       type: 'STOCK_UPDATE',
-      payload: createPayload(stock, apiData)
+      payload: Object.assign({}, stock, {
+        currency: apiData.currency,
+        exchange: apiData.exchange,
+        marketValue: currentMarketValue.toFixed(2),
+        unrealisedGains: (currentMarketValue - stock.bookCost).toFixed(2),
+        previousClose: apiData.dailyClose,
+        history: apiData.history,
+        fetchedAt: apiData.fetchedAt
+      })
+
     })
   }
 }
 
-//TODO clean up
 export function updateStockWithCacheData(stock) {
   const result = getStockCache().filter(cache => cache.symbol === stock.symbol)
   if (result.size === 0) {
@@ -45,17 +52,4 @@ export function updateStockWithCacheData(stock) {
       })
     })
   }
-}
-
-function createPayload(stock, apiData) {
-  const currentMarketValue = apiData.dailyClose * stock.shares
-  return Object.assign({}, stock, {
-    currency: apiData.currency,
-    exchange: apiData.exchange,
-    marketValue: currentMarketValue.toFixed(2),
-    unrealisedGains: (currentMarketValue - stock.bookCost).toFixed(2),
-    previousClose: apiData.dailyClose,
-    history: apiData.history,
-    fetchedAt: apiData.fetchedAt
-  })
 }
