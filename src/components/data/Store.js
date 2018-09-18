@@ -23,7 +23,9 @@ const reducer = (state, action) => {
     case 'STOCK_DELETE':
       const displayType = action.payload.displayOption
       const index = state.display[ displayType ].indexOf(action.payload.symbol)
-      if (index > -1) state.display[ displayType ].splice(index, 1)
+      if (index > -1) {
+        state.display[ displayType ].splice(index, 1)
+      }
 
       return {
         ...state,
