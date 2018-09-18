@@ -33,9 +33,7 @@ class StockTimeSeriesChart extends Component {
   yAxis = d3.axisLeft().scale(this.state.yScale)
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    if (!nextProps.historicalData) {
-      return null
-    } // data hasn't been loaded yet so do nothing
+    if (!nextProps.historicalData) return null // data hasn't been loaded yet so do nothing
 
     const {filteredDates, filteredPrices} = truncateDataToInterval(nextProps.historicalData, nextProps.interval)
     const timeDomain = d3.extent(filteredDates.map(it => new Date(it * 1000)))
