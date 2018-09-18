@@ -1,16 +1,17 @@
 import moment from 'moment'
-import {getStockCache} from './DataPersist'
+import {getStocks} from './DataPersist'
 import YahooApi from './YahooApi'
 
 export function initialise() {
   return (dispatch) => {
-    getStockCache().forEach(stock => {
+    getStocks().forEach(stock => {
       if (stock.fetchedAt === undefined || moment().diff(stock.fetchedAt, 'days') > 0) {
         dispatch(updateStockWithLiveData(stock))
       } else {
         dispatch(updateStockWithCacheData(stock))
       }
     })
+    dispatch({type: 'ACCOUNT_LOAD'})
   }
 }
 
@@ -36,7 +37,7 @@ export function updateStockWithLiveData(stock) {
 }
 
 export function updateStockWithCacheData(stock) {
-  const result = getStockCache().filter(cache => cache.symbol === stock.symbol)
+  const result = getStocks().filter(cache => cache.symbol === stock.symbol)
   if (result.size === 0) {
     console.log(`Attempting to update symbol ${stock.symbol} without a cache.`)
   }

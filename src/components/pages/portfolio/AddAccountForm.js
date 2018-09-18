@@ -30,7 +30,7 @@ class AddAccountForm extends Component {
     super(props)
     this.state = {
       open: false,
-      name: ""
+      name: ''
     }
   }
 
@@ -47,7 +47,8 @@ class AddAccountForm extends Component {
   }
 
   handleSubmit = () => {
-    this.props.onSubmit(this.state.name)
+    this.props.onSubmit('account name here', {name: this.state.name})
+    this.setState({open: false})
   }
 
   render() {
