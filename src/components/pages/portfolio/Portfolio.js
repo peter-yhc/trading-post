@@ -3,7 +3,11 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import {ACCOUNT} from '../../data/DataPersist'
-import {updateStockWithCacheData, updateStockWithLiveData} from '../../data/StoreActionCreator'
+import {
+  updateStockWithCacheData,
+  updateStockWithLiveData,
+  updateStockWithLiveDataMinimal
+} from '../../data/StoreActionCreator'
 import PortfolioAccount from './PortfolioAccount'
 import AddAccountForm from './AddAccountForm'
 import {withStyles} from '@material-ui/core'
@@ -25,11 +29,11 @@ function Portfolio(props) {
     const accounts = []
     Object.values(props.accounts).forEach(acc => {
       accounts.push(
-        <Grid container className={classes.portfolioAccountContainer}>
+        <Grid container key={acc.name} className={classes.portfolioAccountContainer}>
           <PortfolioAccount
             title={acc.name}
             stocks={acc.stocks}
-            onStockAdd={props.onStockAdd}
+            onStockAdd={props.onAccountStockAdd(acc.name)}
             onStockUpdate={props.onStockUpdate}
             onStockDelete={props.onStockDelete}/>
         </Grid>
@@ -55,7 +59,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onStockAdd: (accountName, stock) => {
+    onStockAdd: accountName => (stock) => {
       dispatch({
         type: 'STOCK_CREATE',
         payload: {
@@ -84,6 +88,18 @@ function mapDispatchToProps(dispatch) {
       dispatch({
         type: 'ACCOUNT_CREATE',
         payload: {name: account.name}
+      })
+    },
+    onAccountStockAdd: accountName => stock => {
+      dispatch(updateStockWithLiveDataMinimal(stock.symbol))
+      dispatch({
+        type: 'ACCOUNT_STOCK_ADD',
+        payload: {
+          accountName: accountName,
+          symbol: stock.symbol,
+          shares: stock.shares,
+          bookCost: stock.bookCost
+        }
       })
     }
   }

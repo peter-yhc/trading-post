@@ -6,7 +6,7 @@ export function PortfolioTable(props) {
 
   function createTable() {
     let table = []
-    props.data.forEach(stock => {
+    Object.values(props.data).forEach(stock => {
       table.push(<TableRow key={stock.symbol}>
         <TableCell>{stock.symbol}</TableCell>
         <TableCell>{stock.exchange}</TableCell>

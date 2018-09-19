@@ -65,7 +65,7 @@ class EditStockForm extends Component {
 
   createSelectOptions = () => {
     const options = []
-    this.props.data.forEach(stock => {
+    Object.values(this.props.data).forEach(stock => {
       options.push(
         <option key={stock.symbol} value={stock.symbol}>{stock.symbol}</option>
       )

@@ -33,10 +33,26 @@ export function getAccounts() {
 export function createAccount(accountName) {
   const cache = getAccounts()
   if (!cache[ accountName ]) {
-    cache[ accountName ] = {name: accountName, stocks: []}
+    cache[ accountName ] = {name: accountName, stocks: {}}
     localStorage.setItem('accounts', JSON.stringify(cache))
   }
   return cache[ accountName ]
+}
+
+export function addStockToAccount(data) {
+  const accountCache = getAccounts()
+  accountCache[ data.accountName ].stocks[ data.symbol ] = {
+    symbol: data.symbol,
+    shares: data.shares,
+    bookCost: data.bookCost,
+  }
+  console.log(accountCache[ data.accountName ])
+  localStorage.setItem('accounts', JSON.stringify(accountCache))
+  return accountCache[ data.accountName ]
+}
+
+export function addStockDataToCache(symbol) {
+
 }
 
 export const ACCOUNT = Object.seal({

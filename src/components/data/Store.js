@@ -1,6 +1,14 @@
 import {applyMiddleware, compose, createStore} from 'redux'
 import thunk from 'redux-thunk'
-import {createAccount, getAccounts, getDisplaySettings, updateDisplaySetting, updateStocksCache} from './DataPersist'
+import {
+  addStockDataToCache,
+  addStockToAccount,
+  createAccount,
+  getAccounts,
+  getDisplaySettings,
+  updateDisplaySetting,
+  updateStocksCache
+} from './DataPersist'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -55,11 +63,21 @@ const reducer = (state, action) => {
           [ accountName ]: createdAccount
         }
       }
-    default:
+    case 'ACCOUNT_STOCK_ADD':
+      console.log(action.payload)
+      // addStockDataToCache(action.payload.symbol)
+      const updatedAccount = addStockToAccount(action.payload)
+
       return {
-        stocks: JSON.parse(localStorage.getItem('stocks')) || [],
-        display: getDisplaySettings()
+        ...state,
+        accounts: {
+          ...state.accounts,
+          [ action.payload.accountName ]: updatedAccount
+        }
       }
+    default:
+      console.log('unknown type: ' + action.type)
+      return state
   }
 }
 

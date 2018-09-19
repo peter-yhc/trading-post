@@ -36,6 +36,24 @@ export function updateStockWithLiveData(stock) {
   }
 }
 
+export function updateStockWithLiveDataMinimal(symbol) {
+  return async (dispatch) => {
+    const apiData = await YahooApi.getStockHistory(symbol)
+
+    dispatch({
+      type: 'STOCK_UPDATE',
+      payload: {
+        symbol,
+        currency: apiData.currency,
+        exchange: apiData.exchange,
+        previousClose: apiData.dailyClose,
+        history: apiData.history,
+        fetchedAt: apiData.fetchedAt
+      }
+    })
+  }
+}
+
 export function updateStockWithCacheData(stock) {
   const result = getStocks().filter(cache => cache.symbol === stock.symbol)
   if (result.size === 0) {

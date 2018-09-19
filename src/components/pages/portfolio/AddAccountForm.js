@@ -47,7 +47,7 @@ class AddAccountForm extends Component {
   }
 
   handleSubmit = () => {
-    this.props.onSubmit('account name here', {name: this.state.name})
+    this.props.onSubmit({name: this.state.name})
     this.setState({open: false})
   }
 

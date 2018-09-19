@@ -21,7 +21,8 @@ class Dashboard extends Component {
 
   generateCharts = () => {
     const charts = []
-    const filteredStocks = filterStocksByDisplayType(this.props.display, this.props.stocks, this.state.displayValue)
+    // const filteredStocks = filterStocksByDisplayType(this.props.display, this.props.stocks, this.state.displayValue)
+    const filteredStocks = []
 
     filteredStocks.forEach(stock => {
       charts.push(
