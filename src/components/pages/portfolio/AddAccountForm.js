@@ -30,29 +30,40 @@ class AddAccountForm extends Component {
     super(props)
     this.state = {
       open: false,
-      name: ''
+      name: '',
+      error: null
     }
   }
 
   handleClickOpen = () => {
-    this.setState({open: true})
+    this.setState({ open: true })
   }
 
   handleChange = (event) => {
-    this.setState({name: event.target.value})
+    if (event.target.value.length < 1) {
+      this.setState({ error: 'Name is required.' })
+    } else {
+      this.setState({ error: null })
+    }
+    this.setState({ name: event.target.value })
   }
 
   handleClose = () => {
-    this.setState({open: false})
+    this.setState({ open: false })
   }
 
-  handleSubmit = () => {
-    this.props.onSubmit({name: this.state.name})
-    this.setState({open: false})
+  handleSubmit = (event) => {
+    event.preventDefault()
+    if (this.state.name.length < 1) {
+      this.setState({ error: 'Name is required.' })
+      return
+    }
+    this.props.onSubmit({ name: this.state.name })
+    this.setState({ open: false })
   }
 
   render() {
-    const {classes} = this.props
+    const { classes } = this.props
 
     return (
       <Fragment>
@@ -63,14 +74,16 @@ class AddAccountForm extends Component {
         <Dialog open={this.state.open} onClose={this.handleClose}>
           <DialogContent>
             <Typography variant="subheading">Add a new account</Typography>
-            <form className={classes.formContainer}>
+            <form className={classes.formContainer} onSubmit={this.handleSubmit}>
               <Grid container item sm={12} justify="center">
                 <TextField
                   label="Name"
                   className={classes.textField}
                   value={this.state.name}
                   onChange={this.handleChange}
-                  margin="normal"/>
+                  margin="normal"
+                  error={this.state.error}
+                />
               </Grid>
             </form>
           </DialogContent>
