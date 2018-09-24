@@ -23,11 +23,19 @@ const styles = theme => ({
 
 function Portfolio(props) {
 
-  const {classes} = props
+  const { classes } = props
 
   function showAccounts() {
     const accounts = []
     Object.values(props.accounts).forEach(acc => {
+
+      if (props.stocks) {
+        Object.keys(acc.stocks).forEach(stockKey => {
+          acc.stocks[stockKey].currency = props.stocks[stockKey].currency
+          acc.stocks[stockKey].exchange = props.stocks[stockKey].exchange
+        })
+      }
+
       accounts.push(
         <Grid container key={acc.name} className={classes.portfolioAccountContainer}>
           <PortfolioAccount
@@ -72,7 +80,7 @@ function mapDispatchToProps(dispatch) {
       dispatch(updateStockWithLiveData(stock))
       dispatch({
         type: 'DISPLAY_UPDATE',
-        payload: {symbol: stock.symbol, displayType: ACCOUNT.PORTFOLIO}
+        payload: { symbol: stock.symbol, displayType: ACCOUNT.PORTFOLIO }
       })
     },
     onStockUpdate: (stock) => {
@@ -81,25 +89,28 @@ function mapDispatchToProps(dispatch) {
     onStockDelete: (stock) => {
       dispatch({
         type: 'STOCK_DELETE',
-        payload: {symbol: stock.symbol, displayOption: stock.displayOption}
+        payload: { symbol: stock.symbol, displayOption: stock.displayOption }
       })
     },
     onAccountCreate: (account) => {
       dispatch({
         type: 'ACCOUNT_CREATE',
-        payload: {name: account.name}
+        payload: { name: account.name }
       })
     },
     onAccountStockAdd: accountName => stock => {
-      dispatch(updateStockWithLiveDataMinimal(stock.symbol))
-      dispatch({
-        type: 'ACCOUNT_STOCK_ADD',
-        payload: {
-          accountName: accountName,
-          symbol: stock.symbol,
-          shares: stock.shares,
-          bookCost: stock.bookCost
-        }
+      new Promise((resolve) => {
+        dispatch(updateStockWithLiveDataMinimal(stock.symbol, resolve))
+      }).then(() => {
+        dispatch({
+          type: 'ACCOUNT_STOCK_ADD',
+          payload: {
+            accountName: accountName,
+            symbol: stock.symbol,
+            shares: stock.shares,
+            bookCost: stock.bookCost
+          }
+        })
       })
     }
   }

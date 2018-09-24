@@ -23,7 +23,7 @@ function PortfolioAccount(props) {
         </Grid>
         <Grid sm={6} item container direction="row" justify="flex-end">
           <AddStockForm onSubmit={props.onStockAdd}/>
-          <EditStockForm data={props.stocks} onSubmit={props.onStockUpdate} onDelete={props.onStockDelete}/>
+          <EditStockForm data={Object.values(props.stocks)} onSubmit={props.onStockUpdate} onDelete={props.onStockDelete}/>
         </Grid>
       </Grid>
       <Grid item sm={12}>

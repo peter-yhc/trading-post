@@ -13,7 +13,6 @@ const styles = theme => ({
 })
 
 function Performance(props) {
-  console.log(props)
   const portfolioStocks = props.stocks.filter(stock => {
     return props.display[ ACCOUNT.PORTFOLIO ].findIndex(it => it === stock.symbol) !== -1
   })
