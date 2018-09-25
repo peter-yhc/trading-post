@@ -1,4 +1,4 @@
-import {Grid, NativeSelect} from '@material-ui/core/es/index'
+import {Grid, NativeSelect, Typography} from '@material-ui/core/es/index'
 import withStyles from '@material-ui/core/es/styles/withStyles'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
@@ -21,8 +21,7 @@ class Dashboard extends Component {
 
   generateCharts = () => {
     const charts = []
-    // const filteredStocks = filterStocksByDisplayType(this.props.display, this.props.stocks, this.state.displayValue)
-    const filteredStocks = []
+    const filteredStocks = filterStocksByAccount(this.props.accounts, this.props.stocks, this.state.displayValue)
 
     filteredStocks.forEach(stock => {
       charts.push(
@@ -38,6 +37,17 @@ class Dashboard extends Component {
     return charts
   }
 
+  generateDisplayDropdown = () => {
+    const options = [
+      <option value={'all'} key={'all'}>All</option>
+    ]
+
+    Object.keys(this.props.accounts).forEach(key => {
+      options.push(<option value={key} key={key}>{key}</option>)
+    })
+    return options
+  }
+
   changeChartPeriod = (event) => {
     this.setState({
       selectValue: parseInt(event.target.value, 10)
@@ -51,6 +61,13 @@ class Dashboard extends Component {
   }
 
   render() {
+    if (this.props.status !== 'READY') {
+      return (
+        <React.Fragment>
+          <Typography variant={'subheading'}>Loading...</Typography>
+        </React.Fragment>
+      )
+    }
     return (
       <React.Fragment>
         <Grid container spacing={24} justify={'flex-start'}>
@@ -58,9 +75,7 @@ class Dashboard extends Component {
             <NativeSelect
               value={this.state.displayValue}
               onChange={this.changeDisplay}>
-              <option value={ACCOUNT.ALL}>All</option>
-              <option value={ACCOUNT.WATCHING}>Watching</option>
-              <option value={ACCOUNT.PORTFOLIO}>Portfolio</option>
+              {this.generateDisplayDropdown()}
             </NativeSelect>
           </Grid>
           <Grid item>
@@ -82,11 +97,15 @@ class Dashboard extends Component {
   }
 }
 
-function filterStocksByDisplayType(displays, stocks, type) {
-  if (type !== ACCOUNT.ALL) {
-    return stocks.filter(stock => displays[ type ] && displays[ type ].includes(stock.symbol)) || []
+function filterStocksByAccount(accounts, stocks, selection) {
+  if (selection !== 'all') {
+    const displayStocks = []
+    Object.keys(accounts[selection].stocks).forEach(key => {
+      displayStocks.push(stocks[key])
+    })
+    return displayStocks
   } else {
-    return stocks
+    return Object.values(stocks)
   }
 }
 

@@ -11,6 +11,12 @@ import {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case 'READY': {
+      return {
+        ...state,
+        status: 'READY'
+      }
+    }
     case 'STOCK_CREATE': {
       updateStocksCache(action.payload.symbol, action.payload)
       return {
@@ -43,13 +49,6 @@ const reducer = (state, action) => {
           ...state.accounts,
           [accountName]: state.accounts[accountName]
         }
-      }
-    }
-    case 'DISPLAY_UPDATE': {
-      const updatedDisplay = updateDisplaySetting(action.payload.symbol, action.payload.displayType)
-      return {
-        ...state,
-        display: updatedDisplay
       }
     }
     case 'ACCOUNT_LOAD': {

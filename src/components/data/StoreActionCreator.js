@@ -4,15 +4,23 @@ import YahooApi from './YahooApi'
 
 export function initialise() {
   return (dispatch) => {
-    dispatch({ type: 'ACCOUNT_LOAD' })
+    new Promise(resolve => {
+      dispatch({ type: 'ACCOUNT_LOAD' })
 
-    Object.values(getStocks()).forEach(stock => {
-      if (stock.fetchedAt === undefined || moment().diff(stock.fetchedAt, 'days') > 0) {
-        dispatch(updateStockWithLiveData(stock))
-      } else {
-        dispatch(updateStockWithCacheData(stock))
-      }
+      Object.values(getStocks()).forEach(stock => {
+        if (stock.fetchedAt === undefined || moment().diff(stock.fetchedAt, 'days') > 0) {
+          dispatch(updateStockWithLiveDataMinimal(stock, resolve))
+        } else {
+          dispatch(updateStockWithCacheData(stock))
+          resolve()
+        }
+      })
+    }).then(() => {
+      dispatch({
+        type: 'READY'
+      })
     })
+
   }
 }
 
