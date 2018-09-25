@@ -23,6 +23,9 @@ const styles = theme => ({
   dialogButton: {
     margin: theme.spacing.unit
   },
+  deleteButton: {
+    color: theme.palette.error[900]
+  },
   formContainer: {
     display: 'flex',
     flexWrap: 'wrap'
@@ -55,8 +58,8 @@ class EditStockForm extends Component {
   }
 
   handleClickOpen = () => {
-    this.setState({open: true})
-    this.setState({symbol: this.props.data[ 0 ].symbol})
+    this.setState({ open: true })
+    this.setState({ symbol: this.props.data[0].symbol })
   }
 
   resetState = () => {
@@ -75,7 +78,7 @@ class EditStockForm extends Component {
 
   handleChange = name => event => {
     this.setState({
-      [ name ]: event.target.value
+      [name]: event.target.value
     })
   }
 
@@ -89,12 +92,12 @@ class EditStockForm extends Component {
   }
 
   handleDelete = () => {
-    this.props.onDelete({symbol: this.state.symbol.toUpperCase()})
+    this.props.onDelete({ symbol: this.state.symbol.toUpperCase() })
     this.resetState()
   }
 
   render() {
-    const {classes} = this.props
+    const { classes } = this.props
     return (
       <React.Fragment>
         <Button
@@ -141,7 +144,9 @@ class EditStockForm extends Component {
           </DialogContent>
           <DialogActions>
             <Grid direction={'row'} justify={'flex-start'} container item>
-              <Button className={classes.dialogButton} onClick={this.handleDelete}> Delete </Button>
+              <Button className={[classes.dialogButton, classes.deleteButton].join(' ')}
+                      onClick={this.handleDelete}> Delete
+              </Button>
             </Grid>
             <Grid direction={'row'} justify={'flex-end'} container item>
               <Button className={classes.dialogButton} color="primary" onClick={this.resetState}> Cancel </Button>
