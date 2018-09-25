@@ -10,13 +10,6 @@ const reducer = (state, action) => {
         status: 'READY'
       }
     }
-    case 'STOCK_CREATE': {
-      updateStocksCache(action.payload.symbol, action.payload)
-      return {
-        ...state,
-        stocks: [...state.stocks, action.payload]
-      }
-    }
     case 'STOCK_UPDATE': {
       updateStocksCache(action.payload.symbol, action.payload)
       if (!state.stocks) {

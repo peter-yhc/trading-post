@@ -2,11 +2,8 @@ import {Grid} from '@material-ui/core/es/index'
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {
-  updateStockWithCacheData,
-  updateStockWithLiveData,
-  updateStockWithLiveDataMinimal
-} from '../../data/StoreActionCreator'
+
+import {updateStockWithLiveDataMinimal} from '../../data/StoreActionCreator'
 import PortfolioAccount from './PortfolioAccount'
 import AddAccountForm from './AddAccountForm'
 import {withStyles} from '@material-ui/core'
@@ -41,7 +38,7 @@ function Portfolio(props) {
             title={acc.name}
             stocks={acc.stocks}
             onStockAdd={props.onAccountStockAdd(acc.name)}
-            onStockUpdate={props.onStockUpdate}
+            onStockUpdate={props.onStockUpdate(acc.name)}
             onStockDelete={props.onStockDelete(acc.name)}/>
         </Grid>
       )
@@ -66,20 +63,20 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    onStockAdd: accountName => (stock) => {
-      dispatch({
-        type: 'STOCK_CREATE',
-        payload: {
-          accountName,
-          symbol: stock.symbol,
-          shares: stock.shares,
-          bookCost: stock.bookCost
-        }
+    onStockUpdate: accountName => stock => {
+      new Promise((resolve) => {
+        dispatch(updateStockWithLiveDataMinimal(stock.symbol, resolve))
+      }).then(() => {
+        dispatch({
+          type: 'ACCOUNT_STOCK_ADD',
+          payload: {
+            accountName: accountName,
+            symbol: stock.symbol,
+            shares: stock.shares,
+            bookCost: stock.bookCost
+          }
+        })
       })
-      dispatch(updateStockWithLiveData(stock))
-    },
-    onStockUpdate: (stock) => {
-      dispatch(updateStockWithCacheData(stock))
     },
     onStockDelete: accountName => event => {
       dispatch({

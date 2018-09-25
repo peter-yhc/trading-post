@@ -20,28 +20,6 @@ export function initialise() {
         type: 'READY'
       })
     })
-
-  }
-}
-
-export function updateStockWithLiveData(stock) {
-  return async (dispatch) => {
-    const apiData = await YahooApi.getStockHistory(stock.symbol)
-    const currentMarketValue = apiData.dailyClose * stock.shares
-
-    dispatch({
-      type: 'STOCK_UPDATE',
-      payload: Object.assign({}, stock, {
-        currency: apiData.currency,
-        exchange: apiData.exchange,
-        marketValue: currentMarketValue.toFixed(2),
-        unrealisedGains: (currentMarketValue - stock.bookCost).toFixed(2),
-        previousClose: apiData.dailyClose,
-        history: apiData.history,
-        fetchedAt: apiData.fetchedAt
-      })
-
-    })
   }
 }
 
@@ -60,7 +38,9 @@ export function updateStockWithLiveDataMinimal(symbol, resolve) {
         fetchedAt: apiData.fetchedAt
       }
     })
-    resolve()
+    if (resolve) {
+      resolve()
+    }
   }
 }
 
