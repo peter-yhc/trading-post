@@ -1,6 +1,6 @@
 import {applyMiddleware, compose, createStore} from 'redux'
 import thunk from 'redux-thunk'
-import {createAccount, getAccounts, updateAccountCache, updateStocksCache} from './DataPersist'
+import {createAccount, deleteStock, getAccounts, updateAccountCache, updateStocksCache} from './DataPersist'
 
 const reducer = (state, action) => {
   switch (action.type) {
@@ -36,6 +36,7 @@ const reducer = (state, action) => {
 
       delete state.accounts[accountName].stocks[stockSymbol]
       updateAccountCache(accountName, state.accounts[accountName])
+      removeStockIfLast(state, stockSymbol)
       return {
         ...state,
         accounts: {
@@ -96,5 +97,16 @@ const store = createStore(
   reducer,
   composeEnhancers(applyMiddleware(thunk))
 )
+
+function removeStockIfLast(state, symbol) {
+  const stockInUse = Object.values(state.accounts).some(account => {
+    return account.stocks[symbol] !== undefined
+  })
+
+  if (stockInUse === false) {
+    delete state.stocks[symbol]
+    deleteStock(symbol)
+  }
+}
 
 export default store

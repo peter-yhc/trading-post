@@ -1,11 +1,17 @@
+export function getStocks() {
+  return JSON.parse(localStorage.getItem('stocks')) || {}
+}
+
 export function updateStocksCache(symbol, updatedValues) {
   const cache = getStocks()
   cache[symbol] = updatedValues
   localStorage.setItem('stocks', JSON.stringify(cache))
 }
 
-export function getStocks() {
-  return JSON.parse(localStorage.getItem('stocks')) || {}
+export function deleteStock(symbol) {
+  const cache = getStocks()
+  delete cache[symbol]
+  localStorage.setItem('stocks', JSON.stringify(cache))
 }
 
 export function getAccounts() {
@@ -26,9 +32,3 @@ export function updateAccountCache(accountName, data) {
   cache[accountName] = data
   localStorage.setItem('accounts', JSON.stringify(cache))
 }
-
-export const ACCOUNT = Object.seal({
-  ALL: 'all',
-  WATCHING: 'watching',
-  PORTFOLIO: 'portfolio'
-})
