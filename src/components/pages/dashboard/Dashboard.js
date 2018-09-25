@@ -97,6 +97,8 @@ class Dashboard extends Component {
 }
 
 function filterStocksByAccount(accounts, stocks, selection) {
+  if (!stocks) return []
+
   if (selection !== 'all') {
     const displayStocks = []
     Object.keys(accounts[selection].stocks).forEach(key => {

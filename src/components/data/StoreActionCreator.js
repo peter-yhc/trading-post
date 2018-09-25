@@ -7,14 +7,19 @@ export function initialise() {
     new Promise(resolve => {
       dispatch({ type: 'ACCOUNT_LOAD' })
 
-      Object.values(getStocks()).forEach(stock => {
-        if (stock.fetchedAt === undefined || moment().diff(stock.fetchedAt, 'days') > 0) {
-          dispatch(updateStockWithLiveDataMinimal(stock, resolve))
-        } else {
-          dispatch(updateStockWithCacheData(stock))
-          resolve()
-        }
-      })
+      const stocks = Object.values(getStocks())
+      if (stocks.length !== 0) {
+        stocks.forEach(stock => {
+          if (stock.fetchedAt === undefined || moment().diff(stock.fetchedAt, 'days') > 0) {
+            dispatch(updateStockWithLiveDataMinimal(stock, resolve))
+          } else {
+            dispatch(updateStockWithCacheData(stock))
+            resolve()
+          }
+        })
+      } else {
+        resolve()
+      }
     }).then(() => {
       dispatch({
         type: 'READY'
