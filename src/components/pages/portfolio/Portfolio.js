@@ -2,7 +2,6 @@ import {Grid} from '@material-ui/core/es/index'
 import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
-import {ACCOUNT} from '../../data/DataPersist'
 import {
   updateStockWithCacheData,
   updateStockWithLiveData,
@@ -78,10 +77,6 @@ function mapDispatchToProps(dispatch) {
         }
       })
       dispatch(updateStockWithLiveData(stock))
-      dispatch({
-        type: 'DISPLAY_UPDATE',
-        payload: { symbol: stock.symbol, displayType: ACCOUNT.PORTFOLIO }
-      })
     },
     onStockUpdate: (stock) => {
       dispatch(updateStockWithCacheData(stock))

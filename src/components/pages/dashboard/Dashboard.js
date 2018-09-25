@@ -4,7 +4,6 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import StockTimeSeriesChart, {ChartIntervalEnum as CHART} from './StockTimeSeriesChart'
-import {ACCOUNT} from '../../data/DataPersist'
 
 const styles = {
   chartContainer: {
@@ -16,12 +15,12 @@ class Dashboard extends Component {
 
   state = {
     selectValue: CHART.MONTH,
-    displayValue: ACCOUNT.ALL
+    accountSelection: 'all'
   }
 
   generateCharts = () => {
     const charts = []
-    const filteredStocks = filterStocksByAccount(this.props.accounts, this.props.stocks, this.state.displayValue)
+    const filteredStocks = filterStocksByAccount(this.props.accounts, this.props.stocks, this.state.accountSelection)
 
     filteredStocks.forEach(stock => {
       charts.push(
@@ -56,7 +55,7 @@ class Dashboard extends Component {
 
   changeDisplay = (event) => {
     this.setState({
-      displayValue: event.target.value
+      accountSelection: event.target.value
     })
   }
 
@@ -73,7 +72,7 @@ class Dashboard extends Component {
         <Grid container spacing={24} justify={'flex-start'}>
           <Grid item>
             <NativeSelect
-              value={this.state.displayValue}
+              value={this.state.accountSelection}
               onChange={this.changeDisplay}>
               {this.generateDisplayDropdown()}
             </NativeSelect>

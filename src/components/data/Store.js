@@ -1,13 +1,6 @@
 import {applyMiddleware, compose, createStore} from 'redux'
 import thunk from 'redux-thunk'
-import {
-  addStockToAccount,
-  createAccount,
-  getAccounts, getStocks,
-  updateAccountCache,
-  updateDisplaySetting,
-  updateStocksCache
-} from './DataPersist'
+import {createAccount, getAccounts, updateAccountCache, updateStocksCache} from './DataPersist'
 
 const reducer = (state, action) => {
   switch (action.type) {
