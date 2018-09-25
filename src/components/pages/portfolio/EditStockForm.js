@@ -89,7 +89,7 @@ class EditStockForm extends Component {
   }
 
   handleDelete = () => {
-    this.props.onDelete({symbol: this.state.symbol.toUpperCase(), displayOption: 'portfolio'})
+    this.props.onDelete({symbol: this.state.symbol.toUpperCase()})
     this.resetState()
   }
 

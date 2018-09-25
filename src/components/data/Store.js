@@ -1,16 +1,24 @@
 import {applyMiddleware, compose, createStore} from 'redux'
 import thunk from 'redux-thunk'
-import {addStockToAccount, createAccount, getAccounts, updateDisplaySetting, updateStocksCache} from './DataPersist'
+import {
+  addStockToAccount,
+  createAccount,
+  getAccounts, getStocks,
+  updateAccountCache,
+  updateDisplaySetting,
+  updateStocksCache
+} from './DataPersist'
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'STOCK_CREATE':
+    case 'STOCK_CREATE': {
       updateStocksCache(action.payload.symbol, action.payload)
       return {
         ...state,
         stocks: [...state.stocks, action.payload]
       }
-    case 'STOCK_UPDATE':
+    }
+    case 'STOCK_UPDATE': {
       updateStocksCache(action.payload.symbol, action.payload)
       if (!state.stocks) {
         state.stocks = {}
@@ -22,31 +30,36 @@ const reducer = (state, action) => {
           [action.payload.symbol]: action.payload
         }
       }
-    case 'STOCK_DELETE':
-      const displayType = action.payload.displayOption
-      const index = state.display[displayType].indexOf(action.payload.symbol)
-      if (index > -1) state.display[displayType].splice(index, 1)
+    }
+    case 'STOCK_DELETE': {
+      const stockSymbol = action.payload.symbol
+      const accountName = action.payload.accountName
 
+      delete state.accounts[accountName].stocks[stockSymbol]
+      updateAccountCache(accountName, state.accounts[accountName])
       return {
         ...state,
-        display: {
-          ...state.display,
-          [displayType]: state.display[displayType]
+        accounts: {
+          ...state.accounts,
+          [accountName]: state.accounts[accountName]
         }
       }
-    case 'DISPLAY_UPDATE':
+    }
+    case 'DISPLAY_UPDATE': {
       const updatedDisplay = updateDisplaySetting(action.payload.symbol, action.payload.displayType)
       return {
         ...state,
         display: updatedDisplay
       }
-    case 'ACCOUNT_LOAD':
+    }
+    case 'ACCOUNT_LOAD': {
       const accounts = getAccounts()
       return {
         ...state,
         accounts: accounts
       }
-    case 'ACCOUNT_CREATE':
+    }
+    case 'ACCOUNT_CREATE': {
       const accountName = action.payload.name
       const createdAccount = createAccount(accountName)
       return {
@@ -56,15 +69,30 @@ const reducer = (state, action) => {
           [accountName]: createdAccount
         }
       }
-    case 'ACCOUNT_STOCK_ADD':
-      const updatedAccount = addStockToAccount(action.payload)
+    }
+    case 'ACCOUNT_STOCK_ADD': {
+      const accountName = action.payload.accountName
+      const accountCache = state.accounts
+      const stockCache = state.stocks
+
+      const currentMarketValue = stockCache[action.payload.symbol].previousClose * action.payload.shares
+      accountCache[accountName].stocks[action.payload.symbol] = {
+        symbol: action.payload.symbol,
+        shares: action.payload.shares,
+        bookCost: action.payload.bookCost,
+        marketValue: currentMarketValue.toFixed(2),
+        unrealisedGains: (currentMarketValue - action.payload.bookCost).toFixed(2)
+      }
+
+      updateAccountCache(accountName, state.accounts[accountName])
       return {
         ...state,
         accounts: {
           ...state.accounts,
-          [action.payload.accountName]: updatedAccount
+          [action.payload.accountName]: accountCache[accountName]
         }
       }
+    }
     default:
       console.log('unknown type: ' + action.type)
       return state

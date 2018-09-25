@@ -43,7 +43,7 @@ function Portfolio(props) {
             stocks={acc.stocks}
             onStockAdd={props.onAccountStockAdd(acc.name)}
             onStockUpdate={props.onStockUpdate}
-            onStockDelete={props.onStockDelete}/>
+            onStockDelete={props.onStockDelete(acc.name)}/>
         </Grid>
       )
     })
@@ -86,10 +86,10 @@ function mapDispatchToProps(dispatch) {
     onStockUpdate: (stock) => {
       dispatch(updateStockWithCacheData(stock))
     },
-    onStockDelete: (stock) => {
+    onStockDelete: accountName => event => {
       dispatch({
         type: 'STOCK_DELETE',
-        payload: { symbol: stock.symbol, displayOption: stock.displayOption }
+        payload: { symbol: event.symbol, accountName }
       })
     },
     onAccountCreate: (account) => {

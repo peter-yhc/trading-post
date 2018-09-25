@@ -34,6 +34,12 @@ export function createAccount(accountName) {
   return cache[accountName]
 }
 
+export function updateAccountCache(accountName, data) {
+  const cache = getAccounts()
+  cache[accountName] = data
+  localStorage.setItem('accounts', JSON.stringify(cache))
+}
+
 export function addStockToAccount(event) {
   const accountCache = getAccounts()
   const stockCache = getStocks()
