@@ -6,7 +6,6 @@ const MAX_HISTORY = 24 * 60 * 60 * 365 * 5 // 5 years
 export default {
 
   getStockHistory: async (symbol) => {
-    console.log(symbol)
     const endingPeriod = Math.round(new Date().getTime() / 1000)
     const startingPeriod = endingPeriod - MAX_HISTORY
     const response = await axios.get(

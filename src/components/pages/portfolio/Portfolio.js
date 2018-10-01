@@ -3,7 +3,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 
-import {updateStockWithLiveDataMinimal} from '../../data/StoreActionCreator'
+import {updateStockWithLiveData} from '../../data/StoreActionCreator'
 import PortfolioAccount from './PortfolioAccount'
 import AddAccountForm from './AddAccountForm'
 import {withStyles} from '@material-ui/core'
@@ -65,7 +65,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onStockUpdate: accountName => stock => {
       new Promise((resolve) => {
-        dispatch(updateStockWithLiveDataMinimal(stock.symbol, resolve))
+        dispatch(updateStockWithLiveData(stock.symbol, resolve))
       }).then(() => {
         dispatch({
           type: 'ACCOUNT_STOCK_ADD',
@@ -92,7 +92,7 @@ function mapDispatchToProps(dispatch) {
     },
     onAccountStockAdd: accountName => stock => {
       new Promise((resolve) => {
-        dispatch(updateStockWithLiveDataMinimal(stock.symbol, resolve))
+        dispatch(updateStockWithLiveData(stock, resolve))
       }).then(() => {
         dispatch({
           type: 'ACCOUNT_STOCK_ADD',

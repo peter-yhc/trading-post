@@ -11,7 +11,7 @@ export function initialise() {
       if (stocks.length !== 0) {
         stocks.forEach(stock => {
           if (stock.fetchedAt === undefined || moment().diff(stock.fetchedAt, 'days') > 0) {
-            dispatch(updateStockWithLiveDataMinimal(stock, resolve))
+            dispatch(updateStockWithLiveData(stock, resolve))
           } else {
             dispatch(updateStockWithCacheData(stock))
             resolve()
@@ -28,7 +28,7 @@ export function initialise() {
   }
 }
 
-export function updateStockWithLiveDataMinimal(stock, resolve) {
+export function updateStockWithLiveData(stock, resolve) {
   return async (dispatch) => {
     const apiData = await YahooApi.getStockHistory(stock.symbol)
 
