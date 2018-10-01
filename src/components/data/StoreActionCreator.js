@@ -28,14 +28,14 @@ export function initialise() {
   }
 }
 
-export function updateStockWithLiveDataMinimal(symbol, resolve) {
+export function updateStockWithLiveDataMinimal(stock, resolve) {
   return async (dispatch) => {
-    const apiData = await YahooApi.getStockHistory(symbol)
+    const apiData = await YahooApi.getStockHistory(stock.symbol)
 
     dispatch({
       type: 'STOCK_UPDATE',
       payload: {
-        symbol,
+        symbol: stock.symbol,
         currency: apiData.currency,
         exchange: apiData.exchange,
         previousClose: apiData.dailyClose,

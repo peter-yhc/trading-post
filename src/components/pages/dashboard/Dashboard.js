@@ -66,39 +66,44 @@ class Dashboard extends Component {
           <Typography variant={'subheading'}>Loading...</Typography>
         </React.Fragment>
       )
+    } else if (!this.props.stocks || this.props.stocks.length === 0) {
+      return (
+        <React.Fragment>
+          <Typography variant={'subheading'}>Add some stocks to your account to get started</Typography>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <React.Fragment>
+          <Grid container spacing={24} justify={'flex-start'}>
+            <Grid item>
+              <NativeSelect
+                value={this.state.accountSelection}
+                onChange={this.changeDisplay}>
+                {this.generateDisplayDropdown()}
+              </NativeSelect>
+            </Grid>
+            <Grid item>
+              <NativeSelect
+                value={this.state.selectValue}
+                onChange={this.changeChartPeriod}>
+                <option value={CHART.MONTH}>1 Month</option>
+                <option value={CHART.HALF_YEAR}>6 Months</option>
+                <option value={CHART.YEAR}>1 Year</option>
+                <option value={CHART.FIVE_YEARS}>5 Years</option>
+              </NativeSelect>
+            </Grid>
+          </Grid>
+          <Grid container item xs={12}>
+            {this.generateCharts()}
+          </Grid>
+        </React.Fragment>
+      )
     }
-    return (
-      <React.Fragment>
-        <Grid container spacing={24} justify={'flex-start'}>
-          <Grid item>
-            <NativeSelect
-              value={this.state.accountSelection}
-              onChange={this.changeDisplay}>
-              {this.generateDisplayDropdown()}
-            </NativeSelect>
-          </Grid>
-          <Grid item>
-            <NativeSelect
-              value={this.state.selectValue}
-              onChange={this.changeChartPeriod}>
-              <option value={CHART.MONTH}>1 Month</option>
-              <option value={CHART.HALF_YEAR}>6 Months</option>
-              <option value={CHART.YEAR}>1 Year</option>
-              <option value={CHART.FIVE_YEARS}>5 Years</option>
-            </NativeSelect>
-          </Grid>
-        </Grid>
-        <Grid container item xs={12}>
-          {this.generateCharts()}
-        </Grid>
-      </React.Fragment>
-    )
   }
 }
 
 function filterStocksByAccount(accounts, stocks, selection) {
-  if (!stocks) return []
-
   if (selection !== 'all') {
     const displayStocks = []
     Object.keys(accounts[selection].stocks).forEach(key => {
