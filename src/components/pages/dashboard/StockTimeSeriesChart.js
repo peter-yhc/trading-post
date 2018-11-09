@@ -27,7 +27,7 @@ class StockTimeSeriesChart extends Component {
   }
 
   titleRef = React.createRef()
-  pathRef = React.createRef()
+  pathRefs = []
 
   xAxis = d3.axisBottom().scale(this.state.xScale)
   yAxis = d3.axisLeft().scale(this.state.yScale)
@@ -50,15 +50,13 @@ class StockTimeSeriesChart extends Component {
     const mergedData = mergeData(filteredDates, filteredPrices)
 
     const dataPoints = []
-    const max = Math.max(...filteredPrices)
+    const slopes = calculateDerivative(filteredPrices, 1)
     for (let i = 0; i < mergedData.length - 1; i++) {
       dataPoints.push({
         svg: lineGenerator([mergedData[i], mergedData[i + 1]]),
-        slope: (mergedData[i + 1].price - mergedData[i].price) / max
+        slope: Math.sqrt(Math.abs(slopes[i])) * slopes[i] / Math.abs(slopes[i])
       })
     }
-
-    // const dataPoints = lineGenerator(mergedData)
     return {dataPoints}
   }
 
@@ -73,7 +71,6 @@ class StockTimeSeriesChart extends Component {
     d3.select(this.state.xAxisRef).call(this.xAxis)
     d3.select(this.state.yAxisRef).call(this.yAxis)
     d3.select(this.titleRef.current).text(this.props.title)
-    // d3.select(this.pathRef.current).style('stroke', strokeColor)
   }
 
   setRefX = element => {
@@ -91,8 +88,8 @@ class StockTimeSeriesChart extends Component {
   createMultiplePath() {
     const paths = []
     this.state.dataPoints.forEach((dataPoint, i) => {
-
-      paths.push(<path key={i} /*ref={this.pathRef}*/ d={dataPoint.svg} fill='none' strokeWidth='2' stroke={`hsl( ${(dataPoint.slope * 360) % 360 }, 100%, 50%)`}/>)
+      this.pathRefs[i] = this.pathRefs[i] ? this.pathRefs[i] : React.createRef()
+      paths.push(<path key={i} ref={this.pathRefs[i]} d={dataPoint.svg} fill='none' strokeWidth='2' stroke={`rgb( ${-dataPoint.slope * 100 + 150}, ${dataPoint.slope * 100 + 150}, ${dataPoint.slope * 25 + 125})`}/>)
     })
 
     return paths
@@ -116,18 +113,6 @@ class StockTimeSeriesChart extends Component {
       </React.Fragment>
     )
   }
-}
-
-function strokeColor(d, i, nodes) {
-  console.log(d, i, nodes)
-  return 'hsl(200, 100%, 30%)'
-  // return (d, i, nodes) => {
-  //   console.log(d)
-  //   console.log(i)
-  //   console.log(nodes)
-  //
-  //   return 'hsl(200, 100%, 30%)'
-  // }
 }
 
 function calculateStartTime(interval) {
@@ -173,6 +158,19 @@ function defineTimeAxisFormat(interval) {
     default:
       return d3.timeFormat('%b, %Y')
   }
+}
+
+function calculateDerivative(dataArray, step) {
+  for (let i = 0; i < step; i++) {
+    dataArray.push(dataArray[dataArray.length-1])
+  }
+  const derivatives = []
+  for (let i = 0; i < dataArray.length - step; i++) {
+    derivatives.push((dataArray[i + step] - dataArray[i]))
+  }
+
+  const max = Math.max(...derivatives)
+  return derivatives.map(d => d/max)
 }
 
 StockTimeSeriesChart.propTypes = {
