@@ -16,11 +16,11 @@ const styles = {
 class StockTimeSeriesChart extends Component {
 
   state = {
-    prices: null,
+    dataPoints: [],
     xScale: d3.scaleTime()
-              .range([margin.left, width - margin.right]),
+      .range([margin.left, width - margin.right]),
     yScale: d3.scaleLinear()
-              .range([height - margin.bottom, margin.top]),
+      .range([height - margin.bottom, margin.top]),
     lineGenerator: d3.line(),
     xAxisRef: null,
     yAxisRef: null
@@ -47,22 +47,33 @@ class StockTimeSeriesChart extends Component {
 
     lineGenerator.x(d => xScale(d.time))
     lineGenerator.y(d => yScale(d.price))
-    const prices = lineGenerator(mergeData(filteredDates, filteredPrices))
-    return {prices}
+    const mergedData = mergeData(filteredDates, filteredPrices)
+
+    const dataPoints = []
+    const max = Math.max(...filteredPrices)
+    for (let i = 0; i < mergedData.length - 1; i++) {
+      dataPoints.push({
+        svg: lineGenerator([mergedData[i], mergedData[i + 1]]),
+        slope: (mergedData[i + 1].price - mergedData[i].price) / max
+      })
+    }
+
+    // const dataPoints = lineGenerator(mergedData)
+    return {dataPoints}
   }
 
   componentDidUpdate() {
     this.xAxis
-        .ticks(defineTimeAxisIntervals(this.props.interval))
-        .tickFormat(defineTimeAxisFormat(this.props.interval))
+      .ticks(defineTimeAxisIntervals(this.props.interval))
+      .tickFormat(defineTimeAxisFormat(this.props.interval))
     this.yAxis
-        .ticks(8)
-        .tickFormat(d => `$${d.toFixed(2)}`)
+      .ticks(8)
+      .tickFormat(d => `$${d.toFixed(2)}`)
 
     d3.select(this.state.xAxisRef).call(this.xAxis)
     d3.select(this.state.yAxisRef).call(this.yAxis)
     d3.select(this.titleRef.current).text(this.props.title)
-    d3.select(this.pathRef.current).style('stroke', strokeColor)
+    // d3.select(this.pathRef.current).style('stroke', strokeColor)
   }
 
   setRefX = element => {
@@ -77,6 +88,17 @@ class StockTimeSeriesChart extends Component {
     }
   }
 
+  createMultiplePath() {
+    const paths = []
+    this.state.dataPoints.forEach((dataPoint, i) => {
+
+      paths.push(<path key={i} /*ref={this.pathRef}*/ d={dataPoint.svg} fill='none' strokeWidth='2' stroke={`hsl( ${(dataPoint.slope * 360) % 360 }, 100%, 50%)`}/>)
+    })
+
+    return paths
+
+  }
+
   render() {
     const {classes} = this.props
     return (
@@ -85,7 +107,7 @@ class StockTimeSeriesChart extends Component {
              viewBox={`0 0 ${width} ${height}`}
              preserveAspectRatio="xMidYMid meet">
           <text ref={this.titleRef} className={classes.title} x={width / 2} y={margin.top}/>
-          <path ref={this.pathRef} d={this.state.prices} fill='none' strokeWidth='2'/>
+          {this.createMultiplePath()}
           <g>
             <g ref={this.setRefX} transform={`translate(0, ${height - margin.bottom})`}/>
             <g ref={this.setRefY} transform={`translate(${margin.left}, 0)`}/>
@@ -96,8 +118,16 @@ class StockTimeSeriesChart extends Component {
   }
 }
 
-function strokeColor(d) {
+function strokeColor(d, i, nodes) {
+  console.log(d, i, nodes)
   return 'hsl(200, 100%, 30%)'
+  // return (d, i, nodes) => {
+  //   console.log(d)
+  //   console.log(i)
+  //   console.log(nodes)
+  //
+  //   return 'hsl(200, 100%, 30%)'
+  // }
 }
 
 function calculateStartTime(interval) {

@@ -1,0 +1,12 @@
+import axios from 'axios'
+
+export default {
+
+  getStockHistory: async (symbol) => {
+    const response = await axios.get(
+      `https://cors.io/?https://i9demdnwbg.execute-api.ap-southeast-2.amazonaws.com/dev/stocks?symbol=${symbol}`)
+
+    return response.data
+  }
+}
+

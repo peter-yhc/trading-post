@@ -1,6 +1,6 @@
 import moment from 'moment'
 import {getStocks} from './DataPersist'
-import YahooApi from './YahooApi'
+import YahooApi from './StockApi'
 
 export function initialise() {
   return (dispatch) => {
