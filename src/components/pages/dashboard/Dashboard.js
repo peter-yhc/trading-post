@@ -1,10 +1,11 @@
-import {Grid, NativeSelect, Typography} from '@material-ui/core/es/index'
+import {Grid, Typography} from '@material-ui/core/es/index'
 import withStyles from '@material-ui/core/es/styles/withStyles'
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import StockTimeSeriesChart, {ChartIntervalEnum as CHART} from './StockTimeSeriesChart'
 import AccountSelector from './AccountSelector'
+import {TimePeriodSlider} from './TimePeriodSelector'
 
 const styles = {
   chartContainer: {
@@ -36,9 +37,9 @@ class Dashboard extends Component {
     return charts
   }
 
-  changeChartPeriod = (event) => {
+  changeChartPeriod = value => {
     this.setState({
-      selectValue: parseInt(event.target.value, 10)
+      selectValue: parseInt(value, 10)
     })
   }
 
@@ -65,14 +66,7 @@ class Dashboard extends Component {
               />
             </Grid>
             <Grid item sm={6}>
-              <NativeSelect
-                value={this.state.selectValue}
-                onChange={this.changeChartPeriod}>
-                <option value={CHART.MONTH}>1 Month</option>
-                <option value={CHART.HALF_YEAR}>6 Months</option>
-                <option value={CHART.YEAR}>1 Year</option>
-                <option value={CHART.FIVE_YEARS}>5 Years</option>
-              </NativeSelect>
+              <TimePeriodSlider value={this.state.selectValue} onChange={this.changeChartPeriod}/>
             </Grid>
           </Grid>
           <Grid container item xs={12}>
