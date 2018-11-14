@@ -4,7 +4,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import StockTimeSeriesChart, {ChartIntervalEnum as CHART} from './StockTimeSeriesChart'
-import {AccountSelector} from './AccountSelector'
+import AccountSelector from './AccountSelector'
 
 const styles = {
   chartContainer: {
@@ -59,12 +59,12 @@ class Dashboard extends Component {
       return (
         <React.Fragment>
           <Grid container spacing={24} justify={'flex-start'}>
-            <Grid item>
+            <Grid item sm={6}>
               <AccountSelector accounts={Object.values(this.props.accounts)}
                                handleChange={this.props.accountToggleDashboard}
               />
             </Grid>
-            <Grid item>
+            <Grid item sm={6}>
               <NativeSelect
                 value={this.state.selectValue}
                 onChange={this.changeChartPeriod}>
@@ -87,9 +87,6 @@ class Dashboard extends Component {
 function filterStocksByAccount(accounts, stocks) {
   const displayStocks = []
   let stockKeys = new Set()
-
-  console.log(accounts)
-  console.log(stocks)
 
   Object.keys(accounts).forEach(key => {
     if (accounts[key].config.dashboard) {

@@ -1,8 +1,13 @@
 import React from 'react'
 import {FormControl, FormControlLabel, FormGroup, FormLabel, Switch} from '@material-ui/core/es/index'
 import PropTypes from 'prop-types'
+import withStyles from '@material-ui/core/es/styles/withStyles'
 
-export function AccountSelector(props) {
+const styles = {
+
+}
+
+function AccountSelector(props) {
 
   const handleStateChange = account => () => {
     props.handleChange(account.name, !account.config.dashboard)
@@ -27,7 +32,7 @@ export function AccountSelector(props) {
   return (
     <FormControl component="fieldset">
       <FormLabel component="legend">Show stocks from:</FormLabel>
-      <FormGroup>
+      <FormGroup row={true}>
         {generateSwitches()}
       </FormGroup>
     </FormControl>
@@ -38,3 +43,5 @@ AccountSelector.propTypes = {
   accounts: PropTypes.array.isRequired,
   handleChange: PropTypes.func.isRequired
 }
+
+export default withStyles(styles)(AccountSelector)
