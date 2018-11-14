@@ -15,13 +15,12 @@ const styles = {
 class Dashboard extends Component {
 
   state = {
-    selectValue: CHART.MONTH,
-    accountSelection: 'all'
+    selectValue: CHART.MONTH
   }
 
   generateCharts = () => {
     const charts = []
-    const filteredStocks = filterStocksByAccount(this.props.accounts, this.props.stocks, this.state.accountSelection)
+    const filteredStocks = filterStocksByAccount(this.props.accounts, this.props.stocks)
 
     filteredStocks.forEach(stock => {
       charts.push(
@@ -37,26 +36,9 @@ class Dashboard extends Component {
     return charts
   }
 
-  generateDisplayDropdown = () => {
-    const options = [
-      <option value={'all'} key={'all'}>All</option>
-    ]
-
-    Object.keys(this.props.accounts).forEach(key => {
-      options.push(<option value={key} key={key}>{key}</option>)
-    })
-    return options
-  }
-
   changeChartPeriod = (event) => {
     this.setState({
       selectValue: parseInt(event.target.value, 10)
-    })
-  }
-
-  changeDisplay = (event) => {
-    this.setState({
-      accountSelection: event.target.value
     })
   }
 
@@ -78,9 +60,9 @@ class Dashboard extends Component {
         <React.Fragment>
           <Grid container spacing={24} justify={'flex-start'}>
             <Grid item>
-              <AccountSelector accountSelection={this.state.accountSelection}
-                               changeDisplay={this.changeDisplay}
-                               generateDisplayDropdown={this.generateDisplayDropdown}/>
+              <AccountSelector accounts={Object.values(this.props.accounts)}
+                               handleChange={this.props.accountToggleDashboard}
+              />
             </Grid>
             <Grid item>
               <NativeSelect
@@ -102,20 +84,38 @@ class Dashboard extends Component {
   }
 }
 
-function filterStocksByAccount(accounts, stocks, selection) {
-  if (selection !== 'all') {
-    const displayStocks = []
-    Object.keys(accounts[selection].stocks).forEach(key => {
-      displayStocks.push(stocks[key])
-    })
-    return displayStocks
-  } else {
-    return Object.values(stocks)
-  }
+function filterStocksByAccount(accounts, stocks) {
+  const displayStocks = []
+  let stockKeys = new Set()
+
+  console.log(accounts)
+  console.log(stocks)
+
+  Object.keys(accounts).forEach(key => {
+    if (accounts[key].config.dashboard) {
+      stockKeys = new Set([...stockKeys, ...Object.keys(accounts[key].stocks)])
+    }
+  })
+
+  stockKeys.forEach(key => {
+    if (stocks[key]) displayStocks.push(stocks[key])
+  })
+  return displayStocks
 }
 
 function mapStateToProps(state) {
   return state
 }
 
-export default withRouter(connect(mapStateToProps)(withStyles(styles)(Dashboard)))
+function mapDispatchToProps(dispatch) {
+  return {
+    accountToggleDashboard(accountName, enabled) {
+      dispatch({
+        type: 'ACCOUNT_TOGGLE_DASHBOARD',
+        payload: {accountName, enabled}
+      })
+    }
+  }
+}
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Dashboard)))

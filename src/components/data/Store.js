@@ -79,6 +79,21 @@ const reducer = (state, action) => {
         }
       }
     }
+    case 'ACCOUNT_TOGGLE_DASHBOARD': {
+      const accountName = action.payload.accountName
+      const account = Object.assign({}, state.accounts[accountName])
+      account.config.dashboard = action.payload.enabled
+
+      updateAccountCache(accountName, account)
+
+      return {
+        ...state,
+        accounts: {
+          ...state.accounts,
+          [accountName]: account
+        }
+      }
+    }
     default:
       console.log('unknown type: ' + action.type)
       return state

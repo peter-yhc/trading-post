@@ -1,22 +1,40 @@
-import React, {Component} from 'react'
-import {NativeSelect} from '@material-ui/core/es/index'
+import React from 'react'
+import {FormControl, FormControlLabel, FormGroup, FormLabel, Switch} from '@material-ui/core/es/index'
 import PropTypes from 'prop-types'
 
-export class AccountSelector extends Component {
+export function AccountSelector(props) {
 
-  render() {
-    return (
-      <NativeSelect
-        value={this.props.accountSelection}
-        onChange={this.props.changeDisplay}>
-        {this.props.generateDisplayDropdown()}
-      </NativeSelect>
-    )
+  const handleStateChange = account => () => {
+    props.handleChange(account.name, !account.config.dashboard)
   }
+
+  const generateSwitches = () => {
+    const labels = []
+    props.accounts.forEach(account => {
+      labels.push(
+        <FormControlLabel
+          key={account.name}
+          control={
+            <Switch checked={account.config.dashboard} onChange={handleStateChange(account)}/>
+          }
+          label={account.name}
+        />
+      )
+    })
+    return labels
+  }
+
+  return (
+    <FormControl component="fieldset">
+      <FormLabel component="legend">Show stocks from:</FormLabel>
+      <FormGroup>
+        {generateSwitches()}
+      </FormGroup>
+    </FormControl>
+  )
 }
 
 AccountSelector.propTypes = {
-  accountSelection: PropTypes.string.isRequired,
-  changeDisplay: PropTypes.func.isRequired,
-  generateDisplayDropdown: PropTypes.func.isRequired
+  accounts: PropTypes.array.isRequired,
+  handleChange: PropTypes.func.isRequired
 }

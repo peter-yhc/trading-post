@@ -1,4 +1,4 @@
-import AccountModel from './AccountModel'
+import AccountModel from './model/AccountModel'
 
 export function getStocks() {
   return JSON.parse(localStorage.getItem('stocks')) || {}
