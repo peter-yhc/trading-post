@@ -1,3 +1,5 @@
+import AccountModel from './AccountModel'
+
 export function getStocks() {
   return JSON.parse(localStorage.getItem('stocks')) || {}
 }
@@ -21,7 +23,7 @@ export function getAccounts() {
 export function createAccount(accountName) {
   const cache = getAccounts()
   if (!cache[accountName]) {
-    cache[accountName] = { name: accountName, stocks: {} }
+    cache[accountName] = new AccountModel(accountName)
     localStorage.setItem('accounts', JSON.stringify(cache))
   }
   return cache[accountName]
