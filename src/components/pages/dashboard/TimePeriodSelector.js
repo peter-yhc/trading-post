@@ -18,6 +18,8 @@ export function TimePeriodSlider(props) {
       <option value={CHART.YEAR}>1 Year</option>
       <option value={CHART.FIVE_YEARS}>5 Years</option>
     </NativeSelect>
+
+    // <Slider/>
   )
 
 }
