@@ -4,6 +4,7 @@ import React, {Component} from 'react'
 import {connect} from 'react-redux'
 import {withRouter} from 'react-router-dom'
 import StockTimeSeriesChart, {ChartIntervalEnum as CHART} from './StockTimeSeriesChart'
+import {AccountSelector} from './AccountSelector'
 
 const styles = {
   chartContainer: {
@@ -77,11 +78,9 @@ class Dashboard extends Component {
         <React.Fragment>
           <Grid container spacing={24} justify={'flex-start'}>
             <Grid item>
-              <NativeSelect
-                value={this.state.accountSelection}
-                onChange={this.changeDisplay}>
-                {this.generateDisplayDropdown()}
-              </NativeSelect>
+              <AccountSelector accountSelection={this.state.accountSelection}
+                               changeDisplay={this.changeDisplay}
+                               generateDisplayDropdown={this.generateDisplayDropdown}/>
             </Grid>
             <Grid item>
               <NativeSelect
