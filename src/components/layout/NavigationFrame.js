@@ -74,7 +74,7 @@ class NavigationFrame extends React.Component {
               className={classes.navIconHide}>
               <Icon>menu</Icon>
             </IconButton>
-            <Typography variant="title" color="inherit" noWrap>
+            <Typography variant="h6" color="inherit" noWrap>
               Trading Post
             </Typography>
           </Toolbar>

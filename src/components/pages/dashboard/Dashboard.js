@@ -47,13 +47,13 @@ class Dashboard extends Component {
     if (this.props.status !== 'READY') {
       return (
         <React.Fragment>
-          <Typography variant={'subheading'}>Loading...</Typography>
+          <Typography variant={'subtitle1'}>Loading...</Typography>
         </React.Fragment>
       )
     } else if (!this.props.stocks || this.props.stocks.length === 0) {
       return (
         <React.Fragment>
-          <Typography variant={'subheading'}>Add some stocks to your account to get started</Typography>
+          <Typography variant={'subtitle1'}>Add some stocks to your account to get started</Typography>
         </React.Fragment>
       )
     } else {

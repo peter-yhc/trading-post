@@ -109,7 +109,7 @@ class EditStockForm extends Component {
         </Button>
         <Dialog className={classes.root} open={this.state.open} onClose={this.resetState}>
           <DialogContent>
-            <Typography variant="subheading">Edit portfolio</Typography>
+            <Typography variant="subtitle1">Edit portfolio</Typography>
             <form className={classes.formContainer}>
               <Grid container item sm={6} justify="center">
                 <FormControl

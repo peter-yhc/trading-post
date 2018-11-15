@@ -73,7 +73,7 @@ class AddAccountForm extends Component {
 
         <Dialog open={this.state.open} onClose={this.handleClose}>
           <DialogContent>
-            <Typography variant="subheading">Add a new account</Typography>
+            <Typography variant="subtitle1">Add a new account</Typography>
             <form className={classes.formContainer} onSubmit={this.handleSubmit}>
               <Grid container item sm={12} justify="center">
                 <TextField

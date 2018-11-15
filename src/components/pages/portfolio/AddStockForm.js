@@ -77,7 +77,7 @@ class AddStockForm extends Component {
         </Button>
         <Dialog open={this.state.open} onClose={this.resetState}>
           <DialogContent>
-            <Typography variant="subheading">Add to your portfolio</Typography>
+            <Typography variant="subtitle1">Add to your portfolio</Typography>
             <form className={classes.formContainer}>
               <Grid container item sm={6} justify="center">
                 <TextField
