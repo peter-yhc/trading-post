@@ -64,8 +64,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onStockUpdate: accountName => stock => {
+      console.log('stock update', stock)
       new Promise((resolve) => {
-        dispatch(updateStockWithLiveData(stock.symbol, resolve))
+        dispatch(updateStockWithLiveData(stock, resolve))
       }).then(() => {
         dispatch({
           type: 'ACCOUNT_STOCK_ADD',
