@@ -85,6 +85,7 @@ class AddStockForm extends Component {
                   className={classes.textField}
                   value={this.state.symbol}
                   onChange={this.handleChange('symbol')}
+                  helperText="Eg. MSFT, VCN.TO, JNJ"
                   margin="normal"/>
               </Grid>
               <Grid container item sm={6} justify="center">
@@ -92,6 +93,7 @@ class AddStockForm extends Component {
                   label={'Number of shares'}
                   value={this.state.shares}
                   handleChange={this.handleChange('shares')}
+                  helperText="The number of shares you currently own"
                 />
               </Grid>
               <Grid container item sm={6} justify="center">
@@ -99,6 +101,7 @@ class AddStockForm extends Component {
                   label={'Book Cost'}
                   value={this.state.bookCost}
                   handleChange={this.handleChange('bookCost')}
+                  helperText="The book cost of your shares"
                 />
               </Grid>
             </form>

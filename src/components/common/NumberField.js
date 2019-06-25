@@ -42,7 +42,7 @@ class NumberField extends Component {
         value={this.state.value}
         onChange={this.handleChange}
         error={this.state.error}
-        helperText={this.state.errorText}
+        helperText={this.state.errorText || this.props.helperText}
         margin="normal"/>
     )
   }
@@ -52,7 +52,8 @@ NumberField.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
-  format: PropTypes.object.isRequired
+  format: PropTypes.object.isRequired,
+  helperText: PropTypes.string,
 }
 
 export default withStyles(styles)(NumberField)

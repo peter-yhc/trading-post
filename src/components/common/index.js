@@ -12,6 +12,7 @@ export function DecimalField(props) {
       label={props.label}
       value={props.value}
       handleChange={props.handleChange}
+      helperText={props.helperText}
     />
   )
 }
@@ -19,7 +20,8 @@ export function DecimalField(props) {
 DecimalField.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired,
+  helperText: PropTypes.string,
 }
 
 export function IntegerField(props) {
@@ -29,6 +31,7 @@ export function IntegerField(props) {
       label={props.label}
       value={props.value}
       handleChange={props.handleChange}
+      helperText={props.helperText}
     />
   )
 }
@@ -36,5 +39,6 @@ export function IntegerField(props) {
 IntegerField.propTypes = {
   label: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  handleChange: PropTypes.func.isRequired
+  handleChange: PropTypes.func.isRequired,
+  helperText: PropTypes.string,
 }
