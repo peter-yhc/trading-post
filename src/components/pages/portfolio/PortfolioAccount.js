@@ -14,7 +14,14 @@ const styles = theme => ({
   }
 })
 
+
 function PortfolioAccount(props) {
+  const showEditStockForm = () => {
+    if(props.stocks && Object.keys(props.stocks).length > 0) {
+      return (<EditStockForm data={Object.values(props.stocks)} onSubmit={props.onStockUpdate} onDelete={props.onStockDelete}/>)
+    }
+    return (<div/>)
+  }
   return (
     <React.Fragment>
       <Grid container direction="row" justify="flex-end">
@@ -23,7 +30,7 @@ function PortfolioAccount(props) {
         </Grid>
         <Grid sm={6} item container direction="row" justify="flex-end">
           <AddStockForm onSubmit={props.onStockAdd}/>
-          <EditStockForm data={Object.values(props.stocks)} onSubmit={props.onStockUpdate} onDelete={props.onStockDelete}/>
+          {showEditStockForm()}
         </Grid>
       </Grid>
       <Grid item sm={12}>
