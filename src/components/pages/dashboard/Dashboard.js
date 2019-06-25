@@ -53,7 +53,7 @@ class Dashboard extends Component {
     } else if (!this.props.stocks || this.props.stocks.length === 0) {
       return (
         <React.Fragment>
-          <Typography variant={'subtitle1'}>Add some stocks to your account to get started</Typography>
+          <Typography variant={'subtitle1'}>Create a portfolio and add some stocks to your account to get started</Typography>
         </React.Fragment>
       )
     } else {
