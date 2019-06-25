@@ -30,14 +30,6 @@ class NavigationOptions extends React.Component {
             </ListItemText>
           </ListItem>
         </Link>
-        <Link className={classes.link} to={'/performance'}>
-          <ListItem button>
-            <ListItemIcon>
-              <Icon>assessment</Icon>
-            </ListItemIcon>
-            <ListItemText>Performance</ListItemText>
-          </ListItem>
-        </Link>
         <Link className={classes.link} to={'/portfolio'}>
           <ListItem button>
             <ListItemIcon>
